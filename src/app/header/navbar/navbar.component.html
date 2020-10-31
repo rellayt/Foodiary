@@ -1,0 +1,48 @@
+<mat-toolbar
+  class="mat-toolbar-container"
+  [ngClass]="isLogged ? 'mat-toolbar-user' : 'mat-toolbar-guest'"
+>
+  <div class="navigation-wrapper">
+    <div class="title" #title>
+      <app-logo routerLink="welcome"></app-logo>
+    </div>
+    <div class="navigation">
+      <ul>
+        <li #menuItem1 id="menuItem1">
+          <button mat-flat-button>Przepisy</button>
+        </li>
+        <li #menuItem2>
+          <button id="menuItem2" mat-flat-button>Kalkulatory</button>
+        </li>
+        <li #menuItem3>
+          <button id="menuItem3" mat-flat-button>O nas</button>
+        </li>
+        <li #menuItem4>
+          <button
+            *ngIf="!isLogged"
+            id="menuItem4"
+            mat-flat-button
+            routerLink="my-account/login"
+          >
+            <i class="fa fa-user"></i>
+            Moje konto
+          </button>
+          <button
+            *ngIf="isLogged"
+            id="menuItem4"
+            mat-flat-button
+            [matMenuTriggerFor]="menu"
+          >
+            Moje konto
+          </button>
+          <mat-menu #menu="matMenu">
+            {{ currentUser?.login }}
+            <button mat-menu-item>Profil</button>
+            <button mat-menu-item>Ustawienia</button>
+            <button mat-menu-item (click)="logout()">Wyloguj</button>
+          </mat-menu>
+        </li>
+      </ul>
+    </div>
+  </div>
+</mat-toolbar>

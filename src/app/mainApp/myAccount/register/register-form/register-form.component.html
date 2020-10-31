@@ -1,0 +1,61 @@
+<form (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill" [formGroup]="registerForm">
+    <mat-label>Login</mat-label>
+    <input matInput formControlName="login" [(ngModel)]="userToPost.login" />
+    <register-control-messages
+      [control]="registerForm.get('login')"
+    ></register-control-messages>
+  </mat-form-field>
+  <mat-form-field appearance="fill" [formGroup]="registerForm">
+    <mat-label>E-mail</mat-label>
+    <input matInput formControlName="email" [(ngModel)]="userToPost.email" />
+    <register-control-messages
+      [control]="registerForm.get('email')"
+    ></register-control-messages>
+  </mat-form-field>
+  <mat-form-field appearance="fill" [formGroup]="registerForm">
+    <mat-label>Hasło</mat-label>
+    <input
+      matInput
+      formControlName="password"
+      [type]="hide ? 'password' : 'text'"
+      [(ngModel)]="userToPost.password"
+    />
+    <register-control-messages
+      [control]="registerForm.get('password')"
+    ></register-control-messages>
+  </mat-form-field>
+  <mat-form-field appearance="fill" [formGroup]="registerForm">
+    <mat-label>Powtórz hasło</mat-label>
+    <input
+      matInput
+      [type]="hide ? 'password' : 'text'"
+      formControlName="confirmPassword"
+    />
+    <register-control-messages
+      [control]="registerForm.get('confirmPassword')"
+    ></register-control-messages>
+  </mat-form-field>
+  <div class="hide-wrapper">
+    <div class="hide-container">
+      <button
+        type="button"
+        mat-icon-button
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="submit-button-container">
+    <button
+      type="submit"
+      [style.opacity]="registerForm.valid ? '1' : '0.6'"
+      mat-stroked-button
+      [disabled]="!registerForm.valid"
+    >
+      Zarejestruj
+    </button>
+  </div>
+</form>

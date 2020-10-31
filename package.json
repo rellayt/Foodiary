@@ -1,5 +1,5 @@
 {
-  "name": "fooddiary",
+  "name": "foodiary",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -12,15 +12,29 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.1.11",
+    "@angular/cdk": "^9.2.4",
     "@angular/common": "~9.1.11",
     "@angular/compiler": "~9.1.11",
     "@angular/core": "~9.1.11",
     "@angular/forms": "~9.1.11",
+    "@angular/material": "^9.2.4",
     "@angular/platform-browser": "~9.1.11",
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
+    "@fortawesome/fontawesome-free": "^5.15.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@types/gsap": "^1.20.2",
+    "animate.css": "^4.1.1",
+    "animejs": "^3.2.0",
+    "font-awesome": "^4.7.0",
+    "gsap": "^3.5.1",
+    "jquery": "^3.5.1",
+    "parallax-js": "^3.1.0",
     "rxjs": "~6.5.4",
+    "three": "^0.120.1",
     "tslib": "^1.10.0",
+    "vanta": "^0.5.19",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

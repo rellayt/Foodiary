@@ -1,0 +1,60 @@
+@import "../../styles/colors.scss";
+
+.mat-toolbar-container {
+  width: 100%;
+  height: 11vh;
+  background-color: transparent;
+}
+.mat-toolbar-user {
+  box-shadow: 0px 0px 1px gray;
+  background-color: $white;
+}
+.mat-toolbar-guest {
+  position: fixed;
+}
+.navigation-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  margin: 0 6%;
+  align-items: center;
+  position: static;
+}
+ul {
+  display: flex;
+  list-style: none;
+}
+.title {
+  position: relative;
+  top: 5px;
+}
+.navigation {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  li {
+    border-radius: 11px;
+    margin-left: 0.8vw;
+    box-shadow: inset 0px 0px 2px 1px transparent;
+    transition: 200ms box-shadow ease-in-out;
+    &:nth-child(4) {
+      margin-left: 1.5vw;
+      button {
+        font-size: 1.2vw;
+      }
+    }
+    &:hover {
+      box-shadow: inset 0px 0px 2px 1px black;
+      transition: 200ms box-shadow ease-in-out;
+    }
+  }
+
+  button {
+    color: $black;
+    background-color: transparent;
+    font-size: 1.1vw;
+    border-radius: 11px;
+    padding: 0.2vw 0.7vw;
+  }
+}
