@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { OnceClickedService } from '../animation/once-clicked.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,12 +23,13 @@ export class UserService {
   userSubject = new BehaviorSubject<User>(null);
   user = this.userSubject.asObservable();
 
-  constructor(private http: HttpClient, public router: Router) {
+  constructor(private http: HttpClient, public router: Router, private onceClickedService: OnceClickedService) {
     if (localStorage.getItem('token')) {
       this.getUser().subscribe(
         user => {
           this.changeUserSubject(user as User);
           this.changeLoginSubject(true);
+          this.onceClickedService.changeOnceClickedSubject(true);
         });
     }
   }

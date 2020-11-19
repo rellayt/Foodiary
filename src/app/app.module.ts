@@ -22,7 +22,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './services/server/user.service';
 import { DiaryComponent } from './mainApp/mainPage/diary/diary.component';
 import { ProfileComponent } from './mainApp/mainPage/profile/profile.component';
-import { UserNavigationComponent } from './mainApp/mainPage/user-navigation/user-navigation.component';
+import { SubNavigationComponent } from './mainApp/mainPage/sub-navigation/sub-navigation.component';
+import { ProfileNavigationComponent } from './mainApp/mainPage/profile/profile-navigation/profile-navigation.component';
+import { AboutMeComponent } from './mainApp/mainPage/profile/about-me/about-me.component';
 
 const dialogComponents = [
   LoginDialogComponent, RegisterDialogComponent, ForgotPasswordDialogComponent
@@ -36,7 +38,7 @@ const formComponents = [
   LoginFormComponent, RegisterFormComponent
 ];
 const mainComponents = [
-  UserNavigationComponent
+  SubNavigationComponent
 ];
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ const mainComponents = [
     DiaryComponent,
     ProfileComponent,
     mainComponents,
+    ProfileNavigationComponent,
+    AboutMeComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,33 +2,41 @@
 
 .mat-toolbar-container {
   width: 100%;
-  height: 11vh;
-  background-color: transparent;
 }
 .mat-toolbar-user {
-  box-shadow: 0px 0px 1px gray;
+  z-index: 5;
   background-color: $white;
+  height: 8vh;
+  position: relative;
+  box-shadow: 0px 0px 14px #00000033;
 }
 .mat-toolbar-guest {
+  margin-top: 2vh;
   position: fixed;
+  background-color: transparent;
 }
 .navigation-wrapper {
   width: 100%;
-  height: 100%;
   display: flex;
-  margin: 0 6%;
   align-items: center;
   position: static;
 }
+.nav-wrap-user {
+  margin: 0% 1%;
+}
+.nav-wrap-guest {
+  margin: 0 6%;
+}
 ul {
   display: flex;
+  align-items: center;
   list-style: none;
 }
 .title {
   position: relative;
   top: 5px;
 }
-.navigation {
+.navigation-guest {
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -56,5 +64,55 @@ ul {
     font-size: 1.1vw;
     border-radius: 11px;
     padding: 0.2vw 0.7vw;
+  }
+}
+.navigation-user {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  li {
+    border-radius: 11px;
+    margin-left: 0.7vw;
+    &:nth-child(4) {
+      position: relative;
+      left: 1em;
+      margin-left: 1.5vw;
+      cursor: pointer;
+    }
+  }
+
+  button {
+    color: $black;
+    padding: 10px;
+    background-color: transparent;
+    border-radius: 10px;
+    opacity: 0.75;
+    transition: 200ms opacity ease-in-out;
+    &:hover {
+      opacity: 1;
+      transition: 200ms opacity ease-in-out;
+    }
+  }
+  mat-icon {
+    position: relative;
+    right: 5px;
+    bottom: 10px;
+    width: 30px;
+    font-size: 30px;
+  }
+}
+
+.nav-user-account {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #3186f51e;
+  i {
+    position: relative;
+    color: #3186f5b2;
+    font-size: 30px;
   }
 }

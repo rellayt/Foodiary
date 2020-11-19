@@ -1,3 +1,16 @@
+@import "../../../styles/colors.scss";
+
+.user-logo {
+  opacity: 0.85;
+  transition: 300ms opacity ease-in;
+  margin-left: -30px;
+  transform: scale(0.8);
+  &:hover {
+    opacity: 1;
+    transition: 300ms opacity ease-out;
+  }
+}
+
 .logo-icon {
   stroke-dasharray: 5000;
   stroke-dashoffset: 0;

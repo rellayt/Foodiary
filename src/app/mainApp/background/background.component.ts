@@ -1,6 +1,7 @@
 import { AfterContentInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as Parallax from 'parallax-js';
 import { gsap } from 'gsap';
+import { UserService } from '../../services/server/user.service';
 
 declare var VANTA: any;
 declare var Parallax: any;
@@ -14,7 +15,8 @@ declare var Parallax: any;
 export class BackgroundComponent implements OnInit, AfterContentInit {
   @ViewChild('background', { static: true }) background: ElementRef<HTMLDivElement>;
 
-  constructor() { }
+  isLogged = false;
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.initialAnimations();
@@ -28,7 +30,7 @@ export class BackgroundComponent implements OnInit, AfterContentInit {
       blurFactor: 0.67,
       speed: 1.70
     });
-
+    this.userService.loginStatus.subscribe(loginStatus => this.isLogged = loginStatus);
   }
   ngAfterContentInit() {
     const scene = document.getElementById('scene');

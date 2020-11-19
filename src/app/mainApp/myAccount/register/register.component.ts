@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { TooltipPosition } from '@angular/material/tooltip';
+import { OnceClickedService } from '../../../services/animation/once-clicked.service';
 
 @Component({
   selector: 'app-register',
@@ -7,10 +9,11 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private onceClickedService: OnceClickedService) { }
 
   ngOnInit(): void {
-    this.dialog.open(RegisterDialogComponent);
+    this.dialog.open(RegisterDialogComponent, { disableClose: true });
+    this.onceClickedService.changeOnceClickedSubject(true);
   }
 
 }
@@ -22,6 +25,7 @@ export class RegisterComponent implements OnInit {
 })
 export class RegisterDialogComponent implements OnInit {
 
+  tooltipPosition: TooltipPosition = 'above';
 
   constructor() { }
 

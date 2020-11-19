@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { gsap } from 'gsap';
+import { UserService } from '../../../services/server/user.service';
 
 @Component({
   selector: 'app-logo',
@@ -9,10 +10,29 @@ import { gsap } from 'gsap';
 
 export class LogoComponent implements OnInit {
   @ViewChild('foodiary', { static: true }) foodiary: ElementRef<HTMLDivElement>;
-  constructor() { }
+  constructor(private userService: UserService) { }
+
+  loginStatus;
 
   ngOnInit(): void {
     this.initialAnimations();
+
+    this.userService.loginStatus.subscribe(loginStatus => {
+      this.loginStatus = loginStatus;
+      if (this.loginStatus) {
+        gsap.to(this.foodiary.nativeElement, {
+          duration: 1,
+          delay: 3,
+          strokeOpacity: 1
+        });
+      } else {
+        gsap.to(this.foodiary.nativeElement, {
+          duration: 1,
+          delay: 3,
+          strokeOpacity: 0.2
+        });
+      }
+    });
   }
   initialAnimations = () => {
     gsap.from(this.foodiary.nativeElement, {
@@ -30,5 +50,6 @@ export class LogoComponent implements OnInit {
       fill: 'black',
       strokeOpacity: 0.2
     });
+
   }
 }

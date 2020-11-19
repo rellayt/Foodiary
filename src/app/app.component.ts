@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './services/server/user.service';
 import { User } from './mainApp/shared/models/user.model';
+
 @Component({
   selector: 'app-main',
   templateUrl: './app.component.html',

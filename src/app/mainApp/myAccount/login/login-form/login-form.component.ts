@@ -43,7 +43,6 @@ export class LoginFormComponent implements OnInit {
         data => {
           const { token } = JSON.parse(JSON.stringify(data));
           localStorage.setItem('token', token);
-          // this.userService.changeUserSubject(user);
           this.userService.changeLoginSubject(true);
           this.router.navigate(['profile']);
         },
