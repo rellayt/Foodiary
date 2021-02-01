@@ -1,0 +1,97 @@
+<div class="calory-help-dialog-wrapper">
+  <div class="close-icon">
+    <button>
+      <mat-icon routerLink="home" [matDialogClose] matTooltip="Zamknij" matTooltipClass="close-dialog-tooltip"
+        [matTooltipPosition]="tooltipPosition">close</mat-icon>
+    </button>
+  </div>
+  <form>
+    <div class="calory-help-container">
+      <div class="gender-container" #gender>
+        <div class="gender-wrapper">
+          <span class="above-input-name">Płeć:</span>
+          <div class="radio-group-wrapper">
+            <mat-radio-group [(ngModel)]="selectedGender" name="selectedGender">
+              <mat-radio-button *ngFor="let gender of genders" [value]="gender.value">
+                {{gender.viewValue}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+      <div class="activity-container" #activity>
+        <div class="activity-wrapper">
+          <span class="above-input-name">Aktywność fizyczna:</span>
+          <mat-form-field appearance="outline" [formGroup]="caloryHelpForm">
+            <mat-select formControlName="activity">
+              <mat-option *ngFor="let activity of physicalActivity" [value]="activity.value">
+                {{activity.viewValue}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="caloryHelpForm.get('activity').invalid">{{getErrorMessage('activity')}}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="height-weight-container" #heightweight>
+        <div class="weight-height-wrapper">
+          <span class="above-input-name">Waga:</span>
+          <mat-form-field class="example-full-width" appearance="outline" [formGroup]="caloryHelpForm">
+            <input type="number" matInput formControlName="weight">
+            <mat-error *ngIf="caloryHelpForm.get('weight').invalid">{{getErrorMessage('weight')}}</mat-error>
+            <span matSuffix>kg</span>
+          </mat-form-field>
+        </div>
+        <div class="weight-height-wrapper">
+          <span class="above-input-name">Wzrost:</span>
+          <mat-form-field class="example-full-width" appearance="outline" [formGroup]="caloryHelpForm">
+            <input type="number" matInput formControlName="height">
+            <mat-error *ngIf="caloryHelpForm.get('height').invalid">{{getErrorMessage('height')}}</mat-error>
+            <span matSuffix>cm</span>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="age-submit-container" #agesubmit>
+        <div class="age-wrapper">
+          <span class="above-input-name">Wiek:</span>
+          <mat-form-field class="example-full-width" appearance="outline" [formGroup]="caloryHelpForm">
+            <input type="number" matInput formControlName="age">
+            <mat-error *ngIf="caloryHelpForm.get('age').invalid">{{getErrorMessage('age')}}</mat-error>
+            <span matSuffix>lat</span>
+          </mat-form-field>
+        </div>
+        <div class="submit-button"><button type="submit" mat-stroked-button
+            [style.opacity]="caloryHelpForm.valid && !!this.selectedGender ? '1' : '0.7'"
+            [disabled]="!caloryHelpForm.valid || !this.selectedGender" (click)="calculate()">Oblicz</button></div>
+      </div>
+    </div>
+  </form>
+  <div class="result-container" [style.display]="result ? 'grid' : 'none'">
+    <div class="basic-metabolism-container">
+      <div class="basic-text" #basicText1>Podstawowa przemiana materii wynosi:</div>
+      <div class="basic-metabolism-value" #bMetabolism>{{basicMetabolism}} kcal</div>
+    </div>
+    <div class="tabs-container" #tabs>
+      <ul class="tabs">
+        <li [ngClass]=" userTarget === 'loss' ? 'active' : ''" (click)="changeTarget('loss')">Chcę schudnąć</li>
+        <li [ngClass]=" userTarget === 'stay' ? 'active' : ''" (click)="changeTarget('stay')">Chcę utrzymać wagę</li>
+        <li [ngClass]=" userTarget === 'mass' ? 'active' : ''" (click)="changeTarget('mass')">Chcę przytyć</li>
+      </ul>
+    </div>
+    <div class="total-metabolism-container">
+      <div class="basic-text" #basicText2>Jeśli chcesz {{viewText}}, utrzymuj swoje dzienne zapotrzebowanie kaloryczne
+        na poziomie:
+      </div>
+      <div class="total-metabolism-submit-button-wrapper">
+        <div class="total-metabolism-value-wrapper">
+          <div class="basic-metabolism-calories" #totalCalory>{{viewValues.calory}} kcal</div>
+          <div class="basic-metabolism-nutrients" #totalNutrients>białko: <b>{{viewValues.protein}}g</b>, węglowodany:
+            <b>{{viewValues.carbs}}g</b>, tłuszcze: <b>{{viewValues.fat}}g</b>
+          </div>
+        </div>
+        <div class="submit-button-container" #saveButton>
+          <button mat-raised-button mat-dialog-close>Zapisz</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

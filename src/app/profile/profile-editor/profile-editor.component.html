@@ -1,0 +1,45 @@
+<div class="profile-editor-container">
+  <div class="avatar-wrapper">
+    <div class="select-avatar-upper">
+      <div class="select-avatar-bottom">
+        <i class="fa fa-user"></i>
+        <button mat-raised-button>
+          <i class="fa fa-camera"></i>
+          Zmień zdjęcie</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="calory-data-wrapper">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Kaloryka
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-calory-form></app-calory-form>
+    </mat-expansion-panel>
+  </div>
+  <mat-accordion>
+    <div class="personal-data-wrapper">
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Dane osobowe
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-personal-data-form></app-personal-data-form>
+      </mat-expansion-panel>
+    </div>
+    <div class="body-measurements-data">
+      <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Pomiary
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-measurement-form></app-measurement-form>
+      </mat-expansion-panel>
+    </div>
+  </mat-accordion>
+</div>

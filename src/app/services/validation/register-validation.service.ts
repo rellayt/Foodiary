@@ -6,8 +6,6 @@ import { UserService } from '../server/user.service';
   providedIn: 'root'
 })
 export class RegisterValidationService {
-  constructor() {
-  }
 
   static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
     const config = {
@@ -33,30 +31,24 @@ export class RegisterValidationService {
     }
     return null;
   }
+
   static emailValidator(control) {
-    if (control.value && control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)
-    ) {
-      return null;
-    } else {
-      return { invalidEmailAddress: true };
-    }
+    const expression = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+
+    return control.value && control.value.match(expression) ? null : { invalidEmailAddress: true };
   }
+
   static passwordsValidator(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
 
-      if (matchingControl.errors && !matchingControl.errors.invalidPasswordComparison) {
-        return;
-      }
+      if (matchingControl.errors && !matchingControl.errors.invalidPasswordComparison) return;
 
-      if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ invalidPasswordComparison: true });
-      } else {
-        return;
-      }
-    };
+      control.value !== matchingControl.value ? matchingControl.setErrors({ invalidPasswordComparison: true }) : '';
+    }
   }
+
   static duplicateLoginValidator(controlName: string, userService: UserService) {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
@@ -67,6 +59,7 @@ export class RegisterValidationService {
       }
     };
   }
+
   static duplicateEmailValidator(controlName: string, userService: UserService) {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];

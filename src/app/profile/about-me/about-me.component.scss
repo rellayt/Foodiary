@@ -1,0 +1,99 @@
+@import "src/app/shared/colors.scss";
+
+.about-me-container {
+  display: grid;
+  width: 100%;
+  height: auto;
+  grid-template-columns: [col1-start] 32% [col2-start] 32% [col3-start] 32% [col3-end];
+  grid-template-rows: [row1-start] 150px [row2-start] 130px [row3-start] 130px [row3-end];
+  grid-column-gap: 2%;
+  grid-row-gap: 2.6rem;
+}
+.user-login-header {
+  color: $black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: 600;
+  grid-column: col1-start / col2-start;
+  :first-child {
+    position: relative;
+    top: 15px;
+  }
+}
+.one {
+  grid-column: col2-start / col3-end;
+}
+.two {
+  grid-column: col1-start / col3-end;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-expansion-panel {
+    width: 45%;
+    margin: 0 1.5rem;
+  }
+
+  .calories {
+    color: $blue;
+    width: 100%;
+    text-align: center;
+    margin: 5px;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  ul {
+    align-items: flex-start;
+  }
+  .macronutrients {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
+    font-size: 1.25rem;
+    li {
+      margin: 4px;
+    }
+    .macro-item {
+      color: $blue;
+      font-weight: 600;
+      font-size: 1.35rem;
+      .macro-unit {
+        color: $black;
+        margin-left: 3px;
+        font-size: 1.3rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
+.three {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: col1-start / col3-end;
+
+  mat-expansion-panel {
+    width: 92.7%;
+    margin: 0 1.5rem;
+  }
+}
+.four {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: col1-start / col3-end;
+  padding: 0.2rem;
+  mat-expansion-panel {
+    width: 92.7%;
+    margin: 0 1.5rem;
+  }
+}
+mat-panel-title {
+  font-size: 1.5rem;
+  padding: 1em 0;
+}
+::ng-deep .mat-expansion-panel {
+  background: $white;
+}

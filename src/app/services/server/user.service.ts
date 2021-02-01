@@ -1,7 +1,7 @@
-import { User } from './../../mainApp/shared/models/user.model';
-import { Injectable, OnInit } from '@angular/core';
+import { User } from '../../models/user.model';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { OnceClickedService } from '../animation/once-clicked.service';
@@ -14,8 +14,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserService {
-  readonly baseUrlRegister = 'http://localhost:3000/register/';
-  readonly baseUrlLogin = 'http://localhost:3000/login/';
+  readonly baseUrlRegister = 'http://localhost:7777/register/';
+  readonly baseUrlLogin = 'http://localhost:7777/login/';
 
   loginStatusSubject = new BehaviorSubject<boolean>(false);
   loginStatus = this.loginStatusSubject.asObservable();

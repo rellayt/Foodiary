@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { UserService } from '../server/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginValidationService {
-  static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
-    const config = {
-      required: 'Pole jest wymagane',
-      invalidData: 'Nieprawidłowe dane logowania',
-    };
-    return config[validatorName];
-  }
+  // static getValidatorErrorMessage(validatorName: string) {
+  //   const config = {
+  //     required: 'Pole jest wymagane',
+  //     invalidData: 'Nieprawidłowe dane logowania',
+  //   };
+  //   return config[validatorName];
+  // }
+
   static emptyFieldsValidator(loginForm) {
     if (loginForm.valid) return;
 

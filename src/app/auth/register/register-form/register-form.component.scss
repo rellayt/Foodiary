@@ -1,0 +1,56 @@
+@import "src/app/shared/colors.scss";
+.register-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  mat-form-field {
+    width: 90%;
+    font-size: 19px;
+    input {
+      position: relative;
+      top: 3px;
+      font-size: 22px;
+    }
+  }
+  .hide-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 85%;
+    margin: -28px -28px;
+    color: $gray-dark;
+    mat-icon {
+      position: relative;
+      bottom: 2px;
+      right: 2px;
+      color: $black;
+      font-size: 30px;
+      opacity: 60%;
+    }
+  }
+  .hide-container {
+    position: relative;
+    bottom: 53px;
+  }
+  .submit-button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 65px;
+    margin-top: 18px;
+    button {
+      background-color: $blue;
+      color: $white;
+      font-size: 22px;
+      border-radius: 7px;
+      width: 90%;
+      height: 100%;
+    }
+  }
+
+  control-message {
+    position: absolute;
+    top: 44px;
+    left: -12px;
+    font-size: 17px;
+  }
+}

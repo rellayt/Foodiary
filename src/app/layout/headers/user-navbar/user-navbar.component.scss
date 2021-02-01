@@ -1,0 +1,57 @@
+@import "src/app/shared/colors.scss";
+
+.navbar-container-user {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  z-index: 5;
+  background-color: $white;
+  box-shadow: 0px 0px 14px #00000033;
+  .title {
+    margin-left: 30px;
+  }
+  ul {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    list-style: none;
+    gap: 12px;
+    button {
+      color: $black;
+      padding: 10px;
+      background-color: transparent;
+      border-radius: 10px;
+      opacity: 0.75;
+      transition: 200ms opacity ease-in-out;
+      &:hover {
+        opacity: 0.97;
+        transition: 200ms opacity ease-in-out;
+      }
+    }
+    mat-icon {
+      position: relative;
+      right: 5px;
+      bottom: 11px;
+      width: 30px;
+      font-size: 30px;
+    }
+    .nav-user-account {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #3186f51e;
+      margin: 0 12px 0 32px;
+      i {
+        position: relative;
+        color: #3186f5b2;
+        font-size: 30px;
+      }
+    }
+  }
+}

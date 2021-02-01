@@ -1,6 +1,72 @@
+@import "src/app/shared/colors.scss";
+
 .inactive {
   visibility: hidden;
 }
 .active {
   visibility: visible;
+}
+::ng-deep {
+  .mat-focused .mat-form-field-label {
+    color: $blue !important;
+    font-weight: 500;
+  }
+  .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: $blue;
+  }
+  .cdk-overlay-dark-backdrop {
+    background: $dialog-background;
+  }
+  .mat-radio-button.mat-accent .mat-radio-inner-circle,
+  .mat-radio-button.mat-accent
+    .mat-radio-ripple
+    .mat-ripple-element:not(.mat-radio-persistent-ripple),
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+  .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+    background-color: $blue;
+  }
+  .mat-focused .mat-form-field-label {
+    color: $blue !important;
+    font-weight: 500;
+  }
+  .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: $blue;
+  }
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: $blue;
+  }
+  .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+    background-color: $blue !important;
+  }
+  .mat-step-header .mat-step-icon-selected,
+  .mat-step-header .mat-step-icon-state-done,
+  .mat-step-header .mat-step-icon-state-edit {
+    background-color: $blue !important;
+  }
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: $gray-light;
+  }
+  .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid
+    .mat-form-field-outline-thick {
+    color: red !important;
+  }
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: $blue !important;
+  }
+
+  .mat-form-field.mat-focused .mat-form-field-label {
+    color: $blue !important;
+  }
+
+  .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: $blue;
+  }
+  .mat-datepicker-toggle-active {
+    color: $blue !important;
+    opacity: 0.8;
+  }
+  .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+  .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: $blue;
+  }
 }

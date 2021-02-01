@@ -1,0 +1,111 @@
+@import "src/app/shared/colors.scss";
+
+.profile-editor-container {
+  display: grid;
+  width: 100%;
+  height: auto;
+  grid-template-columns: [col1-start] 35% [col2-start] 64% [col3-end];
+  grid-template-rows: [row1-start] 400px [row2-start] 300px [row2-end];
+  grid-column-gap: 5px;
+  grid-row-gap: 10px;
+  mat-expansion-panel {
+    width: 90%;
+    margin: 5px;
+  }
+  mat-accordion {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    grid-column: col1-start/col3-end;
+  }
+
+  mat-panel-title {
+    display: flex;
+    justify-content: center;
+    font-size: 1.4rem;
+    padding: 1em;
+    color: $black;
+  }
+  ::ng-deep .mat-expansion-indicator::after {
+    color: $blue !important;
+  }
+  ::ng-deep .mat-expansion-panel-body {
+    padding: 0 28px !important;
+  }
+}
+.avatar-wrapper {
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+  .select-avatar-upper {
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 220px;
+    height: 220px;
+    background-color: $white;
+    border: 1px #0e0e0e27 solid;
+    z-index: 0;
+  }
+  .select-avatar-bottom {
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    i {
+      position: relative;
+      top: 15px;
+      margin: 3.4rem 0;
+      font-size: 6.5rem;
+      color: $blue;
+    }
+    width: 200px;
+    height: 200px;
+    z-index: 1;
+    background-color: #3186f51e;
+    button {
+      display: flex;
+      justify-items: center;
+      align-items: center;
+      background-color: $blue;
+      color: $white;
+      font-size: 1.2rem;
+      i {
+        top: -1px;
+        margin: 0;
+        color: $white;
+        font-size: 1.2rem;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+.calory-data-wrapper {
+  position: relative;
+  top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 95%;
+  height: 90%;
+  mat-expansion-panel {
+    width: 94%;
+    margin: 5px;
+  }
+}
+.personal-data-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.body-measurements-data {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

@@ -1,0 +1,26 @@
+<div class="login-dialog-wrapper">
+  <div class="close-icon">
+    <button>
+      <mat-icon routerLink="home" [matDialogClose] matTooltip="Zamknij" matTooltipClass="close-dialog-tooltip"
+        [matTooltipPosition]="tooltipPosition">close</mat-icon>
+    </button>
+  </div>
+  <h3 mat-dialog-title>
+    <span class="title">Logowanie</span>
+    <span class="no-account"><button routerLink="register" mat-dialog-close>Nie mam konta</button></span>
+  </h3>
+  <div class="login-dialog-container" mat-dialog-content>
+    <app-login-form></app-login-form>
+    <div class="or-section">
+      <div class="word">lub</div>
+      <div class="line-through"></div>
+    </div>
+
+    <div class="facebook-button-container">
+      <button mat-stroked-button>
+        <i class="fa fa-facebook"></i>
+        <label> Zaloguj się za pomocą Facebooka </label>
+      </button>
+    </div>
+  </div>
+</div>

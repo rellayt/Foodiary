@@ -1,4 +1,4 @@
-@import "../../styles/colors.scss";
+@import "src/app/shared/colors.scss";
 
 .mat-toolbar-container {
   width: 100%;
@@ -6,9 +6,9 @@
 .mat-toolbar-user {
   z-index: 5;
   background-color: $white;
+  box-shadow: 0px 0px 14px #00000033;
   height: 8vh;
   position: relative;
-  box-shadow: 0px 0px 14px #00000033;
 }
 .mat-toolbar-guest {
   margin-top: 2vh;
@@ -31,7 +31,13 @@ ul {
   display: flex;
   align-items: center;
   list-style: none;
+
+  li {
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+  }
 }
+
 .title {
   position: relative;
   top: 5px;
@@ -40,30 +46,38 @@ ul {
   width: 100%;
   display: flex;
   justify-content: flex-end;
-
+  ul:hover > li {
+    opacity: 0.5 !important;
+  }
+  ul:hover li:hover {
+    opacity: 1 !important;
+  }
   li {
+    display: flex;
+    width: 195px;
+    justify-content: center;
     border-radius: 11px;
-    margin-left: 0.8vw;
-    box-shadow: inset 0px 0px 2px 1px transparent;
-    transition: 200ms box-shadow ease-in-out;
     &:nth-child(4) {
-      margin-left: 1.5vw;
-      button {
-        font-size: 1.2vw;
+      a {
+        font-size: 23px;
+      }
+      a:focus {
+        font-size: 20px;
       }
     }
-    &:hover {
-      box-shadow: inset 0px 0px 2px 1px black;
-      transition: 200ms box-shadow ease-in-out;
+    a:focus {
+      font-size: 20px;
     }
   }
 
-  button {
+  a {
+    text-decoration: none;
     color: $black;
     background-color: transparent;
-    font-size: 1.1vw;
+    font-size: 22px;
     border-radius: 11px;
-    padding: 0.2vw 0.7vw;
+    padding: 2px 4px;
+    cursor: pointer;
   }
 }
 .navigation-user {

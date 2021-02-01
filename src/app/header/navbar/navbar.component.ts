@@ -1,7 +1,7 @@
-import { AfterViewChecked, ElementRef, OnChanges, ViewEncapsulation } from '@angular/core';
+import { ElementRef, ViewEncapsulation } from '@angular/core';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { gsap } from 'gsap';
-import { User } from 'src/app/mainApp/shared/models/user.model';
+import { User } from 'src/app/models/user.model';
 import { UserService } from '../../services/server/user.service';
 import { Router } from '@angular/router';
 import {
@@ -19,7 +19,7 @@ export const navbarTooltip: MatTooltipDefaultOptions = {
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss', './../../styles/tooltips.scss'],
+  styleUrls: ['./navbar.component.scss', '../../styles/tooltips.scss'],
   providers: [
     { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: navbarTooltip },
   ],
@@ -27,18 +27,10 @@ export const navbarTooltip: MatTooltipDefaultOptions = {
 })
 export class NavbarComponent implements OnInit {
   @ViewChild('title', { static: true }) title: ElementRef<HTMLDivElement>;
-  @ViewChild('menuItem1', { static: true }) menuItem1: ElementRef<
-    HTMLDivElement
-  >;
-  @ViewChild('menuItem2', { static: true }) menuItem2: ElementRef<
-    HTMLDivElement
-  >;
-  @ViewChild('menuItem3', { static: true }) menuItem3: ElementRef<
-    HTMLDivElement
-  >;
-  @ViewChild('menuItem4', { static: true }) menuItem4: ElementRef<
-    HTMLDivElement
-  >;
+  @ViewChild('menuItem1', { static: true }) menuItem1: ElementRef<HTMLDivElement>;
+  @ViewChild('menuItem2', { static: true }) menuItem2: ElementRef<HTMLDivElement>;
+  @ViewChild('menuItem3', { static: true }) menuItem3: ElementRef<HTMLDivElement>;
+  @ViewChild('menuItem4', { static: true }) menuItem4: ElementRef<HTMLDivElement>;
 
   constructor(
     private userService: UserService,
@@ -60,29 +52,29 @@ export class NavbarComponent implements OnInit {
       });
     this.initialAnimations();
   }
+
   initialAnimations = () => {
     this.initLogoAnimation();
-    const menuItems = [
-      this.menuItem1,
-      this.menuItem2,
-      this.menuItem3,
-      this.menuItem4,
-    ];
+    const menuItems = [this.menuItem1, this.menuItem2, this.menuItem3, this.menuItem4];
     let value = 1;
     menuItems.forEach((elementRef) => {
       this.initItemAnimation(elementRef, value);
       value += 0.3;
     });
   }
+
   initItemAnimation = (item: ElementRef<HTMLDivElement>, delayValue: any) => {
-    gsap.from(item.nativeElement, {
-      duration: 1,
-      opacity: 0,
+    gsap.fromTo(item.nativeElement, {
       y: -25,
+    }, {
+      y: 0,
+      duration: 0.7,
+      opacity: 1,
       stagger: 10,
       delay: delayValue,
     });
   }
+
   initLogoAnimation = () => {
     gsap.from(this.title.nativeElement, {
       duration: 1,
@@ -91,11 +83,12 @@ export class NavbarComponent implements OnInit {
       delay: 0.5,
     });
   }
+
   logout = () => {
     localStorage.removeItem('token');
     this.isLogged = false;
     this.currentUser = null;
     this.userService.changeLoginSubject(false);
-    this.router.navigate(['welcome']);
+    this.router.navigate(['home']);
   }
 }

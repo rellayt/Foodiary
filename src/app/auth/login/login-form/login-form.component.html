@@ -1,0 +1,27 @@
+<form class="login-form-wrapper" #userForm="ngForm" cdkFocusInitial>
+  <mat-form-field appearance="fill" [formGroup]="loginForm">
+    <mat-label>Login / E-mail</mat-label>
+    <input matInput type="text" formControlName="login" [(ngModel)]="login" />
+    <control-message class="login-register-error" [control]="loginForm.get('login')" [config]="config">
+    </control-message>
+  </mat-form-field>
+  <div class="forgot-password-container">
+    <button routerLink="forgot-password" mat-dialog-close>
+      Nie pamiętam hasła
+    </button>
+  </div>
+  <mat-form-field appearance="fill" [formGroup]="loginForm">
+    <mat-label>Hasło</mat-label>
+    <input matInput type="text" formControlName="password" [type]="hide ? 'password' : 'text'" [(ngModel)]="password" />
+    <button matSuffix mat-icon-button (click)="hide = !hide" [attr.aria-label]="'Hide password'">
+      <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+    </button>
+    <control-message class="login-register-error" [control]="loginForm.get('password')" [config]="config">
+    </control-message>
+  </mat-form-field>
+  <div class="submit-button-container">
+    <button type="submit" mat-stroked-button (click)="loginSubmit()">
+      Zaloguj się
+    </button>
+  </div>
+</form>

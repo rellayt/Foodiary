@@ -1,0 +1,15 @@
+<div class="register-dialog-wrapper">
+  <div class="close-icon">
+    <button>
+      <mat-icon routerLink="home" matDialogClose matTooltip="Zamknij" matTooltipClass="close-dialog-tooltip"
+        [matTooltipPosition]="tooltipPosition">close</mat-icon>
+    </button>
+  </div>
+  <h3 mat-dialog-title>
+    <span class="title">Załóż konto</span>
+    <span class="return-to-login"><button routerLink="login" mat-dialog-close>Mam już konto</button></span>
+  </h3>
+  <div class="register-dialog-container" mat-dialog-content>
+    <app-register-form></app-register-form>
+  </div>
+</div>

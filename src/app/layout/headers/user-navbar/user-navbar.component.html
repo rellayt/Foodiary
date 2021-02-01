@@ -1,0 +1,33 @@
+<nav class="navbar-container-user">
+  <div class="title" #title>
+    <app-logo routerLink="home"></app-logo>
+  </div>
+  <ul>
+    <li #menuItem1>
+      <button mat-icon-button matTooltip="Przepisy" matTooltipClass="user-navigation-tooltip">
+        <mat-icon>menu_book</mat-icon>
+      </button>
+    </li>
+    <li #menuItem2>
+      <button #menuItem2 mat-icon-button matTooltip="Kalkulatory" matTooltipClass="user-navigation-tooltip">
+        <mat-icon>calculate</mat-icon>
+      </button>
+    </li>
+    <li #menuItem3>
+      <button #menuItem3 mat-icon-button matTooltip="O nas" matTooltipClass="user-navigation-tooltip">
+        <mat-icon>group</mat-icon>
+      </button>
+    </li>
+    <li #menuItem4 class="profile-nav-item">
+      <div matRipple class="nav-user-account" mat-icon-button [matMenuTriggerFor]="menu">
+        <i class="fa fa-user"></i>
+      </div>
+      <mat-menu #menu="matMenu">
+        {{ currentUser?.name }}
+        <button mat-menu-item>Profil</button>
+        <button mat-menu-item>Ustawienia</button>
+        <button mat-menu-item (click)="logout()">Wyloguj</button>
+      </mat-menu>
+    </li>
+  </ul>
+</nav>

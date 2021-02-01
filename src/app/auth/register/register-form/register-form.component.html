@@ -1,0 +1,35 @@
+<form class="register-form-wrapper" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill" [formGroup]="registerForm">
+    <mat-label>Login</mat-label>
+    <input matInput formControlName="login" />
+    <control-message [control]="registerForm.get('login')" [config]="config"></control-message>
+  </mat-form-field>
+  <mat-form-field appearance="fill" [formGroup]="registerForm">
+    <mat-label>E-mail</mat-label>
+    <input matInput formControlName="email" />
+    <control-message [control]="registerForm.get('email')" [config]="config"></control-message>
+  </mat-form-field>
+  <mat-form-field appearance="fill" [formGroup]="registerForm">
+    <mat-label>Hasło</mat-label>
+    <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" />
+    <control-message [control]="registerForm.get('password')" [config]="config"></control-message>
+  </mat-form-field>
+  <mat-form-field appearance="fill" [formGroup]="registerForm">
+    <mat-label>Powtórz hasło</mat-label>
+    <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" />
+    <control-message [control]="registerForm.get('confirmPassword')" [config]="config"></control-message>
+  </mat-form-field>
+  <div class="hide-wrapper">
+    <div class="hide-container">
+      <button type="button" mat-icon-button (click)="hide = !hide" [attr.aria-label]="'Hide password'">
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="submit-button-container">
+    <button type="submit" [style.opacity]="registerForm.valid ? '1' : '0.6'" mat-stroked-button mat-dialog-close
+      [disabled]="!registerForm.valid">
+      Zarejestruj
+    </button>
+  </div>
+</form>

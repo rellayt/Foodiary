@@ -1,0 +1,118 @@
+@import "src/app/shared/colors.scss";
+
+.calory-form-container {
+  display: grid;
+  grid-template-columns: [col1-start] 50% [col2-start] 50% [col2-end];
+  grid-template-rows: [row1-start] 1fr [row2-start] 1fr [row3-start];
+  grid-column-gap: 7px;
+  align-items: center;
+  position: relative;
+  bottom: 25px;
+  mat-label {
+    font-size: 20px;
+  }
+  span {
+    font-size: 19px;
+    color: $gray-dark;
+  }
+  mat-form-field {
+    input {
+      position: relative;
+      top: 4px;
+      font-size: 22px;
+    }
+  }
+  ::ng-deep {
+    .mat-focused .mat-form-field-label {
+      color: $blue !important;
+      font-weight: 500;
+    }
+    .mat-form-field.mat-focused .mat-form-field-ripple {
+      background-color: $blue;
+    }
+    .mat-form-field-appearance-fill .mat-form-field-flex {
+      padding: 5px 5px 0 5px !important;
+    }
+  }
+}
+
+.daily-energy-supply-field {
+  grid-column: col1-start/col2-end;
+  width: 100%;
+  position: relative;
+  top: 14px;
+}
+.macro-field {
+  padding: 0;
+  grid-row-gap span {
+    font-size: 18px;
+    color: $gray-dark;
+  }
+}
+.error-and-save-container {
+  grid-column: col1-start/col2-end;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  height: 28px;
+  position: relative;
+  bottom: 5px;
+}
+.error-message-wrapper {
+  visibility: visible;
+  font-size: 19px;
+  width: 100%;
+}
+.calculate-save-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 10px;
+  span {
+    text-align: center;
+    font-size: 18px;
+  }
+  button:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $blue;
+    font-size: 18px;
+    color: $white;
+  }
+  button:nth-child(2) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $white;
+    font-size: 18px;
+    color: $black;
+  }
+}
+.carbo-percent-field {
+  position: relative;
+  top: 7px;
+}
+.protein-percent-field {
+  position: relative;
+  top: 14px;
+}
+.fat-percent-field {
+  position: relative;
+}
+.percentages {
+  input {
+    position: relative;
+    top: -2px;
+    font-size: 22px;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}

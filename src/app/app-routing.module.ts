@@ -1,15 +1,15 @@
-import { RegisterComponent } from './mainApp/myAccount/register/register.component';
+import { RegisterComponent } from './auth/register/register.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { WelcomeComponent } from './mainApp/welcome/welcome.component';
-import { LoginComponent } from './mainApp/myAccount/login/login.component';
-import { ForgotPasswordComponent } from './mainApp/myAccount/login/forgot-password/forgot-password.component';
-import { DiaryComponent } from './mainApp/mainPage/diary/diary.component';
-import { ProfileComponent } from './mainApp/mainPage/profile/profile.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './auth/login/login.component';
+import { ForgotPasswordComponent } from './auth/login/forgot-password/forgot-password.component';
+import { DiaryComponent } from './diary/diary.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
-  { path: 'welcome', component: WelcomeComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
@@ -22,4 +22,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-export const RoutingComponents = [WelcomeComponent, LoginComponent, RegisterComponent, ForgotPasswordComponent];
+export const RoutingComponents = [HomeComponent, LoginComponent, RegisterComponent, ForgotPasswordComponent];

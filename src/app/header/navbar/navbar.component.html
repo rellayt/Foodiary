@@ -1,36 +1,36 @@
-<mat-toolbar class="mat-toolbar-container" [ngClass]="isLogged ? 'mat-toolbar-user' : 'mat-toolbar-guest'">
+<!-- <mat-toolbar class="mat-toolbar-container" [ngClass]="isLogged ? 'mat-toolbar-user' : 'mat-toolbar-guest'">
   <div class="navigation-wrapper" [ngClass]="isLogged ? 'nav-wrap-user' : 'nav-wrap-guest'">
     <div class="title" #title>
-      <app-logo routerLink="welcome"></app-logo>
+      <app-logo routerLink="home"></app-logo>
     </div>
     <div [ngClass]="isLogged ? 'navigation-user' : 'navigation-guest'">
       <ul>
-        <li #menuItem1 id="menuItem1">
-          <button *ngIf="!isLogged" mat-flat-button>Przepisy</button>
+        <li #menuItem1>
+          <a *ngIf="!isLogged" id="menuItem1" routerLink="/">Przepisy</a>
           <button *ngIf="isLogged" mat-icon-button matTooltip="Przepisy" matTooltipClass="user-navigation-tooltip">
             <mat-icon>menu_book</mat-icon>
           </button>
         </li>
         <li #menuItem2>
-          <button *ngIf="!isLogged" id="menuItem2" mat-flat-button>
+          <a *ngIf="!isLogged" id="menuItem2" routerLink="/">
             Kalkulatory
-          </button>
+          </a>
           <button *ngIf="isLogged" mat-icon-button matTooltip="Kalkulatory" matTooltipClass="user-navigation-tooltip">
             <mat-icon>calculate</mat-icon>
           </button>
         </li>
         <li #menuItem3>
-          <button *ngIf="!isLogged" id="menuItem3" mat-flat-button>
+          <a *ngIf="!isLogged" id="menuItem3" routerLink="/">
             O nas
-          </button>
+          </a>
           <button *ngIf="isLogged" mat-icon-button matTooltip="O nas" matTooltipClass="user-navigation-tooltip">
             <mat-icon>group</mat-icon>
           </button>
         </li>
         <li #menuItem4>
-          <button *ngIf="!isLogged" id="menuItem4" mat-flat-button routerLink="/login">
+          <a *ngIf="!isLogged" id="menuItem4" routerLink="/login">
             Moje konto
-          </button>
+          </a>
           <div matRipple *ngIf="isLogged" id="menuItem4" class="nav-user-account" mat-icon-button
             [matMenuTriggerFor]="menu">
             <i class="fa fa-user"></i>
@@ -46,3 +46,4 @@
     </div>
   </div>
 </mat-toolbar>
+ -->
