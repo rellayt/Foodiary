@@ -1,5 +1,9 @@
-<app-guest-navbar *ngIf="!isLogged"></app-guest-navbar>
-<app-user-navbar *ngIf="isLogged"></app-user-navbar>
+<app-guest-navbar *ngIf="!isAuthenticated"></app-guest-navbar>
+<app-user-navbar *ngIf="isAuthenticated"></app-user-navbar>
+<app-sub-navigation *ngIf="isAuthenticated"></app-sub-navigation>
 <app-background></app-background>
-<app-sub-navigation *ngIf="isLogged"></app-sub-navigation>
-<router-outlet></router-outlet>
+<div class="main-container">
+  <div class="main-wrapper">
+    <router-outlet></router-outlet>
+  </div>
+</div>

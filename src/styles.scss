@@ -19,3 +19,28 @@ body {
 .mat-checkbox-inner-container {
   margin-right: 14px !important;
 }
+
+.close-dialog-tooltip {
+  top: 1px;
+  background: $blue-low-opacity;
+  padding: 5px 7px;
+  color: $white;
+  font-weight: 600;
+  font-size: 1em;
+  position: relative;
+  bottom: 6px;
+  border-radius: 7px !important;
+  box-shadow: 1px 0px 5px #00000033;
+}
+
+.user-navigation-tooltip {
+  background: $blue-low-opacity;
+  padding: 5px 7px;
+  color: $white;
+  font-weight: 600;
+  font-size: 1em;
+  position: relative;
+  bottom: 6px;
+  border-radius: 7px !important;
+  box-shadow: 1px 0px 5px #00000033;
+}

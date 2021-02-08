@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TooltipPosition } from '@angular/material/tooltip';
-import { RegisterValidationService } from '../../../services/validation/register-validation.service';
-import { OnceClickedService } from '../../../services/animation/once-clicked.service';
+import { OnceClickedService } from '../../services/animation/once-clicked.service';
+import { validateEmail } from '../../validation/validators';
 
 @Component({
   selector: 'app-forgot-password',
@@ -28,7 +28,7 @@ export class ForgotPasswordComponent implements OnInit {
 })
 export class ForgotPasswordDialogComponent implements OnInit {
 
-  email = new FormControl('', [Validators.required, RegisterValidationService.emailValidator]);
+  email = new FormControl('', [Validators.required, validateEmail()]);
   constructor() { }
 
   tooltipPosition: TooltipPosition = 'above';

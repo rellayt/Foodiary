@@ -1,30 +1,37 @@
-import { Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Input, OnInit, Optional } from '@angular/core';
+import { AbstractControl, FormGroupDirective } from '@angular/forms';
+import { config } from './validation-config';
 
 @Component({
   selector: 'validation-feedback',
-  template: '<mat-error *ngIf="errorMessage !== null">{{errorMessage}}</mat-error>',
+  templateUrl: './validation-feedback.component.html',
 })
 
-export class ValidationFeedbackComponent {
-  @Input() control: FormControl;
-  @Input() config: any;
+export class ValidationFeedbackComponent implements OnInit {
+
+  @Input()
+  control: AbstractControl
+
+  @Input()
+  controlName: string
 
   get errorMessage() {
-    for (const propertyName in this.control.errors) {
-      if (this.control.errors.hasOwnProperty(propertyName) && this.control.touched) {
-        return this.getValidatorErrorMessage(propertyName, this.control.errors[propertyName]);
-      }
+    for (const property in this.control.errors) {
+      const hasError = this.control.errors.hasOwnProperty(property) && this.control.touched
+      if (hasError && property in config) return config[property]
     }
     return null;
   }
 
-  getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
-    if (validatorName == 'minlength' || 'maxlength') {
-      this.config.minlength = `Minimalna długość pola to ${validatorValue.requiredLength}`;
-      this.config.maxlength = `Maksymalna długość to ${validatorValue.requiredLength}`;
-    }
+  constructor(@Optional() private formGroup: FormGroupDirective) { }
 
-    return this.config[validatorName];
+  ngOnInit() {
+    if (!this.control && !this.controlName) {
+      throw new Error('Validation Feedback must have [control] or [controlName] inputs')
+    } else {
+      if (this.controlName && this.formGroup) {
+        this.control = this.formGroup.form.get(this.controlName)
+      }
+    }
   }
 }

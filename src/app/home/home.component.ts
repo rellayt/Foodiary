@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { gsap } from 'gsap';
-import { UserService } from '../services/server/user.service';
 import { Router } from '@angular/router';
 import { OnceClickedService } from '../services/animation/once-clicked.service';
 
@@ -15,12 +14,8 @@ export class HomeComponent implements OnInit {
   @ViewChild('arrow', { static: true }) arrowRef: ElementRef<HTMLDivElement>;
   @ViewChild('arrowContainer', { static: true }) arrowContainerRef: ElementRef<HTMLDivElement>;
 
-  constructor(private userService: UserService, private router: Router, private onceClickedService: OnceClickedService) {
-    this.userService.loginStatus.subscribe(loginStatus => {
-      if (loginStatus) {
-        this.router.navigate(['profile']);
-      }
-    });
+  constructor(private router: Router, private onceClickedService: OnceClickedService) {
+
   }
 
   ngOnInit(): void {

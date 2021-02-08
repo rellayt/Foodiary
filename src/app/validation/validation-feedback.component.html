@@ -1,0 +1,20 @@
+<ng-container *ngIf="errorMessage !== null; then standardErrors; else nonStandardErrors">
+</ng-container>
+
+<ng-template #standardErrors>
+  <mat-error>{{errorMessage}}</mat-error>
+</ng-template>
+
+<ng-template #nonStandardErrors>
+  <ng-container *ngIf="control.hasError('minlength') || control.hasError('maxlength'); else ownErrors">
+    <mat-error *ngIf="control.touched && control.getError('minlength') as error">
+      Minimalna długość pola wynosi {{error.requiredLength}}
+    </mat-error>
+    <mat-error *ngIf="control.touched && control.getError('maxlength') as error">
+      Maksymalna długość pola wynosi {{error.requiredLength}}
+    </mat-error>
+  </ng-container>
+  <ng-template #ownErrors>
+    <ng-content></ng-content>
+  </ng-template>
+</ng-template>

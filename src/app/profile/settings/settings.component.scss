@@ -1,0 +1,97 @@
+@import "src/app/shared/colors.scss";
+
+.profile-settings-container {
+  // background-color: yellow;
+  height: auto;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .profile-settings-form {
+    width: 60%;
+    // background-color: cyan;
+    display: grid;
+    position: relative;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-column-gap: 30px;
+    span {
+      position: relative;
+      bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      grid-column: 1/3;
+    }
+    mat-form-field {
+      font-size: 20px;
+    }
+
+    button {
+      grid-column: 2/3;
+      display: flex;
+      justify-content: center;
+      justify-self: flex-end;
+      align-items: center;
+      width: 50%;
+      height: 50%;
+      background-color: $blue;
+      color: $white;
+      font-size: 20px;
+    }
+    .line-through {
+      position: absolute;
+      bottom: 330px;
+      width: 100%;
+      box-shadow: 0px 0px 1px #f7f7f7;
+      border-top: solid 1px $gray-light;
+    }
+  }
+  .additional-options-container {
+    width: 60%;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+    grid-row-gap: 30px;
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 23px;
+      grid-column: 1/5;
+    }
+    button {
+      width: 90%;
+      height: 45px;
+      justify-self: center;
+      align-items: center;
+      font-size: 23px;
+      color: white;
+    }
+    :nth-child(2) {
+      grid-column: 1/3;
+      background-color: $red;
+    }
+    :nth-child(3) {
+      grid-column: 3/5;
+      background-color: $blue;
+    }
+    .line-through {
+      position: absolute;
+      bottom: 65px;
+      width: 100%;
+      box-shadow: 0px 0px 1px #f7f7f7;
+      border-top: solid 1px $gray-light;
+    }
+  }
+  validation-feedback {
+    position: absolute;
+    top: 45px;
+    left: -12px;
+    font-size: 17px;
+  }
+}

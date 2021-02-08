@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { UserService } from 'src/app/services/server/user.service';
-import { RegisterValidationService } from '../../../services/validation/register-validation.service';
-import { User } from '../../../models/user.model';
 import { Router } from '@angular/router';
-import { concatMap, first } from 'rxjs/operators';
+import { timer } from 'rxjs';
+import { first, switchMap } from 'rxjs/operators';
+import { ValidationService } from '../../../validation/validation.service';
+import { validatePassword, validateUsername, validateEmail } from '../../../validation/validators';
+import { AuthService } from '../../auth.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-register-form',
@@ -13,42 +15,54 @@ import { concatMap, first } from 'rxjs/operators';
 })
 export class RegisterFormComponent {
 
-  config = {
-    required: 'Pole jest wymagane',
-    invalidLogin: 'Login musi się składać z liter oraz liczb',
-    invalidEmailAddress: 'Niepoprawny adres e-mail',
-    invalidPasswordComparison: 'Hasła muszą być takie same',
-    duplicateUsername: 'Ta nazwa użytkownika jest zajęta',
-    duplicateEmail: 'Ten e-mail jest zajęty.',
-  };
+  registrationForm: any
+  profileUrl = 'profile'
 
+  hide = true
+  loading = false
 
-  registerForm: any;
-  hide = true;
+  constructor(private form: FormBuilder, private auth: AuthService,
+    private router: Router, private validation: ValidationService,
+    private matDialog: MatDialog) {
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) {
-    this.registerForm = this.formBuilder.group({
-      login: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(12), RegisterValidationService.loginValidator]],
-      email: ['', [Validators.required, RegisterValidationService.emailValidator]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
-      confirmPassword: ['', [Validators.required]],
-    }, {
-      validator: [RegisterValidationService.passwordsValidator('password', 'confirmPassword'),
-      RegisterValidationService.duplicateLoginValidator('login', this.userService),
-      RegisterValidationService.duplicateEmailValidator('email', this.userService)]
-    });
+    this.registrationForm = this.form.group({
+      name: this.form.control('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(12),
+        validateUsername()
+      ], this.validation.validateNameAvailability()),
+      email: this.form.control('', [
+        Validators.required,
+        validateEmail()
+      ], this.validation.validateEmailAvailability()),
+      password: this.form.control('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(30),
+        validatePassword({
+          uppercase: true,
+          lowercase: true,
+          number: true,
+          special: false
+        })
+      ]),
+      repeat_password: this.form.control('', [Validators.required]),
+    }, { updateOn: 'blur' });
+
   }
 
-  onSubmit() {
-    this.userService.postUser(this.registerForm.value).pipe(
-      first(),
-      concatMap(() => this.userService.login(this.registerForm.value))
+  save() {
+    this.loading = true
+    timer(500).pipe(
+      switchMap(() => this.auth.register(this.registrationForm.value)),
+      first()
     ).subscribe(data => {
-      const { token } = JSON.parse(JSON.stringify(data));
-      localStorage.setItem('token', token);
-      this.userService.changeLoginSubject(true);
-      this.router.navigate(['profile']);
-      this.registerForm.reset();
-    });
+      this.router.navigate([this.profileUrl])
+      this.matDialog.closeAll()
+    }, error => {
+      this.loading = false;
+      console.error(error)
+    })
   }
 }

@@ -6,9 +6,10 @@
   z-index: -1;
 }
 .logged-height {
-  // height: 93.1vh;
-  // height: 54.5rem;
-  height: 93.2%;
+  clear: both;
+  height: calc(100vh - 118px);
+  background-repeat: repeat-y;
+  // background-attachment: fixed;
 }
 .unlogged-height {
   height: 100%;

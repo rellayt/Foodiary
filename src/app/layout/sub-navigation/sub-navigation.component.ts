@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { SubNavigationService } from './sub-navigation.service';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sub-navigation',
@@ -9,15 +9,19 @@ import { SubNavigationService } from './sub-navigation.service';
 })
 export class SubNavigationComponent implements OnInit {
 
-  pages = [{ id: 'Profil', link: 'profile' },
-  { id: 'Dziennik', link: 'diary' }, { id: 'Szablony', link: 'template' },
-  { id: 'Produkty', link: 'products' }, { id: 'Dodaj przepis', link: 'add-recipe' }];
+  pages = [{ label: 'Profil', link: 'profile' },
+  { label: 'Dziennik', link: 'diary' }, { label: 'Szablony', link: 'template' },
+  { label: 'Produkty', link: 'products' }, { label: 'Dodaj przepis', link: 'add-recipe' }];
 
   activeLink;
 
-  constructor(private router: Router, private subNavigationService: SubNavigationService) { }
+  constructor(private router: Router, private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
-    this.subNavigationService.activeLink.subscribe(activeLink => this.activeLink = activeLink);
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.activeLink = event.url.split('/')[1]
+      });
   }
 }

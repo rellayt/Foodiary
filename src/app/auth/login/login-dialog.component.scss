@@ -1,4 +1,5 @@
 @import "src/app/shared/colors.scss";
+
 .login-dialog-wrapper {
   .title {
     width: 50%;
@@ -117,6 +118,7 @@
       }
     }
   }
+
   ::ng-deep {
     .mat-form-field.mat-focused .mat-form-field-ripple {
       background-color: $blue;

@@ -1,9 +1,9 @@
-<div class="about-me-container">
+<div class="about-me-container" *ngIf="profile$ | async as profile">
 
   <nav class="user-login-header">
-    <div>{{ currentUser?.name }}</div>
+    <span>{{ profile.name }}</span>
   </nav>
-  <div class="one">one</div>
+  <div class="weight-chart">one</div>
   <div class="two">
     <mat-expansion-panel [expanded]="true" hideToggle>
       <mat-expansion-panel-header>
@@ -41,7 +41,7 @@
         </mat-panel-title>
 
       </mat-expansion-panel-header>
-      {{currentUser?.created_at}}
+      {{profile.created_at}}
       <p>This is the primary content of the panel.</p>
     </mat-expansion-panel>
   </div>

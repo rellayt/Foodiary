@@ -16,3 +16,35 @@
     justify-content: center;
   }
 }
+
+/* .sub-navigation-container {
+  background-color: $white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 4px 0px 8px #00000028;
+  a {
+    padding: 1.6vw 0 1.3vw 0;
+  }
+
+}
+
+.sub-navigation-wrapper {
+  background-color: $white;
+} */
+
+.profile-navigation-container {
+  width: 100%;
+
+  ::ng-deep .mat-tab-label,
+  .mat-tab-link {
+    font-size: 22px;
+    color: $black;
+    opacity: 0.9;
+  }
+  ::ng-deep .mat-ink-bar {
+    height: 0.2em !important;
+    background-color: $blue !important;
+  }
+}

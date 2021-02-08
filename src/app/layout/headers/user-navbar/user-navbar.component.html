@@ -1,6 +1,6 @@
 <nav class="navbar-container-user">
   <div class="title" #title>
-    <app-logo routerLink="home"></app-logo>
+    <app-logo></app-logo>
   </div>
   <ul>
     <li #menuItem1>
@@ -23,7 +23,7 @@
         <i class="fa fa-user"></i>
       </div>
       <mat-menu #menu="matMenu">
-        {{ currentUser?.name }}
+        {{(profile | async).name }}
         <button mat-menu-item>Profil</button>
         <button mat-menu-item>Ustawienia</button>
         <button mat-menu-item (click)="logout()">Wyloguj</button>

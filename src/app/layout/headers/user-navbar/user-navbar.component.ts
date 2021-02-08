@@ -1,10 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTooltipDefaultOptions, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/server/user.service';
-import { User } from 'src/app/models/user.model';
-import { filter, switchMap, take } from 'rxjs/operators';
 import { initLogoAnimation, userNavAnimation } from 'src/app/utility/navbar-gsap-animations';
+import { AuthService } from '../../../auth/auth.service';
+import { ProfileService } from '../../../profile/profile.service';
 
 export const navbarTooltip: MatTooltipDefaultOptions = {
   showDelay: 150,
@@ -15,7 +14,7 @@ export const navbarTooltip: MatTooltipDefaultOptions = {
 @Component({
   selector: 'app-user-navbar',
   templateUrl: './user-navbar.component.html',
-  styleUrls: ['./user-navbar.component.scss', '../../../styles/tooltips.scss'],
+  styleUrls: ['./user-navbar.component.scss'],
   providers: [
     { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: navbarTooltip },
   ],
@@ -29,22 +28,10 @@ export class UserNavbarComponent implements OnInit {
   @ViewChild('menuItem3', { static: true }) menuItem3: ElementRef;
   @ViewChild('menuItem4', { static: true }) menuItem4: ElementRef;
 
-  constructor(private userService: UserService, private router: Router) { }
-
-  isLogged = false;
-  currentUser: User;
+  profile = this.profileService.getUserProfile()
 
   ngOnInit(): void {
-    this.userService.loginStatus.pipe(
-      filter(Boolean),
-      switchMap(() => this.userService.getUser()),
-      take(1)
-    )
-      .subscribe((user) => {
-        this.currentUser = user;
-        this.isLogged = true;
-      });
-    this.initialAnimations();
+    this.initialAnimations()
   }
 
   initialAnimations = () => {
@@ -57,12 +44,10 @@ export class UserNavbarComponent implements OnInit {
     });
   }
 
-  logout = () => {
-    localStorage.removeItem('token');
-    this.isLogged = false;
-    this.currentUser = null;
-    this.userService.changeLoginSubject(false);
-    this.router.navigate(['home']);
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['home'])
   }
 
+  constructor(private auth: AuthService, private router: Router, private profileService: ProfileService) { }
 }

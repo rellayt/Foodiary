@@ -127,6 +127,6 @@
   },
   "defaultProject": "Foodiary",
   "cli": {
-    "analytics": "a3f157be-2cbd-4fc7-8640-47f2f914a9b5"
+    "analytics": false
   }
 }

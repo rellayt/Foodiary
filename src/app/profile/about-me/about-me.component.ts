@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
-import { UserService } from '../../services/server/user.service';
+import { ProfileService } from '../profile.service';
 
 @Component({
   selector: 'app-about-me',
@@ -10,22 +10,11 @@ import { UserService } from '../../services/server/user.service';
 })
 export class AboutMeComponent implements OnInit {
 
-  currentUser: User;
+  profile$ = this.profileService.getUserProfile()
 
-  constructor(private userService: UserService, private router: Router) {
-    this.userService.getUser().subscribe(
-      user => {
-        this.currentUser = user;
-        this.currentUser.name = `${user.name[0].toUpperCase()}${user.name.slice(1, user.name.length)}`;
-        this.userService.changeLoginSubject(true);
-      },
-      error => this.router.navigate(['/home'])
-    );
+  constructor(private profileService: ProfileService, private router: Router) {
   }
 
-
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
 }

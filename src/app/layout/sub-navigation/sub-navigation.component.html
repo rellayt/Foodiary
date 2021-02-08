@@ -1,8 +1,8 @@
 <div class="sub-navigation-container">
   <nav mat-tab-nav-bar class="sub-navigation-wrapper">
-    <a mat-tab-link (click)="activeLink = label.link" [active]="activeLink == label.link" *ngFor="let label of pages"
-      [routerLink]="label.link">
-      {{ label.id }}
+    <a mat-tab-link *ngFor="let page of pages" (click)="activeLink = page.link" [active]="activeLink == page.link"
+      [routerLink]="page.link">
+      {{ page.label }}
     </a>
   </nav>
 </div>

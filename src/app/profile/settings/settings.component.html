@@ -1,0 +1,37 @@
+<div class="profile-settings-container">
+  <form [formGroup]="settingsForm" class="profile-settings-form">
+    <span>Dane logowania</span>
+    <div class="line-through"></div>
+    <mat-form-field appearance="fill">
+      <mat-label>Nazwa</mat-label>
+      <input matInput type="text" formControlName="name" autocomplete="off" />
+      <validation-feedback controlName="name"></validation-feedback>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Twoje aktualne hasło</mat-label>
+      <input matInput formControlName="password" autocomplete="off" [type]="hideActualPassword ? 'password' : 'text'" />
+      <validation-feedback controlName="password"></validation-feedback>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>E-mail</mat-label>
+      <input matInput type="text" formControlName="email" autocomplete="off" />
+      <validation-feedback controlName="email"></validation-feedback>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nowe hasło</mat-label>
+      <input matInput formControlName="newPassword" autocomplete="off" [type]="hideNewPassword ? 'password' : 'text'" />
+      <validation-feedback controlName="newPassword"></validation-feedback>
+    </mat-form-field>
+
+    <button type="submit" mat-raised-button>Zapisz zmiany</button>
+  </form>
+  <div class="additional-options-container">
+    <span>Dodatkowe opcje</span>
+    <button type="submit" mat-raised-button>Usuń konto</button>
+    <button type="submit" mat-raised-button>Połącz konto z Facebookiem</button>
+    <div class="line-through"></div>
+  </div>
+</div>

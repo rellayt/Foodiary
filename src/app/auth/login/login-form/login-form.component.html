@@ -1,27 +1,34 @@
-<form class="login-form-wrapper" #userForm="ngForm" cdkFocusInitial>
-  <mat-form-field appearance="fill" [formGroup]="loginForm">
-    <mat-label>Login / E-mail</mat-label>
-    <input matInput type="text" formControlName="login" [(ngModel)]="login" />
-    <control-message class="login-register-error" [control]="loginForm.get('login')" [config]="config">
-    </control-message>
+<form class="login-form-wrapper" [formGroup]="loginForm" autocomplete="off" cdkFocusInitial>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Nazwa / E-mail</mat-label>
+    <input matInput type="text" formControlName="login" [loginErrorCleaner]="'password'" />
+    <validation-feedback controlName="login">
+    </validation-feedback>
   </mat-form-field>
+
   <div class="forgot-password-container">
-    <button routerLink="forgot-password" mat-dialog-close>
+    <button [routerLink]="'forgot-password'" mat-dialog-close>
       Nie pamiętam hasła
     </button>
   </div>
-  <mat-form-field appearance="fill" [formGroup]="loginForm">
+
+  <mat-form-field appearance="fill">
     <mat-label>Hasło</mat-label>
-    <input matInput type="text" formControlName="password" [type]="hide ? 'password' : 'text'" [(ngModel)]="password" />
-    <button matSuffix mat-icon-button (click)="hide = !hide" [attr.aria-label]="'Hide password'">
+    <input matInput #passwordInput formControlName="password" (keyup.enter)="login(); passwordInput.blur()"
+      [loginErrorCleaner]="'login'" [type]="hide ? 'password' : 'text'" />
+    <button matSuffix type="button" (click)="hide=!hide" mat-icon-button [attr.aria-label]="'Hide password'">
       <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
     </button>
-    <control-message class="login-register-error" [control]="loginForm.get('password')" [config]="config">
-    </control-message>
+    <validation-feedback controlName="password"></validation-feedback>
   </mat-form-field>
+
   <div class="submit-button-container">
-    <button type="submit" mat-stroked-button (click)="loginSubmit()">
-      Zaloguj się
+    <button type="submit" (click)="login()" mat-stroked-button [disabled]="!loginForm.valid"
+      [style.opacity]="loginForm.valid ? '1' : '0.7'">
+      <span *ngIf="!loading">Zaloguj się</span>
+      <mat-spinner *ngIf="loading"></mat-spinner>
     </button>
   </div>
+
 </form>
