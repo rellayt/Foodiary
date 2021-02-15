@@ -6,5 +6,6 @@ export const config = {
   taken_username: 'Ta nazwa użytkownika jest zajęta',
   taken_email: 'Ten e-mail jest zajęty',
   invalid_login: 'Nieprawidłowe dane logowania',
-  invalid_password: 'Nieprawidłowe hasło'
+  invalid_password: 'Nieprawidłowe hasło',
+  pattern: 'Nieprawidłowe dane',
 };

@@ -19,12 +19,13 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.onceClickedService.onceClickedSubject.subscribe(value => {
-      if (value)
-        this.checkedWelcomeAnimation();
-      else
-        this.startWelcomeAnimation();
-    });
+    /*     this.onceClickedService.onceClickedSubject.subscribe(value => {
+          if (value)
+          else
+            this.startWelcomeAnimation();
+        }); */
+    this.checkedWelcomeAnimation();
+
   }
 
   startWelcomeAnimation = () => {

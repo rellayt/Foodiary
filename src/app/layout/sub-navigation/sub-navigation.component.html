@@ -1,4 +1,4 @@
-<div class="sub-navigation-container">
+<div class="sub-navigation-container" #subNavRef>
   <nav mat-tab-nav-bar class="sub-navigation-wrapper">
     <a mat-tab-link *ngFor="let page of pages" (click)="activeLink = page.link" [active]="activeLink == page.link"
       [routerLink]="page.link">

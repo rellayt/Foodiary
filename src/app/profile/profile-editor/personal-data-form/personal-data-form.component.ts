@@ -29,17 +29,35 @@ export class PersonalDataFormComponent implements OnInit {
     { value: 15, viewValue: 'Wielkopolskie' },
     { value: 16, viewValue: 'Zachodniopomorskie' },
   ]
-  config = {
-    pattern: 'Nieprawidłowe dane'
-  }
-  checked = false;
+
+  minDate = new Date(1920, 0, 1);
+  maxDate = new Date(2005, 0, 1);
 
   personalDataForm: any
-  constructor(private formBuilder: FormBuilder) {
-    this.personalDataForm = this.formBuilder.group({
-      firstName: ['', [Validators.pattern("[a-zA-Z]+"), Validators.minLength(3), Validators.maxLength(30)]],
-      lastName: ['', [Validators.pattern("[a-zA-Z]+"), Validators.minLength(3), Validators.maxLength(30)]],
-    });
+  constructor(private form: FormBuilder) {
+    this.personalDataForm = this.form.group({
+      forename: this.form.control(null, [Validators.pattern("[a-zA-Z]+"), Validators.minLength(3), Validators.maxLength(30)]),
+      surname: this.form.control(null, [Validators.pattern("[a-zA-Z]+"), Validators.minLength(3), Validators.maxLength(30)]),
+      gender: this.form.control(null),
+      city: this.form.control(null, Validators.pattern("[a-zA-Z]+")),
+      residingAbroad: this.form.control(false, {
+        updateOn: 'change'
+      }),
+      dateOfBirth: this.form.control(null),
+      province: this.form.control(null),
+    }, { updateOn: 'blur' });
+  }
+  toggleControlValue() {
+    const control = this.personalDataForm.controls['residingAbroad']
+    control.setValue(!control.value)
+    if (control.value) this.personalDataForm.controls['province'].reset()
+  }
+  save() {
+    const formValue = Object.assign({}, this.personalDataForm.value)
+
+    formValue['dateOfBirth'] = formValue['dateOfBirth'] ? formValue['dateOfBirth'].toDate() : null
+
+    Object.keys(formValue).forEach((k) => (formValue[k] === null) && delete formValue[k])
   }
 
   ngOnInit(): void {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { map, delay, first } from 'rxjs/operators';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
 
@@ -14,7 +14,7 @@ export class ValidationService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  validateNameAvailability(options?: { avoidCurrentValue: boolean }): AsyncValidatorFn {
+  validateNameAvailability(options = { avoidCurrentValue: false }): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
 
       let match = false
@@ -23,7 +23,7 @@ export class ValidationService {
         match = name.toLowerCase() === '' + control.value.toLowerCase()
       }
 
-      return match ? EMPTY : this.checkName(control.value).pipe(
+      return match ? of(null) : this.checkName(control.value).pipe(
         first(),
         delay(100),
         map(res => {
@@ -33,7 +33,7 @@ export class ValidationService {
     }
   }
 
-  validateEmailAvailability(options?: { avoidCurrentValue: boolean }): AsyncValidatorFn {
+  validateEmailAvailability(options = { avoidCurrentValue: false }): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
 
       let match = false
@@ -42,7 +42,7 @@ export class ValidationService {
         match = email.toLowerCase() === '' + control.value.toLowerCase()
       }
 
-      return match ? EMPTY : this.checkEmail(control.value).pipe(
+      return match ? of(null) : this.checkEmail(control.value).pipe(
         first(),
         delay(100),
         map(res => {

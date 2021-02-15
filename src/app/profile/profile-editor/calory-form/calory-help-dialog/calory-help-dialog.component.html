@@ -1,7 +1,7 @@
 <div class="calory-help-dialog-wrapper">
   <div class="close-icon">
     <button>
-      <mat-icon routerLink="home" [matDialogClose] matTooltip="Zamknij" matTooltipClass="close-dialog-tooltip"
+      <mat-icon mat-dialog-close matTooltip="Zamknij" matTooltipClass="close-dialog-tooltip"
         [matTooltipPosition]="tooltipPosition">close</mat-icon>
     </button>
   </div>
@@ -85,7 +85,7 @@
         <div class="total-metabolism-value-wrapper">
           <div class="basic-metabolism-calories" #totalCalory>{{viewValues.calory}} kcal</div>
           <div class="basic-metabolism-nutrients" #totalNutrients>białko: <b>{{viewValues.protein}}g</b>, węglowodany:
-            <b>{{viewValues.carbs}}g</b>, tłuszcze: <b>{{viewValues.fat}}g</b>
+            <b>{{viewValues.carb}}g</b>, tłuszcze: <b>{{viewValues.fat}}g</b>
           </div>
         </div>
         <div class="submit-button-container" #saveButton>

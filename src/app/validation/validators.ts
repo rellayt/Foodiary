@@ -8,34 +8,44 @@ export const validatePassword = (options: {
 }): ValidatorFn => {
   return (control: FormControl) => {
 
-    const rules = {
-      lowercase: /[a-z]/,
-      uppercase: /[A-Z]/,
-      number: /[\d]/,
-      special: /[\W]/
-    }
-
-    const errors = {}
-    let valid = true
-
-    Object.entries(rules).forEach(([key, value]) => {
-      if (options[key] && !control.value.match(value)) {
-        errors[key] = true
-        valid = false
+    try {
+      const rules = {
+        lowercase: /[a-z]/,
+        uppercase: /[A-Z]/,
+        number: /[\d]/,
+        special: /[\W]/
       }
-    })
-    return valid ? null : { 'password': errors }
+
+      const errors = {}
+      let valid = true
+
+      Object.entries(rules).forEach(([key, value]) => {
+        if (options[key] && !control.value.match(value)) {
+          errors[key] = true
+          valid = false
+        }
+      })
+      return valid || control.untouched ? null : { 'password': errors }
+    }
+    catch (err) {
+      return null
+    }
   }
+
 }
 
 export const validateUsername = (): ValidatorFn => {
   return (control: FormControl) => {
-    const pattern = /[a-zA-Z]+[\d]*/
+    try {
+      const pattern = /[a-zA-Z]+[\d]*/
 
-    const input = control.value
-    const match = input.match(pattern)
+      const input = control.value
+      const match = input.match(pattern)
 
-    return match && input == match[0] ? null : { invalid_username: true }
+      return match && input == match[0] ? null : { invalid_username: true }
+    } catch (err) {
+      return null
+    }
   }
 }
 

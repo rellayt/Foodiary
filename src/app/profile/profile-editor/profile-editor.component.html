@@ -1,4 +1,4 @@
-<div class="profile-editor-container">
+<div class="profile-editor-container" #profileEditorRef>
   <div class="avatar-wrapper">
     <div class="select-avatar-upper">
       <div class="select-avatar-bottom">
@@ -22,7 +22,7 @@
   </div>
   <mat-accordion>
     <div class="personal-data-wrapper">
-      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Dane osobowe
@@ -32,7 +32,7 @@
       </mat-expansion-panel>
     </div>
     <div class="body-measurements-data">
-      <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Pomiary

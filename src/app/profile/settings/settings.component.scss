@@ -16,6 +16,7 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(4, 1fr);
     grid-column-gap: 30px;
+    grid-row-gap: 5px;
     span {
       position: relative;
       bottom: 10px;
@@ -28,22 +29,35 @@
     mat-form-field {
       font-size: 20px;
     }
-
-    button {
+    .settings-submit-container {
       grid-column: 2/3;
       display: flex;
       justify-content: center;
       justify-self: flex-end;
       align-items: center;
-      width: 50%;
-      height: 50%;
-      background-color: $blue;
-      color: $white;
-      font-size: 20px;
+      button {
+        width: 170px;
+        height: 50%;
+        background-color: $blue;
+        color: $white;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      mat-spinner {
+        stroke: $white !important;
+        zoom: 0.28;
+      }
+      ::ng-deep .mat-progress-spinner circle,
+      .mat-spinner circle {
+        stroke: $white;
+      }
     }
+
     .line-through {
       position: absolute;
-      bottom: 330px;
+      bottom: 340px;
       width: 100%;
       box-shadow: 0px 0px 1px #f7f7f7;
       border-top: solid 1px $gray-light;
@@ -56,7 +70,7 @@
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 20px;
-    grid-row-gap: 30px;
+    grid-row-gap: 40px;
     span {
       display: flex;
       align-items: center;
@@ -82,7 +96,7 @@
     }
     .line-through {
       position: absolute;
-      bottom: 65px;
+      bottom: 75px;
       width: 100%;
       box-shadow: 0px 0px 1px #f7f7f7;
       border-top: solid 1px $gray-light;
@@ -91,7 +105,14 @@
   validation-feedback {
     position: absolute;
     top: 45px;
-    left: -12px;
-    font-size: 17px;
+    left: -13px;
+    font-size: 18px;
+  }
+  mat-icon {
+    position: relative;
+    right: 2px;
+    color: $black;
+    font-size: 28px;
+    opacity: 60%;
   }
 }

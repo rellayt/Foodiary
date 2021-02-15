@@ -1,0 +1,30 @@
+<div class="delete-profile-container">
+  <div class="close-icon">
+    <button>
+      <mat-icon mat-dialog-close matTooltip="Zamknij" matTooltipClass="close-dialog-tooltip"
+        [matTooltipPosition]="'above'">close</mat-icon>
+    </button>
+  </div>
+  <div class="warning-container">
+    <b>Uwaga!</b> <br> Skutkiem usunięcia konta jest <b>nieodwracalne</b> utracenie wszelkich wprowadzonych danych na
+    stronie.
+  </div>
+  <div class="consent-container">
+    <mat-checkbox [formControl]="consent">Rozumiem</mat-checkbox>
+  </div>
+  <div class="delete-result-container" *ngIf="consent.value">
+    <mat-form-field appearance="fill">
+      <mat-label>Twoje aktualne hasło</mat-label>
+      <input matInput #passwordInput [formControl]="password" [type]="hide ? 'password' : 'text'" />
+      <button matSuffix type="button" (click)="hide=!hide" mat-icon-button [attr.aria-label]="'Hide password'">
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+      <validation-feedback [control]="password"></validation-feedback>
+    </mat-form-field>
+    <button type="submit" mat-raised-button (click)="delete()" [disabled]="!password.valid"
+      [style.opacity]="password.valid ? '1' : '0.7'">
+      <mat-spinner *ngIf="loading"></mat-spinner>
+      <ng-container *ngIf="!loading"> Usuń konto</ng-container>
+    </button>
+  </div>
+</div>

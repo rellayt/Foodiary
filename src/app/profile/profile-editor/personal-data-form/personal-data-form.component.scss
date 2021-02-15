@@ -1,5 +1,4 @@
 @import "src/app/shared/colors.scss";
-
 .personal-data-form-container {
   display: grid;
   width: 100%;
@@ -43,7 +42,6 @@
   }
   mat-form-field {
     font-size: 16px;
-
     input,
     mat-select,
     mat-label {
@@ -53,29 +51,38 @@
       position: relative;
       top: 3px;
     }
-  }
-  ::ng-deep {
-    .mat-ripple-element {
-      background-color: rgba(255, 255, 255, 0.226);
+    ::ng-deep {
+      .mat-input-element:disabled {
+        color: $black !important;
+      }
+      .mat-ripple-element {
+        background-color: rgba(255, 255, 255, 0.226);
+      }
+      .mat-form-field-appearance-fill .mat-form-field-label {
+        margin-top: -0.4em;
+      }
+      .mat-form-field-flex {
+        padding: 0.45em 0.45em 0 0.45em;
+      }
+      mat-checkbox .mat-ripple-element {
+        background-color: $blue !important;
+      }
+      .mat-select-arrow-wrapper {
+        position: relative;
+        top: 6px;
+      }
     }
-    .mat-form-field-appearance-fill .mat-form-field-label {
-      margin-top: -0.4em;
+    .error {
+      position: absolute;
+      top: 36px;
+      left: -7px;
+      font-size: 0.9em;
     }
-    .mat-form-field-flex {
-      padding: 0.45em 0.45em 0 0.45em;
+    validation-feedback {
+      position: absolute;
+      top: 35px;
+      left: -5px;
+      font-size: 17px;
     }
-    mat-checkbox .mat-ripple-element {
-      background-color: $blue !important;
-    }
-    .mat-select-arrow-wrapper {
-      position: relative;
-      top: 6px;
-    }
-  }
-  .error {
-    position: absolute;
-    top: 36px;
-    left: -7px;
-    font-size: 0.9em;
   }
 }

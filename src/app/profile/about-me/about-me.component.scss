@@ -44,9 +44,6 @@
 
     ul {
       align-items: flex-start;
-    }
-
-    .macronutrients {
       display: grid;
       grid-template-columns: 1fr 1fr;
       flex-direction: column;
@@ -58,12 +55,12 @@
       .macro-item {
         color: $blue;
         font-weight: 600;
-        font-size: 18px;
+        font-size: 22px;
         .macro-unit {
           color: $black;
           margin-left: 3px;
-          font-size: 1.3rem;
-          font-weight: 500;
+          font-size: 20px;
+          font-weight: 600;
         }
       }
     }

@@ -14,9 +14,12 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { SettingsComponent } from './settings/settings.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptorService } from '../auth/auth-interceptor.service';
 import { ValidationModule } from '../validation/validation.module';
+import { DelayResolve } from '../resolves/delay-resolve';
+import { DeleteProfileDialogComponent } from './settings/delete/delete-profile-dialog.component';
+import { MacroResolve } from '../resolves/macro-resolve';
+import { ZeroPrefixDeleterDirective } from '../directives/zero-prefix-deleter.directive';
+import { ProfileRoutingModule } from './profile-routing.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,11 @@ import { ValidationModule } from '../validation/validation.module';
     PersonalDataFormComponent,
     MeasurementFormComponent,
     SettingsComponent,
+    DeleteProfileDialogComponent,
+    ZeroPrefixDeleterDirective
+  ],
+  exports: [
+    ZeroPrefixDeleterDirective,
   ],
   imports: [
     CommonModule,
@@ -36,7 +44,8 @@ import { ValidationModule } from '../validation/validation.module';
     MaterialModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    ValidationModule
+    ValidationModule,
+    ProfileRoutingModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
@@ -46,7 +55,7 @@ import { ValidationModule } from '../validation/validation.module';
       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-
+    DelayResolve, MacroResolve
   ]
 })
 export class ProfileModule { }

@@ -1,0 +1,90 @@
+@import "src/app/shared/colors.scss";
+
+.delete-profile-container {
+  width: 560px;
+  height: auto;
+  .close-icon {
+    height: 15px;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    button {
+      position: relative;
+      bottom: 22px;
+      left: 22px;
+      background-color: transparent;
+      border: none;
+      outline: none;
+    }
+    mat-icon {
+      font-weight: 600;
+      font-size: 1.9em;
+      outline: none;
+      cursor: pointer;
+      opacity: 0.7;
+      color: $black;
+      transition: all 150ms ease-out;
+      &:hover {
+        color: $blue;
+        opacity: 1;
+        transition: all 150ms ease-out;
+      }
+    }
+  }
+  .warning-container {
+    :first-child {
+      font-size: 22px;
+    }
+    font-size: 19px;
+    line-height: 27px;
+  }
+  .consent-container {
+    margin: 15px 0;
+    mat-checkbox {
+      font-size: 18px;
+    }
+  }
+  .delete-result-container {
+    display: flex;
+    flex-direction: column;
+    mat-form-field {
+      margin-bottom: 10px;
+      font-size: 18px;
+      position: relative;
+      width: 55%;
+      button {
+        opacity: 0.6;
+      }
+    }
+    button[type="submit"] {
+      width: 140px;
+      height: 42px;
+      font-size: 19px;
+      background-color: $red;
+      color: $white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  validation-feedback {
+    width: 315px;
+    position: absolute;
+    top: 43px;
+    left: -12px;
+    font-size: 18px;
+  }
+  ::ng-deep {
+    mat-checkbox .mat-ripple-element {
+      background-color: $blue !important;
+    }
+  }
+  mat-spinner {
+    stroke: $white !important;
+    zoom: 0.28;
+  }
+  ::ng-deep .mat-progress-spinner circle,
+  .mat-spinner circle {
+    stroke: $white;
+  }
+}

@@ -1,47 +1,49 @@
-<form autocomplete="off">
-  <div class="personal-data-form-container">
-    <mat-form-field appearance="fill" [formGroup]="personalDataForm">
-      <mat-label>Imię</mat-label>
-      <input matInput formControlName="firstName">
-      <!-- <validation-feedback class="error" [control]="personalDataForm.get('firstName')" [config]="config">
-      </validation-feedback> -->
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Płeć</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let gender of genders" [value]="gender.value">
-          {{gender.viewValue}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Miejscowość</mat-label>
-      <input matInput>
-    </mat-form-field>
-    <div class="checkbox">
-      <mat-checkbox [(ngModel)]="checked" name="checked"></mat-checkbox>
-      <span (click)="checked = !checked">Nie mieszkam w Polsce</span>
-    </div>
-    <mat-form-field appearance="fill" [formGroup]="personalDataForm">
-      <mat-label>Nazwisko</mat-label>
-      <input matInput formControlName="lastName">
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Data urodzenia</mat-label>
-      <input matInput [matDatepicker]="picker">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Województwo</mat-label>
-      <mat-select [disabled]=checked>
-        <mat-option *ngFor="let province of provinces" [value]="province.value">
-          {{province.viewValue}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <div class="personal-data-save-button">
-      <button mat-raised-button>Zatwierdź</button>
-    </div>
+<form autocomplete="off" [formGroup]="personalDataForm" (ngSubmit)="save()" class="personal-data-form-container">
+  <mat-form-field appearance="fill">
+    <mat-label>Imię</mat-label>
+    <input matInput formControlName="forename">
+    <validation-feedback controlName="forename">
+    </validation-feedback>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Płeć</mat-label>
+    <mat-select formControlName="gender">
+      <mat-option *ngFor="let gender of genders" [value]="gender.value">
+        {{gender.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Miejscowość</mat-label>
+    <input matInput formControlName="city">
+    <validation-feedback controlName="city">
+    </validation-feedback>
+  </mat-form-field>
+  <div class="checkbox">
+    <mat-checkbox name="checked" formControlName="residingAbroad"></mat-checkbox>
+    <span (click)="toggleControlValue()">Nie mieszkam w Polsce</span>
+  </div>
+  <mat-form-field appearance="fill">
+    <mat-label>Nazwisko</mat-label>
+    <input matInput formControlName="surname">
+    <validation-feedback controlName="surname">
+    </validation-feedback>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Data urodzenia</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" [min]="minDate" [max]="maxDate" disabled>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker disabled="false"></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Województwo</mat-label>
+    <mat-select [disabled]="personalDataForm.controls['residingAbroad'].value" formControlName="province">
+      <mat-option *ngFor="let province of provinces" [value]="province.value">
+        {{province.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="personal-data-save-button">
+    <button mat-raised-button type="submit">Zatwierdź</button>
   </div>
 </form>

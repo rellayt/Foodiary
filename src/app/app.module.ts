@@ -52,10 +52,7 @@ import { ProfileModule } from './profile/profile.module';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private auth: AuthService, private cookieService: CookieService) {
-    const token = this.cookieService.get('token')
-    if (token) {
-      this.auth.getUser(token)
-    }
+  constructor() {
+
   }
 }

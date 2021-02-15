@@ -1,59 +1,61 @@
-<div class="about-me-container" *ngIf="profile$ | async as profile">
+<div class="about-me-container" #aboutMeRef>
+  <ng-container *ngIf="profile$ | async as profile">
 
-  <nav class="user-login-header">
-    <span>{{ profile.name }}</span>
-  </nav>
-  <div class="weight-chart">one</div>
-  <div class="two">
-    <mat-expansion-panel [expanded]="true" hideToggle>
+    <nav class="user-login-header">
+      <span>{{ profile.name }}</span>
+    </nav>
+    <div class="weight-chart ">one</div>
+    <div class="two" *ngIf="macro$ | async as macro ">
+      <mat-expansion-panel [expanded]="true" hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          Bilans kaloryczny
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="calories">3500</div>
-    </mat-expansion-panel>
+          <mat-panel-title>
+            Bilans kaloryczny
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="calories">{{macro.calory}}</div>
+      </mat-expansion-panel>
 
-    <mat-expansion-panel [expanded]="true" hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Rozkład makroskładników
-        </mat-panel-title>
+      <mat-expansion-panel [expanded]="true" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Rozkład makroskładników
+          </mat-panel-title>
 
-      </mat-expansion-panel-header>
-      <ul class="macronutrients">
-        <li>Białko:</li>
-        <div class="macro-item">300<span class="macro-unit">g</span></div>
-        <li>Węglowodany:</li>
-        <div class="macro-item">200<span class="macro-unit">g</span></div>
-        <li>Tłuszcze:</li>
-        <div class="macro-item">150<span class="macro-unit">g</span></div>
-      </ul>
-    </mat-expansion-panel>
+        </mat-expansion-panel-header>
+        <ul class="macronutrients">
+          <li>Białko:</li>
+          <div class="macro-item">{{macro.protein}}<span class="macro-unit">g</span></div>
+          <li>Węglowodany:</li>
+          <div class="macro-item">{{macro.carb}}<span class="macro-unit">g</span></div>
+          <li>Tłuszcze:</li>
+          <div class="macro-item">{{macro.fat}}<span class="macro-unit">g</span></div>
+        </ul>
+      </mat-expansion-panel>
 
-  </div>
+    </div>
 
-  <div class="three">
-    <mat-expansion-panel [expanded]="true" hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Moje dane
-        </mat-panel-title>
+    <div class="three">
+      <mat-expansion-panel [expanded]="true" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Moje dane
+          </mat-panel-title>
 
-      </mat-expansion-panel-header>
-      {{profile.created_at}}
-      <p>This is the primary content of the panel.</p>
-    </mat-expansion-panel>
-  </div>
-  <div class="four">
-    <mat-expansion-panel [expanded]="true" hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Pomiary
-        </mat-panel-title>
+        </mat-expansion-panel-header>
+        {{profile.created_at}}
+        <p>This is the primary content of the panel.</p>
+      </mat-expansion-panel>
+    </div>
+    <div class="four">
+      <mat-expansion-panel [expanded]="true" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Pomiary
+          </mat-panel-title>
 
-      </mat-expansion-panel-header>
-      <p>This is the primary content of the panel.</p>
-    </mat-expansion-panel>
-  </div>
+        </mat-expansion-panel-header>
+        <p>This is the primary content of the panel.</p>
+      </mat-expansion-panel>
+    </div>
+  </ng-container>
 </div>

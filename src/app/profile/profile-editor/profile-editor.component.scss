@@ -2,8 +2,6 @@
 
 .profile-editor-container {
   display: grid;
-  width: 100%;
-  height: auto;
   grid-template-columns: [col1-start] 35% [col2-start] 64% [col3-end];
   grid-template-rows: [row1-start] 400px [row2-start] 300px [row2-end];
   grid-column-gap: 5px;

@@ -21,7 +21,7 @@ export const userNavAnimation = (item, delayValue) => {
 export const guestNavAnimation = (item, delayValue) => {
   gsap.fromTo(item, { y: -20 }, {
     y: 0,
-    duration: 0.7,
+    duration: 0.4,
     opacity: 1,
     stagger: 10,
     delay: delayValue,

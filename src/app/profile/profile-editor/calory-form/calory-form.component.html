@@ -1,55 +1,56 @@
-<form class="calory-form-container">
-  <mat-form-field appearance="fill" class="daily-energy-supply-field">
-    <mat-label>Dzienna podaż energii</mat-label>
-    <input #caloriesInput [(ngModel)]="nutrients.calory" name="nutrients.calory" matInput type="number"
-      onKeyPress="if(this.value.length==5) return false" (ngModelChange)="update(caloriesInput)">
-    <span matSuffix>kcal</span>
-  </mat-form-field>
+<form class="calory-form-container" [formGroup]="caloryForm">
 
-  <mat-form-field appearance="fill" class="protein-percent-field">
-    <mat-label>Białko</mat-label>
-    <input #protein type="number" [(ngModel)]="nutrients.protein" name="nutrients.protein" matInput
-      (ngModelChange)="update(protein)">
-    <span matSuffix>g</span>
-  </mat-form-field>
-  <mat-form-field appearance="fill" class="protein-percent-field percentages">
-    <input #proteinPercentage matInput [(ngModel)]="percentages.proteinPercent" name="percentages.proteinPercent"
-      (ngModelChange)="update(proteinPercentage)" commaReplacer>
-    <span matSuffix>%</span>
-  </mat-form-field>
+    <mat-form-field appearance="fill" class="daily-energy-supply-field">
+        <mat-label>Dzienna podaż energii</mat-label>
+        <input zeroPrefixDeleter formControlName="calory" matInput type="number" onKeyPress="if(this.value.length==5) return false" (focus)="state = ControlState.CALORY">
+        <span matSuffix>kcal</span>
+    </mat-form-field>
 
-  <mat-form-field appearance="fill" class="carbo-percent-field">
-    <mat-label>Węglowodany</mat-label>
-    <input #carbs type="number" [(ngModel)]="nutrients.carbs" name="nutrients.carbs" matInput
-      (ngModelChange)="update(carbs)">
-    <span matSuffix>g</span>
-  </mat-form-field>
-  <mat-form-field appearance="fill" class="carbo-percent-field percentages">
-    <input #carbsPercentage [(ngModel)]="percentages.carbsPercent" name="percentages.carbsPercent" matInput
-      (ngModelChange)="update(carbsPercentage)" commaReplacer>
-    <span matSuffix>%</span>
-  </mat-form-field>
+    <ng-container [formGroup]="caloryForm.get('protein')">
+        <mat-form-field appearance="fill">
+            <mat-label>Białko</mat-label>
+            <input zeroPrefixDeleter type="number" matInput formControlName="quantity" (focus)="state = ControlState.QUANTITY">
+            <span matSuffix>g</span>
+        </mat-form-field>
 
-  <mat-form-field appearance="fill" class="fat-percent-field">
-    <mat-label>Tłuszcze</mat-label>
-    <input #fat type="number" [(ngModel)]="nutrients.fat" name="nutrients.fat" matInput (ngModelChange)="update(fat)">
-    <span matSuffix>g</span>
-  </mat-form-field>
-  <mat-form-field appearance="fill" class="fat-percent-field percentages">
-    <input #fatPercentage [(ngModel)]="percentages.fatPercent" name="percentages.fatPercent" matInput
-      (ngModelChange)="update(fatPercentage)" commaReplacer>
-    <span matSuffix>%</span>
-  </mat-form-field>
+        <mat-form-field appearance="fill">
+            <input zeroPrefixDeleter matInput commaReplacer formControlName="percent" (focus)="state = ControlState.PERCENT">
+            <span matSuffix>%</span>
+        </mat-form-field>
+    </ng-container>
 
-  <div class="error-and-save-container">
-    <div class="error-message-wrapper" [style.visibility]="percentageConflict ? 'visible' : 'hidden' ">Łączna procentowa
-      wartość makroskładników wynosi <b>{{percentageSum}}%</b>, wymagana
-      wartość to 100%.
+    <ng-container [formGroup]="caloryForm.get('carb')">
+        <mat-form-field appearance="fill">
+            <mat-label>Węglowodany</mat-label>
+            <input zeroPrefixDeleter type="number" matInput formControlName="quantity" (focus)="state = ControlState.QUANTITY">
+            <span matSuffix>g</span>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <input zeroPrefixDeleter matInput commaReplacer formControlName="percent" (focus)="state = ControlState.PERCENT">
+            <span matSuffix>%</span>
+        </mat-form-field>
+    </ng-container>
+
+    <ng-container [formGroup]="caloryForm.get('fat')">
+        <mat-form-field appearance="fill">
+            <mat-label>Tłuszcze</mat-label>
+            <input zeroPrefixDeleter type="number" matInput formControlName="quantity" (focus)="state = ControlState.QUANTITY">
+            <span matSuffix>g</span>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <input zeroPrefixDeleter matInput commaReplacer formControlName="percent" (focus)="state = ControlState.PERCENT">
+            <span matSuffix>%</span>
+        </mat-form-field>
+    </ng-container>
+
+    <div class="error-and-save-container">
+        <div class="error-message-wrapper" [style.visibility]="percentageConflict ? 'visible' : 'hidden' ">Łączna procentowa wartość makroskładników wynosi ~<b>{{percentageSum}}%</b>, wymagana wartość to 100%.
+        </div>
+        <div class="calculate-save-buttons">
+            <button mat-raised-button (click)="saveMacro()" [disabled]="percentageConflict || nutrientConflict" [style.opacity]="!percentageConflict || !nutrientConflict ? '1' : '0.7'">Zapisz</button>
+            <button mat-raised-button #dialogOpenButton (click)="openDialog()">Oblicz</button>
+        </div>
     </div>
-    <div class="calculate-save-buttons">
-      <button mat-raised-button [disabled]="percentageConflict"
-        [style.opacity]="!percentageConflict ? '1' : '0.7'">Zapisz</button>
-      <button mat-raised-button (click)="openDialog()">Oblicz</button>
-    </div>
-  </div>
 </form>

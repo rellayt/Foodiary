@@ -12,7 +12,6 @@ export class ProfileService {
   private user_request: Observable<User>
 
   getUserProfile() {
-
     if (!this.user_request) {
       this.user_request = this.auth.state.pipe(
         filter(() => this.auth.isAuthenticated),

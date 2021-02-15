@@ -5,13 +5,10 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { DiaryComponent } from './diary/diary.component';
-import { ProfileComponent } from './profile/profile.component';
 import { AuthModule } from './auth/auth.module';
 import { AuthorizedGuard } from './auth/authorized.guard';
 import { UnauthorizedGuard } from './auth/unauthorized.guard';
-import { AboutMeComponent } from './profile/about-me/about-me.component';
-import { ProfileEditorComponent } from './profile/profile-editor/profile-editor.component';
-import { SettingsComponent } from './profile/settings/settings.component';
+
 
 const routes: Routes = [
   {
@@ -54,34 +51,12 @@ const routes: Routes = [
       AuthorizedGuard
     ]
   },
-  {
-    path: 'profile',
-    redirectTo: 'profile/about_me',
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-    canActivate: [
-      AuthorizedGuard
-    ], children: [
-      {
-        path: 'about_me',
-        component: AboutMeComponent
-      },
-      {
-        path: 'edit',
-        component: ProfileEditorComponent
-      },
-      {
-        path: 'settings',
-        component: SettingsComponent
-      }
-    ]
-  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), AuthModule],
+  imports: [RouterModule.forRoot(routes,
+    // { enableTracing: true }
+  ), AuthModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

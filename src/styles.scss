@@ -44,3 +44,22 @@ body {
   border-radius: 7px !important;
   box-shadow: 1px 0px 5px #00000033;
 }
+.mat-snack-bar-container {
+  background-color: $blue;
+  color: $white;
+  .mat-simple-snackbar {
+    letter-spacing: 1px;
+    font-size: 18px;
+  }
+  .mat-simple-snackbar-action {
+    color: $white;
+  }
+  .mat-button-wrapper {
+    font-size: 18px;
+    position: relative;
+    top: 2px;
+  }
+}
+.mat-snack-bar-error {
+  background-color: $red;
+}

@@ -2,19 +2,22 @@
 
 .calory-form-container {
   display: grid;
-  grid-template-columns: [col1-start] 50% [col2-start] 50% [col2-end];
-  grid-template-rows: [row1-start] 1fr [row2-start] 1fr [row3-start];
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 7px;
   align-items: center;
   position: relative;
   bottom: 25px;
+
   mat-label {
     font-size: 20px;
   }
+
   span {
     font-size: 19px;
     color: $gray-dark;
   }
+
   mat-form-field {
     input {
       position: relative;
@@ -22,6 +25,24 @@
       font-size: 22px;
     }
   }
+
+  mat-form-field:first-child {
+    grid-column: 1/3;
+    width: 100%;
+    position: relative;
+    top: 14px;
+  }
+
+  mat-form-field:nth-child(4),
+  mat-form-field:nth-child(5) {
+    top: 7px;
+  }
+
+  mat-form-field:nth-child(2),
+  mat-form-field:nth-child(3) {
+    top: 14px;
+  }
+
   ::ng-deep {
     .mat-focused .mat-form-field-label {
       color: $blue !important;
@@ -36,34 +57,21 @@
   }
 }
 
-.daily-energy-supply-field {
-  grid-column: col1-start/col2-end;
-  width: 100%;
-  position: relative;
-  top: 14px;
-}
-.macro-field {
-  padding: 0;
-  grid-row-gap span {
-    font-size: 18px;
-    color: $gray-dark;
-  }
-}
 .error-and-save-container {
-  grid-column: col1-start/col2-end;
-  display: grid;
-  grid-template-columns: 60% 40%;
-  height: 28px;
+  grid-column: 1/3;
+  display: flex;
+  width: 100%;
+  height: 35px;
+  align-items: center;
   position: relative;
-  bottom: 5px;
+  top: 3px;
 }
 .error-message-wrapper {
-  visibility: visible;
   font-size: 19px;
-  width: 100%;
+  width: 65%;
 }
 .calculate-save-buttons {
-  width: 100%;
+  width: 35%;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -87,24 +95,6 @@
     background-color: $white;
     font-size: 18px;
     color: $black;
-  }
-}
-.carbo-percent-field {
-  position: relative;
-  top: 7px;
-}
-.protein-percent-field {
-  position: relative;
-  top: 14px;
-}
-.fat-percent-field {
-  position: relative;
-}
-.percentages {
-  input {
-    position: relative;
-    top: -2px;
-    font-size: 22px;
   }
 }
 

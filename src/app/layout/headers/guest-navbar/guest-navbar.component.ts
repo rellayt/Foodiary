@@ -1,7 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ElementRef, ViewChild } from '@angular/core';
 import { guestNavAnimation, initLogoAnimation } from 'src/app/utility/navbar-gsap-animations';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-guest-navbar',
@@ -25,10 +24,10 @@ export class GuestNavbarComponent implements OnInit {
 
   initialAnimations = (menuItems) => {
     initLogoAnimation(this.title.nativeElement);
-    let value = 1;
+    let value = 0.5;
     menuItems.forEach((elementRef) => {
       guestNavAnimation(elementRef, value);
-      value += 0.3;
+      value += 0.4;
     });
   }
 

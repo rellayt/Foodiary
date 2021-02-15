@@ -1,5 +1,5 @@
-<div class="profile-settings-container">
-  <form [formGroup]="settingsForm" class="profile-settings-form">
+<div class="profile-settings-container" #profileSettingsRef>
+  <form [formGroup]="settingsForm" class="profile-settings-form" (ngSubmit)="updateUserData()">
     <span>Dane logowania</span>
     <div class="line-through"></div>
     <mat-form-field appearance="fill">
@@ -10,7 +10,12 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Twoje aktualne hasło</mat-label>
-      <input matInput formControlName="password" autocomplete="off" [type]="hideActualPassword ? 'password' : 'text'" />
+      <input matInput #passwordInput formControlName="password" autocomplete="off"
+        [type]="hideActualPassword ? 'password' : 'text'" />
+      <button matSuffix type="button" (click)="hideActualPassword=!hideActualPassword" mat-icon-button
+        [attr.aria-label]="'Hide password'">
+        <mat-icon>{{ hideActualPassword ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
       <validation-feedback controlName="password"></validation-feedback>
     </mat-form-field>
 
@@ -23,14 +28,31 @@
     <mat-form-field appearance="fill">
       <mat-label>Nowe hasło</mat-label>
       <input matInput formControlName="newPassword" autocomplete="off" [type]="hideNewPassword ? 'password' : 'text'" />
-      <validation-feedback controlName="newPassword"></validation-feedback>
+      <button matSuffix type="button" (click)="hideNewPassword=!hideNewPassword" mat-icon-button
+        [attr.aria-label]="'Hide password'">
+        <mat-icon>{{ hideNewPassword ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+      <validation-feedback controlName="newPassword">
+        <mat-error
+          *ngIf="settingsForm.get('newPassword').touched && settingsForm.get('newPassword').getError('password') as error">
+          Hasło powinno zawierać:
+          <div *ngIf="error.lowercase">•małą literę</div>
+          <div *ngIf="error.uppercase">•dużą literę</div>
+          <div *ngIf="error.number">•cyfrę</div>
+        </mat-error>
+      </validation-feedback>
     </mat-form-field>
-
-    <button type="submit" mat-raised-button>Zapisz zmiany</button>
+    <div class="settings-submit-container">
+      <button type="submit" mat-raised-button [disabled]="!settingsForm.valid"
+        [style.opacity]="settingsForm.valid ? '1' : '0.7'">
+        <mat-spinner *ngIf="loading"></mat-spinner>
+        <ng-container *ngIf="!loading"> Zapisz zmiany</ng-container>
+      </button>
+    </div>
   </form>
   <div class="additional-options-container">
     <span>Dodatkowe opcje</span>
-    <button type="submit" mat-raised-button>Usuń konto</button>
+    <button type="submit" #dialogOpenButton mat-raised-button (click)="openDialog()">Usuń konto</button>
     <button type="submit" mat-raised-button>Połącz konto z Facebookiem</button>
     <div class="line-through"></div>
   </div>

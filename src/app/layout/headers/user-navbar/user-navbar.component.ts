@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTooltipDefaultOptions, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
-import { Router } from '@angular/router';
 import { initLogoAnimation, userNavAnimation } from 'src/app/utility/navbar-gsap-animations';
 import { AuthService } from '../../../auth/auth.service';
 import { ProfileService } from '../../../profile/profile.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export const navbarTooltip: MatTooltipDefaultOptions = {
   showDelay: 150,
@@ -46,8 +46,12 @@ export class UserNavbarComponent implements OnInit {
 
   logout() {
     this.auth.logout();
-    this.router.navigate(['home'])
+    this._snackBar.open("Wylogowano", "X", {
+      duration: 1500,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
   }
 
-  constructor(private auth: AuthService, private router: Router, private profileService: ProfileService) { }
+  constructor(private auth: AuthService, private _snackBar: MatSnackBar, private profileService: ProfileService) { }
 }
