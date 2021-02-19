@@ -1,9 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTooltipDefaultOptions, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { initLogoAnimation, userNavAnimation } from 'src/app/utility/navbar-gsap-animations';
+import { subpageInitAnimation } from 'src/app/utility/subpage-animations';
 import { AuthService } from '../../../auth/auth.service';
 import { ProfileService } from '../../../profile/profile.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarService } from '../../../services/snack-bar.service';
 
 export const navbarTooltip: MatTooltipDefaultOptions = {
   showDelay: 150,
@@ -27,11 +28,14 @@ export class UserNavbarComponent implements OnInit {
   @ViewChild('menuItem2', { static: true }) menuItem2: ElementRef;
   @ViewChild('menuItem3', { static: true }) menuItem3: ElementRef;
   @ViewChild('menuItem4', { static: true }) menuItem4: ElementRef;
+  @ViewChild('userNavbar', { static: true }) userNavbar: ElementRef;
 
   profile = this.profileService.getUserProfile()
 
   ngOnInit(): void {
     this.initialAnimations()
+    subpageInitAnimation(this.userNavbar.nativeElement, 0, 1.5, 0)
+
   }
 
   initialAnimations = () => {
@@ -46,12 +50,8 @@ export class UserNavbarComponent implements OnInit {
 
   logout() {
     this.auth.logout();
-    this._snackBar.open("Wylogowano", "X", {
-      duration: 1500,
-      horizontalPosition: 'end',
-      verticalPosition: 'bottom',
-    });
+    this.snackBar.open("Wylogowano", 1500);
   }
 
-  constructor(private auth: AuthService, private _snackBar: MatSnackBar, private profileService: ProfileService) { }
+  constructor(private auth: AuthService, private snackBar: SnackBarService, private profileService: ProfileService) { }
 }

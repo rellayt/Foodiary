@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/co
 import { ActivatedRoute, NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { User } from 'src/app/models/user.model';
-import { profileEndAnimation, profileInitAnimation } from 'src/app/utility/profile-gsap-animations';
+import { subpageEndAnimation, subpageInitAnimation } from 'src/app/utility/subpage-animations';
 import { ProfileService } from '../profile.service';
 import { browserRefresh } from 'src/app/app.component';
 import { Subscription } from 'rxjs';
@@ -27,12 +27,12 @@ export class AboutMeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    browserRefresh ? profileInitAnimation(this.aboutMeRef.nativeElement, 0, 1) :
-      profileInitAnimation(this.aboutMeRef.nativeElement, 20)
+    browserRefresh ? subpageInitAnimation(this.aboutMeRef.nativeElement, 0, 1) :
+      subpageInitAnimation(this.aboutMeRef.nativeElement, 20)
 
     this.eventSubscription = this.router.events.pipe(filter(event => event instanceof RoutesRecognized))
       .subscribe((event: any) => {
-        profileEndAnimation(this.aboutMeRef.nativeElement, 20)
+        subpageEndAnimation(this.aboutMeRef.nativeElement, 20)
       });
 
   }

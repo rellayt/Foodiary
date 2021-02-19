@@ -10,6 +10,7 @@ import { getCalory, getNutrientPercent } from 'src/app/utility/macro-calculation
 import { MacroService } from 'src/app/services/macro.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { calculateByCaloricBalanace, calculateByPercent, calculateByQuantity, updateCaloryValue } from 'src/app/utility/diary-calculator';
+import { SnackBarService } from '../../../services/snack-bar.service';
 
 export enum ControlState {
   CALORY,
@@ -63,7 +64,7 @@ export class CaloryFormComponent implements OnInit, OnDestroy {
   )
 
   constructor(private matDialogRef: MatDialog, private form: FormBuilder, private route: ActivatedRoute,
-    private macroService: MacroService, private _snackBar: MatSnackBar) {
+    private macroService: MacroService, private snackBar: SnackBarService) {
     this.caloryForm = this.form.group({
       calory: this.form.control(0),
       protein: this.createMacroGroup(),
@@ -86,14 +87,10 @@ export class CaloryFormComponent implements OnInit, OnDestroy {
     const quantityValue = (name) => +this.caloryForm.get(name).controls['quantity'].value
     const macro = { protein: quantityValue('protein'), carb: quantityValue('carb'), fat: quantityValue('fat') }
 
-    this.macroService.saveMacro(macro).subscribe(data => {
-      this.macroService.clearMacroCache()
+    this.macroService.saveMacro(macro).subscribe(res => {
+      this.macroService.clearCache()
       this.nutrientConflict = true
-      this._snackBar.open("Pomyślnie zapisano", "X", {
-        duration: 1000,
-        horizontalPosition: 'end',
-        verticalPosition: 'bottom',
-      });
+      this.snackBar.open("Pomyślnie zapisano")
     })
   }
 

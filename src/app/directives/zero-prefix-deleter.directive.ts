@@ -5,7 +5,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 })
 export class ZeroPrefixDeleterDirective {
 
-  constructor(private elementRef: ElementRef,) {
+  constructor(private elementRef: ElementRef) {
   }
 
   @HostListener('input') valueChanges() {

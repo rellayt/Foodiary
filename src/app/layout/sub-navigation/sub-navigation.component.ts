@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { profileInitAnimation } from 'src/app/utility/profile-gsap-animations';
+import { subpageInitAnimation } from 'src/app/utility/subpage-animations';
 
 @Component({
   selector: 'app-sub-navigation',
@@ -16,16 +16,20 @@ export class SubNavigationComponent implements OnInit {
 
   activeLink;
   @ViewChild('subNavRef', { static: true }) subNavRef: ElementRef;
+  @ViewChild('linkRef', { static: true }) linkRef: ElementRef;
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {
-    profileInitAnimation(this.subNavRef.nativeElement, 0, 0.4, -5)
+    subpageInitAnimation(this.subNavRef.nativeElement, 0, 1.5, 0)
+    subpageInitAnimation(this.linkRef.nativeElement, 0, 3.5, -15)
 
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         this.activeLink = event.url.split('/')[1]
       });
+
+
   }
 }

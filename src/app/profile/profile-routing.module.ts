@@ -6,9 +6,11 @@ import { AuthorizedGuard } from '../auth/authorized.guard';
 import { AboutMeComponent } from './about-me/about-me.component';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 import { SettingsComponent } from './settings/settings.component';
-
 import { DelayResolve } from '../resolves/delay-resolve';
 import { MacroResolve } from '../resolves/macro-resolve';
+import { PersonalDataResolve } from '../resolves/personal-data-resolve';
+import { MeasurementResolve } from '../resolves/measurement-resolve';
+import { BodyDimensionsResolve } from '../resolves/body-dimensions-resolve';
 
 const routes: Routes = [
   {
@@ -32,9 +34,13 @@ const routes: Routes = [
       {
         path: 'edit',
         component: ProfileEditorComponent,
+        runGuardsAndResolvers: "always",
         resolve: {
           'delay': DelayResolve,
-          'macro': MacroResolve
+          'macro': MacroResolve,
+          'personalData': PersonalDataResolve,
+          'measurement': MeasurementResolve,
+          'bodyDimensions': BodyDimensionsResolve
         }
       },
       {
@@ -43,7 +49,7 @@ const routes: Routes = [
         resolve: {
           'delay': DelayResolve
         }
-      }
+      },
     ]
   },
 ]

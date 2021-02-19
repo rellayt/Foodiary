@@ -1,0 +1,169 @@
+@import "src/app/shared/colors.scss";
+
+.container {
+  width: 100%;
+  height: 93.6%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  .products-addition {
+    width: 55%;
+    height: 92%;
+    // background-color: rgba(0, 255, 0, 0.411);
+    &__header {
+      margin: 2% 0;
+      font-size: 24px;
+      text-align: center;
+    }
+    &__line {
+      width: 100%;
+      margin: 10px 0;
+      box-shadow: 0px 0px 1px #f7f7f7;
+      border-top: solid 1px $gray-light;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    &__group {
+      width: 90%;
+      height: 275px;
+      padding: 23px 20px 23px 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 25%);
+      margin: 5px 0;
+      font-size: 20px;
+      border-radius: 5px 5px 15px 15px;
+      box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.05);
+      border: 1px solid rgba(50, 50, 50, 0.09);
+      &--delete-button {
+        grid-column: 1/5;
+        height: 5px;
+        display: flex;
+        flex-direction: row-reverse;
+        button {
+          transform: translate(19px, -21px);
+          background-color: transparent;
+          border: none;
+          outline: none;
+        }
+        mat-icon {
+          font-weight: 600;
+          font-size: 22px;
+          outline: none;
+          cursor: pointer;
+          opacity: 0.7;
+          color: $black;
+          transition: all 150ms ease-out;
+          &:hover {
+            color: $red;
+            opacity: 1;
+            transition: all 150ms ease-out;
+          }
+        }
+      }
+      &--calories {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translate(8px, -9px);
+        background-color: rgba(0, 0, 0, 0.04);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+        color: $black;
+        height: 69%;
+        width: 93%;
+        box-shadow: 0px 0px 2px rgba(71, 71, 71, 0.13);
+        border-radius: 2px;
+        span {
+          margin-right: 7px;
+        }
+      }
+      mat-form-field {
+        margin: 0 6px;
+        position: relative;
+        span {
+          position: absolute;
+          width: 60%;
+          transform: translate(6px, -3px);
+          font-size: 17px;
+          color: $gray-dark;
+        }
+      }
+      & > mat-form-field:not(:first-child) {
+        transform: translateY(-10px);
+        input {
+          width: 65%;
+        }
+      }
+      mat-form-field:first-child {
+        transform: translateY(-3px);
+      }
+      mat-form-field:last-child {
+        transform: translateY(-16px);
+      }
+      :nth-child(2),
+      mat-form-field:last-child {
+        grid-column: 1/5;
+      }
+      ::ng-deep {
+        .mat-form-field-appearance-fill .mat-form-field-infix {
+          padding: 0.21em 0 0.21em 0;
+        }
+        .mat-form-field-label-wrapper {
+          top: -1.1em;
+        }
+
+        input.mat-input-element {
+          transform: translateY(-5px);
+        }
+        .mat-select-value {
+          transform: translateY(-4px);
+        }
+      }
+    }
+    &__buttons {
+      margin-top: 10px;
+      width: 90%;
+      display: flex;
+      flex-direction: row-reverse;
+      button {
+        font-size: 21px;
+        height: 45px;
+        margin: 10px;
+      }
+      button:first-child {
+        margin-left: 15px;
+        background-color: $blue;
+        color: $white;
+      }
+      button:nth-child(2) {
+        background-color: $white;
+        color: $black;
+        box-shadow: 0px 0px 5px #4242425e;
+      }
+    }
+  }
+
+  validation-feedback {
+    position: absolute;
+    width: 230px;
+    top: 33px;
+    left: -14px;
+    font-size: 16px;
+  }
+}
+.products-addition__length {
+  position: absolute;
+  right: 0;
+  transform: translate(1px, -22px);
+  margin: -20px 35px;
+  font-size: 35px;
+  color: $gray-light;
+}
+::ng-deep .mat-select-panel-wrap {
+  flex-basis: 50% !important;
+  transform: translateX(4px) !important;
+}

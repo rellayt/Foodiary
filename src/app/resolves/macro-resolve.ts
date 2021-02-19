@@ -9,7 +9,7 @@ export class MacroResolve implements Resolve<Macro> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    return this.macroService.getMacro()
+    return this.macroService.getLatestMacro()
   }
 
   constructor(private macroService: MacroService) { }

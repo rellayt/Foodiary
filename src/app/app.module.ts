@@ -10,17 +10,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DiaryComponent } from './diary/diary.component';
 import { SubNavigationComponent } from './layout/sub-navigation/sub-navigation.component';
-import { CommaReplacerDirective } from './directives/replacer.directive';
 import { GuestNavbarComponent } from './layout/headers/guest-navbar/guest-navbar.component';
 import { UserNavbarComponent } from './layout/headers/user-navbar/user-navbar.component';
 import { AuthModule } from './auth/auth.module';
 import { ValidationModule } from './validation/validation.module';
 import { ValidationService } from './validation/validation.service';
-import { AuthService } from './auth/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthorizedGuard } from './auth/authorized.guard';
 import { UnauthorizedGuard } from './auth/unauthorized.guard';
 import { ProfileModule } from './profile/profile.module';
+import { ProductsModule } from './products/products.module';
+import { DelayResolve } from './resolves/delay-resolve';
+import { DirectivesModule } from './directives/directives.module';
 
 
 @NgModule({
@@ -31,7 +32,6 @@ import { ProfileModule } from './profile/profile.module';
     RoutingComponents,
     DiaryComponent,
     SubNavigationComponent,
-    CommaReplacerDirective,
     GuestNavbarComponent,
     UserNavbarComponent,
   ],
@@ -39,15 +39,18 @@ import { ProfileModule } from './profile/profile.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    DirectivesModule,
     ValidationModule,
     AuthModule,
     ProfileModule,
+    ProductsModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [UnauthorizedGuard, AuthorizedGuard, CookieService, ValidationService,
+
+  providers: [UnauthorizedGuard, AuthorizedGuard, CookieService, ValidationService, DelayResolve
   ],
   bootstrap: [AppComponent]
 })

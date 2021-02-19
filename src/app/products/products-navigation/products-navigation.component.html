@@ -1,0 +1,8 @@
+<div class="products-navigation-container">
+  <nav mat-tab-nav-bar class="sub-navigation-wrapper">
+    <a mat-tab-link *ngFor="let page of pages" (click)="activeLink = page.link" [active]="activeLink == page.link"
+      [routerLink]="page.link">
+      {{ page.label }}
+    </a>
+  </nav>
+</div>

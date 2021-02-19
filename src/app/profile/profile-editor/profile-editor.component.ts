@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { profileInitAnimation } from 'src/app/utility/profile-gsap-animations';
+import { subpageInitAnimation } from 'src/app/utility/subpage-animations';
 import { Router, RoutesRecognized } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { browserRefresh, previousPage } from '../../app.component';
-import { profileEndAnimation } from '../../utility/profile-gsap-animations';
+import { subpageEndAnimation } from '../../utility/subpage-animations';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -15,17 +15,20 @@ export class ProfileEditorComponent implements OnInit, OnDestroy {
   @ViewChild('profileEditorRef', { static: true }) profileEditorRef: ElementRef;
 
   panelOpenState = false;
+
+  step = 2
+
   constructor(private router: Router) { }
 
   eventSubscription: Subscription
 
   ngOnInit(): void {
     if (browserRefresh) {
-      profileInitAnimation(this.profileEditorRef.nativeElement, 0, 1)
+      subpageInitAnimation(this.profileEditorRef.nativeElement, 0, 1)
     } else if (previousPage === 'settings') {
-      profileInitAnimation(this.profileEditorRef.nativeElement, 20)
+      subpageInitAnimation(this.profileEditorRef.nativeElement, 20)
     } else {
-      profileInitAnimation(this.profileEditorRef.nativeElement, -20)
+      subpageInitAnimation(this.profileEditorRef.nativeElement, -20)
     }
 
     this.eventSubscription = this.router.events
@@ -33,8 +36,8 @@ export class ProfileEditorComponent implements OnInit, OnDestroy {
       .subscribe((events: any) => {
         const nextPage = events.url.split('/')[2]
 
-        nextPage === 'settings' ? profileEndAnimation(this.profileEditorRef.nativeElement, 20) :
-          profileEndAnimation(this.profileEditorRef.nativeElement, -20)
+        nextPage === 'settings' ? subpageEndAnimation(this.profileEditorRef.nativeElement, 20) :
+          subpageEndAnimation(this.profileEditorRef.nativeElement, -20)
 
       });
   }

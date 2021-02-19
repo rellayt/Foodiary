@@ -6,10 +6,7 @@
   grid-template-rows: [row1-start] 400px [row2-start] 300px [row2-end];
   grid-column-gap: 5px;
   grid-row-gap: 10px;
-  mat-expansion-panel {
-    width: 90%;
-    margin: 5px;
-  }
+  justify-content: center;
   mat-accordion {
     width: 100%;
     display: flex;
@@ -27,9 +24,6 @@
   }
   ::ng-deep .mat-expansion-indicator::after {
     color: $blue !important;
-  }
-  ::ng-deep .mat-expansion-panel-body {
-    padding: 0 28px !important;
   }
 }
 .avatar-wrapper {
@@ -96,14 +90,32 @@
     width: 94%;
     margin: 5px;
   }
+  ::ng-deep .mat-expansion-panel-body {
+    padding: 0 28px !important;
+  }
 }
 .personal-data-wrapper {
   display: flex;
   justify-content: center;
   width: 100%;
+  mat-expansion-panel {
+    width: 90%;
+    margin: 5px;
+  }
 }
 .body-measurements-data {
   display: flex;
   justify-content: center;
   width: 100%;
+  mat-expansion-panel:first-child {
+    width: 37.7%;
+    margin: 5px;
+  }
+  mat-expansion-panel:nth-child(2) {
+    width: 51.7%;
+    margin: 5px;
+  }
+  ::ng-deep .mat-expansion-panel-body {
+    padding: 0 15px !important;
+  }
 }

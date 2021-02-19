@@ -14,7 +14,7 @@ export class MacroService {
 
   private latestMacro_request: Observable<Macro>
 
-  getMacro() {
+  getLatestMacro() {
     if (!this.latestMacro_request) {
       this.latestMacro_request = this.http.get<Macro>(`${environment.API_URL}/macro/latest`)
         .pipe(
@@ -22,14 +22,14 @@ export class MacroService {
           shareReplay(),
         )
     }
-    return this.latestMacro_request;
+    return this.latestMacro_request
   }
 
   saveMacro(macro: Macro) {
     return this.http.post<Macro>(`${environment.API_URL}/macro/`, macro)
   }
 
-  clearMacroCache() {
-    this.latestMacro_request = null;
+  clearCache() {
+    this.latestMacro_request = null
   }
 }

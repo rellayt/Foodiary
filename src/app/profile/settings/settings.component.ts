@@ -1,18 +1,18 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { filter, map, switchMap, take } from 'rxjs/operators';
+import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { ValidationService } from 'src/app/validation/validation.service';
 import { validateEmail, validatePassword, validateUsername } from 'src/app/validation/validators';
 import { ProfileService } from '../profile.service';
-import { AuthService } from '../../auth/auth.service';
 import { Subscription, timer } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RoutesRecognized } from '@angular/router';
-import { profileEndAnimation, profileInitAnimation } from 'src/app/utility/profile-gsap-animations';
+import { subpageEndAnimation, subpageInitAnimation } from 'src/app/utility/subpage-animations';
 import { browserRefresh } from '../../app.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteProfileDialogComponent } from './delete/delete-profile-dialog.component';
 import { UserService } from '../../user/user.service';
+import { SnackBarService } from '../../services/snack-bar.service';
 
 @Component({
   selector: 'app-settings',
@@ -32,23 +32,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
   dialogSubscription: Subscription
 
   profile$ = this.profileService.getUserProfile().pipe(
-    map(profile => {
-      return { name: profile.name, email: profile.email }
-    })
+    map(profile => { return { name: profile.name, email: profile.email } })
   )
 
 
   ngOnInit(): void {
-    this.profile$.pipe(take(1)).subscribe(profile => {
-      this.settingsForm.controls['name'].setValue(profile.name)
-      this.settingsForm.controls['email'].setValue(profile.email)
-    })
-    browserRefresh ? profileInitAnimation(this.profileSettingsRef.nativeElement, 0, 1) :
-      profileInitAnimation(this.profileSettingsRef.nativeElement, -20)
+    this.profile$.pipe(take(1)).subscribe(profile => this.settingsForm.patchValue(profile))
+
+    browserRefresh ? subpageInitAnimation(this.profileSettingsRef.nativeElement, 0, 1) :
+      subpageInitAnimation(this.profileSettingsRef.nativeElement, -20)
 
     this.eventSubscription = this.router.events.pipe(filter(event => event instanceof RoutesRecognized))
       .subscribe((event: any) => {
-        profileEndAnimation(this.profileSettingsRef.nativeElement, -20)
+        subpageEndAnimation(this.profileSettingsRef.nativeElement, -20)
       });
     this.dialogSubscription = this.matDialogRef.afterAllClosed.subscribe(() => {
       this.dialogOpenButton._elementRef.nativeElement.classList.remove('cdk-program-focused');
@@ -63,7 +59,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   constructor(private form: FormBuilder, private validation: ValidationService,
     private profileService: ProfileService, private userService: UserService,
-    private _snackBar: MatSnackBar, private router: Router, private matDialogRef: MatDialog) {
+    private snackBar: SnackBarService, private router: Router, private matDialogRef: MatDialog) {
 
     this.settingsForm = this.form.group({
       name: this.form.control('', [
@@ -99,13 +95,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.settingsForm.controls['password'].reset()
       this.settingsForm.controls['password'].setErrors(null)
       this.settingsForm.controls['newPassword'].reset()
-
-      this._snackBar.open("Pomyślnie zapisano", "X", {
-        duration: 1000,
-        horizontalPosition: 'end',
-        verticalPosition: 'bottom',
-      });
-
+      this.snackBar.open("Pomyślnie zapisano");
       this.loading = false
     }, error => {
       this.settingsForm.controls['password'].setErrors({ invalid_password: true })

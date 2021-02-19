@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 
-export const profileInitAnimation = (item, x = 0, duration = 0.35, y = 0) => {
+export const subpageInitAnimation = (item, x = 0, duration = 0.35, y = 0) => {
   gsap.from(item, {
     x: x,
     y: y,
@@ -10,7 +10,7 @@ export const profileInitAnimation = (item, x = 0, duration = 0.35, y = 0) => {
     stagger: 10,
   });
 }
-export const profileEndAnimation = (item, x = 0, duration = 0.35, y = 0) => {
+export const subpageEndAnimation = (item, x = 0, duration = 0.35, y = 0) => {
   gsap.to(item, {
     x: x,
     y: y,

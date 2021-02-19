@@ -65,25 +65,14 @@
       }
     }
   }
-  .three {
+  .informations {
     display: flex;
     align-items: center;
     justify-content: center;
     grid-column: 1 / 4;
 
     mat-expansion-panel {
-      width: 92.7%;
-      margin: 0 1.5rem;
-    }
-  }
-  .four {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    grid-column: 1 / 4;
-    padding: 0.2rem;
-    mat-expansion-panel {
-      width: 92.7%;
+      width: 91%;
       margin: 0 1.5rem;
     }
   }

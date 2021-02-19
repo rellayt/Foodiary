@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="products-addition">
+    <div class="products-addition__header">
+      Dodawanie produktów
+    </div>
+    <div class="products-addition__line"></div>
+    <form autocomplete="off" [formGroup]="productsAddition">
+      <div class="products-addition__group" [formGroup]="product"
+        *ngFor="let product of getControlList(productsAddition.get('products')); let i = index">
+        <div class="products-addition__group--delete-button"
+          [style.visibility]="productsAddition.controls['products'].length > 1 ? 'visible' : 'hidden'">
+          <button (click)="removeProduct(i)">
+            <mat-icon matTooltip="Usuń" matTooltipClass="red-tooltip" [matTooltipPosition]="'above'">close</mat-icon>
+          </button>
+        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Nazwa</mat-label>
+          <input matInput formControlName="name" maxLength="60" formControlName="name" />
+          <validation-feedback controlName="name"></validation-feedback>
+        </mat-form-field>
+        <!-- <mat-form-field appearance="fill">
+          <mat-label>Kaloryczność</mat-label>
+          <input matInput formControlName="calories" />
+        </mat-form-field> -->
+        <mat-form-field appearance="fill">
+          <mat-label>Białko</mat-label>
+          <input matInput [inputMaxLength]="3" zeroPrefixDeleter type="number" formControlName="protein" />
+          <span>/100 g</span>
+          <validation-feedback controlName="protein">
+            <mat-error
+              *ngIf="(getControl(i,'protein').getError('max') || getControl(i,'protein').getError('min')) as error">
+              Nieprawidłowa wartość
+            </mat-error>
+          </validation-feedback>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Węglowodany</mat-label>
+          <input matInput [inputMaxLength]="3" zeroPrefixDeleter type="number" formControlName="carb" />
+          <span>/100 g</span>
+          <validation-feedback controlName="carb">
+            <mat-error *ngIf="(getControl(i,'carb').getError('max') || getControl(i,'carb').getError('min')) as error">
+              Nieprawidłowa wartość
+            </mat-error>
+          </validation-feedback>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Tłuszcze</mat-label>
+          <input matInput [inputMaxLength]="3" zeroPrefixDeleter type="number" formControlName="fat" />
+          <span>/100 g</span>
+          <validation-feedback controlName="fat">
+            <mat-error *ngIf="(getControl(i,'fat').getError('max') || getControl(i,'fat').getError('min')) as error">
+              Nieprawidłowa wartość
+            </mat-error>
+          </validation-feedback>
+        </mat-form-field>
+        <div class="products-addition__group--calories">
+          <span>{{getCalory(i)}}</span>kcal
+        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Kategoria</mat-label>
+          <mat-select [panelClass]="'expanded-select'" formControlName="category">
+            <mat-option *ngFor="let category of categories" [value]="category.value">
+              {{category.viewValue}}
+            </mat-option>
+          </mat-select>
+          <validation-feedback controlName="category"></validation-feedback>
+        </mat-form-field>
+      </div>
+      <div class="products-addition__buttons">
+        <button mat-raised-button type="submit" [disabled]="!productsAddition.valid"
+          [style.opacity]="productsAddition.valid ? '1' : '0.7'">Zapisz</button>
+        <button mat-raised-button [disabled]="!productsAddition.valid"
+          [style.opacity]="productsAddition.valid ? '1' : '0.55'"
+          *ngIf="productsAddition.controls['products'].length < 10"
+          (click)="addProduct(productsAddition.get('products'))">Dodaj następny</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="products-addition__length"
+  [style.visibility]="productsAddition.controls['products'].length > 1 ? 'visible' : 'hidden'">
+  {{productsAddition.controls['products'].length}}/10</div>

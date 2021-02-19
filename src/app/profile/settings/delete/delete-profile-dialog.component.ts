@@ -6,6 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { AuthService } from '../../../auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../../user/user.service';
+import { SnackBarService } from '../../../services/snack-bar.service';
 
 @Component({
   selector: 'app-delete',
@@ -24,7 +25,7 @@ export class DeleteProfileDialogComponent implements OnInit {
   hide = true
   loading = false
 
-  constructor(private userService: UserService, private _snackBar: MatSnackBar, private matDialog: MatDialog) { }
+  constructor(private userService: UserService, private snackBar: SnackBarService, private matDialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -34,11 +35,7 @@ export class DeleteProfileDialogComponent implements OnInit {
     timer(500).pipe(
       switchMap(() => this.userService.delete(this.password.value)),
     ).subscribe(data => {
-      this._snackBar.open("Konto zostało usunięte", "X", {
-        duration: 1000,
-        horizontalPosition: 'end',
-        verticalPosition: 'bottom',
-      });
+      this.snackBar.open("Konto zostało usunięte")
       this.matDialog.closeAll()
     }, error => {
       this.loading = false;

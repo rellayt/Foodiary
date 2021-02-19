@@ -15,11 +15,15 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPT
 import { SettingsComponent } from './settings/settings.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { ValidationModule } from '../validation/validation.module';
-import { DelayResolve } from '../resolves/delay-resolve';
 import { DeleteProfileDialogComponent } from './settings/delete/delete-profile-dialog.component';
 import { MacroResolve } from '../resolves/macro-resolve';
-import { ZeroPrefixDeleterDirective } from '../directives/zero-prefix-deleter.directive';
 import { ProfileRoutingModule } from './profile-routing.module';
+import { PersonalDataResolve } from '../resolves/personal-data-resolve';
+import { CommaReplacerDirective } from '../directives/comma-replacer.directive';
+import { BodyDimensionsFormComponent } from './profile-editor/body-dimensions/body-dimensions-form.component';
+import { MeasurementResolve } from '../resolves/measurement-resolve';
+import { BodyDimensionsResolve } from '../resolves/body-dimensions-resolve';
+import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -33,19 +37,20 @@ import { ProfileRoutingModule } from './profile-routing.module';
     MeasurementFormComponent,
     SettingsComponent,
     DeleteProfileDialogComponent,
-    ZeroPrefixDeleterDirective
+    CommaReplacerDirective,
+    BodyDimensionsFormComponent
   ],
   exports: [
-    ZeroPrefixDeleterDirective,
+    CommaReplacerDirective
   ],
   imports: [
     CommonModule,
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
-    AppRoutingModule,
     ValidationModule,
-    ProfileRoutingModule
+    ProfileRoutingModule,
+    DirectivesModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
@@ -55,7 +60,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-    DelayResolve, MacroResolve
+    MacroResolve, PersonalDataResolve, MeasurementResolve, BodyDimensionsResolve
   ]
 })
 export class ProfileModule { }

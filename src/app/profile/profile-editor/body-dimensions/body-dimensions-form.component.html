@@ -1,0 +1,20 @@
+<form autocomplete="off" class="body-dimensions-form-container" [formGroup]="bodyDimensionsForm"
+  (ngSubmit)="save(formDirective)" #formDirective="ngForm">
+  <mat-form-field appearance="fill" *ngFor="let field of fields">
+    <mat-label>{{field.viewValue}}</mat-label>
+    <input type="number" matInput [formControlName]="field.control"
+      [placeholder]="(bodyDimensions$ | async)[field.control] ? 'Było '+ (bodyDimensions$ | async)[field.control] + ' ' + field.suffix : ''">
+    <span matSuffix>{{field.suffix}}</span>
+    <validation-feedback [controlName]="field.control">
+      <mat-error *ngIf="bodyDimensionsForm.controls[field.control].getError('min') as error">
+        Minimalna wartość to <b>{{error.min}}</b> {{field.suffix}}
+      </mat-error>
+      <mat-error *ngIf="bodyDimensionsForm.controls[field.control].getError('max') as error">
+        Maksymalna wartość to <b>{{error.max}}</b> {{field.suffix}}
+      </mat-error>
+    </validation-feedback>
+  </mat-form-field>
+  <div class="measurement-save-button">
+    <button mat-raised-button>Zatwierdź</button>
+  </div>
+</form>

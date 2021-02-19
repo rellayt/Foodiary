@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarService } from '../services/snack-bar.service';
 
 interface LoginCredentials {
   username: string;
@@ -57,7 +58,6 @@ export class AuthService {
 
   updateCurrentUser(user: User, token?: string) {
     token = !token ? this.cookieService.get('token') : token
-    console.log(user);
 
     const session = { user: user, token: token }
     this.session.next(session)
@@ -82,24 +82,17 @@ export class AuthService {
       )
   }
 
-  logout(message?: string) {
+  logout(message?: string, navigateTo = 'home') {
     this.cookieService.delete('token', '/')
-
-    if (message) {
-      this._snackBar.open(message, "X", {
-        duration: 3500,
-        horizontalPosition: 'end',
-        verticalPosition: 'bottom',
-        panelClass: 'mat-snack-bar-error'
-      });
-    }
-
-    this.router.navigate(['home'])
     this.session.next({
-      ...this.session.getValue(),
+      user: null,
       token: null,
       message
     })
+
+    if (message) this.snackBar.open(message, 3500, true);
+
+    this.router.navigate([navigateTo])
   }
 
   authenticate() {
@@ -113,7 +106,7 @@ export class AuthService {
       )
   }
 
-  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router, private _snackBar: MatSnackBar) {
+  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router, private snackBar: SnackBarService) {
     this.state.subscribe(state => this.isAuthenticated = !!state)
   }
 }

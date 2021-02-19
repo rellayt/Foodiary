@@ -20,9 +20,9 @@
       <app-calory-form></app-calory-form>
     </mat-expansion-panel>
   </div>
-  <mat-accordion>
+  <mat-accordion multi>
     <div class="personal-data-wrapper">
-      <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel [expanded]="step === 1" (opened)="step = 1" (closed)="step = 2">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Dane osobowe
@@ -31,15 +31,26 @@
         <app-personal-data-form></app-personal-data-form>
       </mat-expansion-panel>
     </div>
-    <div class="body-measurements-data">
-      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Pomiary
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-measurement-form></app-measurement-form>
-      </mat-expansion-panel>
-    </div>
+    <mat-accordion multi>
+      <div class="body-measurements-data">
+        <mat-expansion-panel [expanded]="step === 2" (opened)="step = 2" (closed)="step = 1">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Pomiar
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-measurement-form></app-measurement-form>
+        </mat-expansion-panel>
+        <mat-expansion-panel [expanded]="step === 2" (opened)="step = 2" (closed)="step = 1">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Wymiary
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-body-dimensions-form></app-body-dimensions-form>
+        </mat-expansion-panel>
+      </div>
+    </mat-accordion>
+
   </mat-accordion>
 </div>

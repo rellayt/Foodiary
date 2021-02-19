@@ -5,6 +5,7 @@ import { first, switchMap } from 'rxjs/operators';
 import { AuthService } from '../../auth.service';
 import { timer } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarService } from '../../../services/snack-bar.service';
 
 @Component({
   selector: 'app-login-form',
@@ -21,7 +22,7 @@ export class LoginFormComponent {
   loading = false;
 
   constructor(private form: FormBuilder, private auth: AuthService,
-    private router: Router, private _snackBar: MatSnackBar) {
+    private router: Router, private snackBar: SnackBarService) {
     this.loginForm = this.form.group({
       login: ['', Validators.required],
       password: ['', Validators.required],
@@ -34,11 +35,7 @@ export class LoginFormComponent {
       switchMap(() => this.auth.login(this.loginForm.value)),
       first()
     ).subscribe(data => {
-      this._snackBar.open("Zalogowano", "X", {
-        duration: 1500,
-        horizontalPosition: 'end',
-        verticalPosition: 'bottom',
-      });
+      this.snackBar.open("Zalogowano", 1500);
       this.router.navigate([this.profileUrl])
     }, error => {
       this.loading = false;

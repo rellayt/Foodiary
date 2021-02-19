@@ -13,6 +13,7 @@
     <mat-error *ngIf="control.touched && control.getError('maxlength') as error">
       Maksymalna długość pola wynosi {{error.requiredLength}}
     </mat-error>
+
   </ng-container>
   <ng-template #ownErrors>
     <ng-content></ng-content>

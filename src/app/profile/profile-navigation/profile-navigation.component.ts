@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-navigation',
@@ -8,7 +7,6 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./profile-navigation.component.scss']
 })
 export class ProfileNavigationComponent implements OnInit {
-
 
   pages = [{ label: 'O mnie', link: 'about_me' },
   { label: 'Aktualizacja profilu', link: 'edit' }, { label: 'Ustawienia', link: 'settings' }];
@@ -20,8 +18,6 @@ export class ProfileNavigationComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeLink = this.router.url.split('/')[2]
-
-
   }
 
 }

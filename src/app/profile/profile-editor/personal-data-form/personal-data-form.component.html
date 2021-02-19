@@ -37,13 +37,17 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Województwo</mat-label>
-    <mat-select [disabled]="personalDataForm.controls['residingAbroad'].value" formControlName="province">
+    <mat-select [(value)]="personalDataForm.controls['province'].value"
+      [disabled]="personalDataForm.controls['residingAbroad'].value" formControlName="province">
       <mat-option *ngFor="let province of provinces" [value]="province.value">
         {{province.viewValue}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <div class="personal-data-save-button">
-    <button mat-raised-button type="submit">Zatwierdź</button>
+    <button mat-raised-button type="submit" [disabled]="!buttonStatus" [style.opacity]="buttonStatus ? '1' : '0.7'">
+      <div matTooltipClass="blue-tooltip" matTooltipPosition="above"
+        [matTooltip]="!buttonStatus ? 'Uzupełnij co najmniej dwa pola' : ''">Zatwierdź</div>
+    </button>
   </div>
 </form>

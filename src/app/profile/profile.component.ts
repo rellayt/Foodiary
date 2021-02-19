@@ -1,7 +1,8 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { MacroService } from '../services/macro.service';
-import { profileInitAnimation } from '../utility/profile-gsap-animations';
+import { subpageInitAnimation } from '../utility/subpage-animations';
+import { PersonalDataService } from '../services/personal-data.service';
+import { MeasurementService } from '../services/measurement.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,19 +12,17 @@ import { profileInitAnimation } from '../utility/profile-gsap-animations';
 export class ProfileComponent implements OnInit, OnDestroy {
   @ViewChild('profileCardRef', { static: true }) profileCardRef: ElementRef;
 
-  constructor(private router: Router, private macroService: MacroService) {
+  constructor(private macro: MacroService, private personalData: PersonalDataService
+    , private measurement: MeasurementService) {
   }
 
   ngOnInit(): void {
-    profileInitAnimation(this.profileCardRef.nativeElement, 0, 1.5, 0)
-    /*     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
-          .subscribe((event: any) => {
-            console.log(event);
-            console.log(event.url.split('/')[2]);
-          }); */
+    subpageInitAnimation(this.profileCardRef.nativeElement, 0, 0.7, 0)
   }
   ngOnDestroy(): void {
-    this.macroService.clearMacroCache()
+    this.macro.clearCache()
+    this.personalData.clearCache()
+    this.measurement.clearCache()
   }
 
 }
