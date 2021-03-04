@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from './models/user.model';
+import { Component } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { OnDestroy } from '@angular/core';
 
 export let browserRefresh = false;
@@ -12,25 +11,23 @@ export let previousPage = '';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnDestroy {
   title = 'Foodiary';
-  subscription: Subscription;
+  routerEvent: Subscription;
 
   constructor(private auth: AuthService, private router: Router) {
-    this.subscription = router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        browserRefresh = !router.navigated;
-        if (event.url.split('/')[2] !== 'edit') {
-          previousPage = event.url.split('/')[2]
-        }
+    this.routerEvent = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) browserRefresh = !this.router.navigated;
+
+      if (event instanceof NavigationEnd) {
+        setTimeout(() => previousPage = event.url, 200);
       }
     });
   }
 
   get isAuthenticated() { return this.auth.isAuthenticated }
 
-  ngOnInit() { }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.routerEvent.unsubscribe();
   }
 }

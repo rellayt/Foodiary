@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { subpageInitAnimation } from '../utility/subpage-animations';
+import { startAnimation } from '../utility/basic-animations';
 
 @Component({
   selector: 'app-product',
@@ -12,7 +12,7 @@ export class ProductsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    subpageInitAnimation(this.productsCardRef.nativeElement, 0, 0.7, 0)
+    startAnimation(this.productsCardRef.nativeElement, 0.7)
 
   }
 

@@ -1,11 +1,11 @@
-<div class="container">
+<div class="container" #productAddition>
   <div class="products-addition">
     <div class="products-addition__header">
-      Dodawanie produktów
+      Dodanie produktów
     </div>
     <div class="products-addition__line"></div>
     <form autocomplete="off" [formGroup]="productsAddition">
-      <div class="products-addition__group" [formGroup]="product"
+      <div class="products-addition__group" [formGroup]="product" #groups
         *ngFor="let product of getControlList(productsAddition.get('products')); let i = index">
         <div class="products-addition__group--delete-button"
           [style.visibility]="productsAddition.controls['products'].length > 1 ? 'visible' : 'hidden'">
@@ -18,37 +18,32 @@
           <input matInput formControlName="name" maxLength="60" formControlName="name" />
           <validation-feedback controlName="name"></validation-feedback>
         </mat-form-field>
-        <!-- <mat-form-field appearance="fill">
-          <mat-label>Kaloryczność</mat-label>
-          <input matInput formControlName="calories" />
-        </mat-form-field> -->
         <mat-form-field appearance="fill">
           <mat-label>Białko</mat-label>
-          <input matInput [inputMaxLength]="3" zeroPrefixDeleter type="number" formControlName="protein" />
+          <input matInput [inputMaxLength]="4" zeroPrefixDeleter type="number" formControlName="protein" />
           <span>/100 g</span>
           <validation-feedback controlName="protein">
-            <mat-error
-              *ngIf="(getControl(i,'protein').getError('max') || getControl(i,'protein').getError('min')) as error">
+            <mat-error *ngIf="getControl(i,'protein').getError('max') || getControl(i,'protein').getError('min')">
               Nieprawidłowa wartość
             </mat-error>
           </validation-feedback>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Węglowodany</mat-label>
-          <input matInput [inputMaxLength]="3" zeroPrefixDeleter type="number" formControlName="carb" />
+          <input matInput [inputMaxLength]="4" zeroPrefixDeleter type="number" formControlName="carb" />
           <span>/100 g</span>
           <validation-feedback controlName="carb">
-            <mat-error *ngIf="(getControl(i,'carb').getError('max') || getControl(i,'carb').getError('min')) as error">
+            <mat-error *ngIf="getControl(i,'carb').getError('max') || getControl(i,'carb').getError('min')">
               Nieprawidłowa wartość
             </mat-error>
           </validation-feedback>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Tłuszcze</mat-label>
-          <input matInput [inputMaxLength]="3" zeroPrefixDeleter type="number" formControlName="fat" />
+          <input matInput [inputMaxLength]="4" zeroPrefixDeleter type="number" formControlName="fat" />
           <span>/100 g</span>
           <validation-feedback controlName="fat">
-            <mat-error *ngIf="(getControl(i,'fat').getError('max') || getControl(i,'fat').getError('min')) as error">
+            <mat-error *ngIf="getControl(i,'fat').getError('max') || getControl(i,'fat').getError('min')">
               Nieprawidłowa wartość
             </mat-error>
           </validation-feedback>
@@ -66,8 +61,8 @@
           <validation-feedback controlName="category"></validation-feedback>
         </mat-form-field>
       </div>
-      <div class="products-addition__buttons">
-        <button mat-raised-button type="submit" [disabled]="!productsAddition.valid"
+      <div class="products-addition__buttons" #buttons>
+        <button mat-raised-button type="submit" (click)="save()" [disabled]="!productsAddition.valid"
           [style.opacity]="productsAddition.valid ? '1' : '0.7'">Zapisz</button>
         <button mat-raised-button [disabled]="!productsAddition.valid"
           [style.opacity]="productsAddition.valid ? '1' : '0.55'"

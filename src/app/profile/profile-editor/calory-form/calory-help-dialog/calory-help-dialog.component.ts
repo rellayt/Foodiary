@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { Macro } from '../../../../models/macro.model';
 import { gsap } from 'gsap';
+import { SnackBarService } from '../../../../services/snack-bar.service';
+import { MacroService } from '../../../../services/macro.service';
 
 @Component({
   selector: 'app-calory-help-dialog',
@@ -52,7 +54,7 @@ export class CaloryHelpDialogComponent implements OnInit {
   viewText: string;
   result = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private snackBar: SnackBarService, private macroService: MacroService) {
     this.caloryHelpForm = this.formBuilder.group({
       activity: ['', [Validators.required]],
       weight: ['', [Validators.required, Validators.min(35), Validators.max(180)]],
@@ -130,6 +132,12 @@ export class CaloryHelpDialogComponent implements OnInit {
       }
     }
     );
-
+  }
+  save() {
+    this.macroService.saveMacro({ protein: this.viewValues.protein, carb: this.viewValues.carb, fat: this.viewValues.fat })
+      .subscribe(res => {
+        this.macroService.clearCache()
+        this.snackBar.open("Pomyślnie zapisano", 1700)
+      })
   }
 }

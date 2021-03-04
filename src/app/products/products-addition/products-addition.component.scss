@@ -7,19 +7,18 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  overflow: auto;
+  overflow-y: auto;
   .products-addition {
     width: 55%;
-    height: 92%;
-    // background-color: rgba(0, 255, 0, 0.411);
+    height: 93%;
     &__header {
-      margin: 2% 0;
+      margin: 1% 0;
       font-size: 24px;
       text-align: center;
     }
     &__line {
       width: 100%;
-      margin: 10px 0;
+      margin: 15px 0 12px 0;
       box-shadow: 0px 0px 1px #f7f7f7;
       border-top: solid 1px $gray-light;
     }
@@ -36,9 +35,9 @@
       grid-template-columns: repeat(4, 25%);
       margin: 5px 0;
       font-size: 20px;
-      border-radius: 5px 5px 15px 15px;
+      border-radius: 5px;
       box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.05);
-      border: 1px solid rgba(50, 50, 50, 0.09);
+      border: 1px solid rgba(50, 50, 50, 0.18);
       &--delete-button {
         grid-column: 1/5;
         height: 5px;
@@ -55,7 +54,7 @@
           font-size: 22px;
           outline: none;
           cursor: pointer;
-          opacity: 0.7;
+          opacity: 0.4;
           color: $black;
           transition: all 150ms ease-out;
           &:hover {
@@ -69,7 +68,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transform: translate(8px, -9px);
+        transform: translate(8px, -13.5px);
         background-color: rgba(0, 0, 0, 0.04);
         border-bottom: 1px solid rgba(0, 0, 0, 0.4);
         color: $black;
@@ -93,16 +92,16 @@
         }
       }
       & > mat-form-field:not(:first-child) {
-        transform: translateY(-10px);
+        transform: translateY(-15px);
         input {
           width: 65%;
         }
       }
-      mat-form-field:first-child {
-        transform: translateY(-3px);
+      mat-form-field:nth-child(2) {
+        transform: translateY(-10px);
       }
       mat-form-field:last-child {
-        transform: translateY(-16px);
+        transform: translateY(-20px);
       }
       :nth-child(2),
       mat-form-field:last-child {
@@ -149,7 +148,7 @@
 
   validation-feedback {
     position: absolute;
-    width: 230px;
+    width: 250px;
     top: 33px;
     left: -14px;
     font-size: 16px;

@@ -1,14 +1,15 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { subpageInitAnimation } from 'src/app/utility/subpage-animations';
+import { startAnimation } from 'src/app/utility/basic-animations';
 
 @Component({
   selector: 'app-sub-navigation',
   templateUrl: './sub-navigation.component.html',
   styleUrls: ['./sub-navigation.component.scss']
 })
-export class SubNavigationComponent implements OnInit {
+export class SubNavigationComponent implements OnInit, OnDestroy {
 
   pages = [{ label: 'Profil', link: 'profile' },
   { label: 'Dziennik', link: 'diary' }, { label: 'Szablony', link: 'template' },
@@ -18,18 +19,22 @@ export class SubNavigationComponent implements OnInit {
   @ViewChild('subNavRef', { static: true }) subNavRef: ElementRef;
   @ViewChild('linkRef', { static: true }) linkRef: ElementRef;
 
+  routerEvent: Subscription
+
   constructor(private router: Router) {
   }
 
   ngOnInit(): void {
-    subpageInitAnimation(this.subNavRef.nativeElement, 0, 1.5, 0)
-    subpageInitAnimation(this.linkRef.nativeElement, 0, 3.5, -15)
+    startAnimation(this.subNavRef.nativeElement, 1.5,)
+    startAnimation(this.linkRef.nativeElement, 3.5, 0, -15)
 
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd))
+    this.routerEvent = this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         this.activeLink = event.url.split('/')[1]
       });
+  }
 
-
+  ngOnDestroy(): void {
+    this.routerEvent.unsubscribe()
   }
 }

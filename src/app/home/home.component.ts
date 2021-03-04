@@ -10,20 +10,15 @@ import { OnceClickedService } from '../services/animation/once-clicked.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  @ViewChild('welcomeWindow', { static: true }) welcomeRef: ElementRef<HTMLDivElement>;
-  @ViewChild('arrow', { static: true }) arrowRef: ElementRef<HTMLDivElement>;
-  @ViewChild('arrowContainer', { static: true }) arrowContainerRef: ElementRef<HTMLDivElement>;
+  @ViewChild('welcomeWindow', { static: true }) welcomeRef: ElementRef;
+  @ViewChild('arrow', { static: true }) arrowRef: ElementRef;
+  @ViewChild('arrowContainer', { static: true }) arrowContainerRef: ElementRef;
 
   constructor(private router: Router, private onceClickedService: OnceClickedService) {
 
   }
 
   ngOnInit(): void {
-    /*     this.onceClickedService.onceClickedSubject.subscribe(value => {
-          if (value)
-          else
-            this.startWelcomeAnimation();
-        }); */
     this.checkedWelcomeAnimation();
 
   }

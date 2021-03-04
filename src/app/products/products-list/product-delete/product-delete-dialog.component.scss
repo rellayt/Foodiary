@@ -1,0 +1,24 @@
+@import "src/app/shared/colors.scss";
+.content {
+  margin-top: 10px;
+  font-size: 20px;
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+
+  button {
+    font-size: 20px;
+    margin: 15px 15px 0px 10px;
+  }
+
+  :first-child {
+    background-color: $white;
+    color: $black;
+  }
+  :nth-child(2) {
+    background-color: $red;
+    color: $white;
+  }
+}

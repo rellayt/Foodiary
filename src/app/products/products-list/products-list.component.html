@@ -1,1 +1,64 @@
-<p>products-list works!</p>
+<div class="container" #productList>
+  <div class="product-list">
+    <div class="product-list__search">
+      <mat-form-field>
+        <mat-label>Wyszukaj</mat-label>
+        <input matInput type="text" autocomplete="off" [(ngModel)]="listProps.query" (blur)="search()"
+          (keydown.enter)="search()">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Kategoria</mat-label>
+        <mat-select [panelClass]="'expanded-select'" [(ngModel)]="listProps.category" (selectionChange)="setCategory()">
+          <mat-option *ngFor="let category of categories" [value]="category.value">
+            {{category.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="dataSource | async" multiTemplateDataRows class="product-list__table shadow">
+      <ng-container matColumnDef="Nazwa produktu">
+        <th mat-header-cell *matHeaderCellDef class="product-list__header"> Nazwa produktu </th>
+        <td mat-cell *matCellDef="let element" class="product-list__main-element"> {{element.name}}
+          <div class="product-list__main-element--options">
+            <button mat-icon-button (click)="openEditMode(element)" matTooltip="Edytuj" matTooltipClass="blue-tooltip"
+              matTooltipPosition="above">
+              <mat-icon>mode</mat-icon>
+            </button>
+            <button #deleteButton mat-icon-button matTooltip="Usuń" (click)="delete(element, deleteButton)"
+              matTooltipClass="red-tooltip" matTooltipPosition="above">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="1">
+          <div class="product-list__element-details"
+            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="product-list__element-details--element">{{element.calory }} kcal</div>
+            <div class="product-list__element-details--element">Białko<span> {{element.protein}}g</span></div>
+            <div class="product-list__element-details--element"> Węglowodany<span> {{element.carb}}g</span></div>
+            <div class="product-list__element-details--element"> Tłuszcze <span>{{element.fat}}g</span></div>
+            <div class="product-list__element-details--element">
+              {{categories[element.category].viewValue}}
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="product-list--element-row"
+        [class.expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="product-list--detail-row"></tr>
+    </table>
+    <div class="product-list--empty shadow" *ngIf="total === 0">Brak wyników</div>
+    <mat-paginator #paginator class="product-list--paginator shadow" [length]="total" [pageSize]="5"
+      [pageSizeOptions]="[3, 5, 10]" (page)="handlePaginator($event)">
+    </mat-paginator>
+  </div>
+  <div class="product-edit" *ngIf="focusedProduct" #productEdit>
+    <app-product-editor [product]="focusedProduct" (closeAction)="handleEditorResult($event)"></app-product-editor>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="meal-template">
+  <nav mat-tab-nav-bar class="meal-template__navigation">
+    <a mat-tab-link *ngFor="let page of pages" (click)="activeLink = page.link" [active]="activeLink == page.link"
+      [routerLink]="page.link" [disabled]="activeLink === page.link">
+      {{ page.label }}
+    </a>
+  </nav>
+</div>

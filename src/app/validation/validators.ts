@@ -1,4 +1,4 @@
-import { ValidatorFn, FormControl } from '@angular/forms';
+import { ValidatorFn, FormControl, AbstractControl } from '@angular/forms';
 
 export const validatePassword = (options: {
   uppercase?: boolean;
@@ -57,5 +57,20 @@ export const validateEmail = (): ValidatorFn => {
     const match = value.match(pattern)
 
     return match && value == match[0] ? null : { invalid_email: true }
+  }
+}
+export const productNameAvailability = (abstract): ValidatorFn => {
+  return (control: FormControl) => {
+    const formArray = abstract.controls['products']
+    let values = [], count = 0
+
+    if (formArray.length > 1) {
+      for (let i = 0; i < formArray.length; i++) {
+        values.push(formArray.at(i).controls['name'].value)
+      }
+      values.reduce((acc, val) => val === control.value ? count++ : null, 0)
+    }
+
+    return count >= 2 ? { invalid_product_name: true } : null
   }
 }

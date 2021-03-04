@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { filter, map, switchMap, take, tap } from 'rxjs/operators';
+import { filter, finalize, map, switchMap, take, tap } from 'rxjs/operators';
 import { ValidationService } from 'src/app/validation/validation.service';
 import { validateEmail, validatePassword, validateUsername } from 'src/app/validation/validators';
 import { ProfileService } from '../profile.service';
 import { Subscription, timer } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RoutesRecognized } from '@angular/router';
-import { subpageEndAnimation, subpageInitAnimation } from 'src/app/utility/subpage-animations';
+import { endAnimation, startAnimation } from 'src/app/utility/basic-animations';
 import { browserRefresh } from '../../app.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteProfileDialogComponent } from './delete/delete-profile-dialog.component';
@@ -28,33 +28,27 @@ export class SettingsComponent implements OnInit, OnDestroy {
   loading = false
 
   settingsForm: any
-  eventSubscription: Subscription
-  dialogSubscription: Subscription
-
+  routerEvent: Subscription
   profile$ = this.profileService.getUserProfile().pipe(
     map(profile => { return { name: profile.name, email: profile.email } })
   )
 
-
   ngOnInit(): void {
     this.profile$.pipe(take(1)).subscribe(profile => this.settingsForm.patchValue(profile))
 
-    browserRefresh ? subpageInitAnimation(this.profileSettingsRef.nativeElement, 0, 1) :
-      subpageInitAnimation(this.profileSettingsRef.nativeElement, -20)
+    browserRefresh ? startAnimation(this.profileSettingsRef.nativeElement, 1) :
+      startAnimation(this.profileSettingsRef.nativeElement, 0.35, -20)
 
-    this.eventSubscription = this.router.events.pipe(filter(event => event instanceof RoutesRecognized))
+    this.routerEvent = this.router.events.pipe(filter(event => event instanceof RoutesRecognized))
       .subscribe((event: any) => {
-        subpageEndAnimation(this.profileSettingsRef.nativeElement, -20)
+        const nextPage = event.url
+
+        endAnimation(this.profileSettingsRef.nativeElement, 0.35, nextPage === '/profile/edit' || nextPage === '/profile/about_me' ? -20 : 0)
       });
-    this.dialogSubscription = this.matDialogRef.afterAllClosed.subscribe(() => {
-      this.dialogOpenButton._elementRef.nativeElement.classList.remove('cdk-program-focused');
-      this.dialogOpenButton._elementRef.nativeElement.classList.remove('cdk-focused');
-    })
   }
 
-  ngOnDestroy(): void {
-    this.eventSubscription.unsubscribe()
-    this.dialogSubscription.unsubscribe()
+  ngOnDestroy() {
+    this.routerEvent.unsubscribe()
   }
 
   constructor(private form: FormBuilder, private validation: ValidationService,
@@ -67,10 +61,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
         Validators.maxLength(12),
         validateUsername()
       ],
-        this.validation.validateNameAvailability({ avoidCurrentValue: true })
+        this.validation.usernameAvailability({ avoidCurrentValue: true })
       ),
       email: this.form.control('', validateEmail(),
-        this.validation.validateEmailAvailability({ avoidCurrentValue: true })
+        this.validation.emailAvailability({ avoidCurrentValue: true })
       ),
       password: this.form.control(null, Validators.required),
       newPassword: this.form.control(null, [
@@ -104,8 +98,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   openDialog() {
-    this.matDialogRef.open(DeleteProfileDialogComponent, {
+    const dialog = this.matDialogRef.open(DeleteProfileDialogComponent, {
       disableClose: true
     });
+    dialog.afterClosed().subscribe(data => this.dialogOpenButton._elementRef.nativeElement.blur())
   }
+
 }

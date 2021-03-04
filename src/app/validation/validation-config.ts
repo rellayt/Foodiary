@@ -8,4 +8,5 @@ export const config = {
   invalid_login: 'Nieprawidłowe dane logowania',
   invalid_password: 'Nieprawidłowe hasło',
   pattern: 'Nieprawidłowe dane',
+  invalid_product_name: 'Podana nazwa jest zajęta',
 };

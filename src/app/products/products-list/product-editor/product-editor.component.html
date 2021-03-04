@@ -1,0 +1,64 @@
+<div class="container" #productEditor>
+  <div class="product-editor shadow">
+    <div class="product-editor--close-icon">
+      <button>
+        <mat-icon (click)="closeEditMode()" matTooltip="Zamknij" matTooltipClass="blue-tooltip"
+          [matTooltipPosition]="'above'">close</mat-icon>
+      </button>
+    </div>
+    <form [formGroup]="productEditorForm" (ngSubmit)="updateProduct()">
+      <mat-form-field appearance="outline">
+        <mat-label>Nazwa</mat-label>
+        <input matInput formControlName="name" maxLength="60" formControlName="name" />
+        <validation-feedback controlName="name"></validation-feedback>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Białko</mat-label>
+        <input matInput [inputMaxLength]="4" zeroPrefixDeleter type="number" formControlName="protein" />
+        <span>/100 g</span>
+        <validation-feedback controlName="protein">
+          <mat-error
+            *ngIf="productEditorForm.controls['protein'].getError('max') || productEditorForm.controls['protein'].getError('min')">
+            Nieprawidłowa wartość
+          </mat-error>
+        </validation-feedback>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Węglowodany</mat-label>
+        <input matInput [inputMaxLength]="4" zeroPrefixDeleter type="number" formControlName="carb" />
+        <span>/100 g</span>
+        <validation-feedback controlName="carb">
+          <mat-error
+            *ngIf="productEditorForm.controls['carb'].getError('max') || productEditorForm.controls['carb'].getError('min')">
+            Nieprawidłowa wartość
+          </mat-error>
+        </validation-feedback>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Tłuszcze</mat-label>
+        <input matInput [inputMaxLength]="4" zeroPrefixDeleter type="number" formControlName="fat" />
+        <span>/100 g</span>
+        <validation-feedback controlName="fat">
+          <mat-error
+            *ngIf="productEditorForm.controls['fat'].getError('max') || productEditorForm.controls['fat'].getError('min')">
+            Nieprawidłowa wartość
+          </mat-error>
+        </validation-feedback>
+      </mat-form-field>
+      <div class="product-editor--calories">
+        <span>{{getCalory()}}</span>kcal
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Kategoria</mat-label>
+        <mat-select [panelClass]="'expanded-select'" formControlName="category">
+          <mat-option *ngFor="let category of categories" [value]="category.value">
+            {{category.viewValue}}
+          </mat-option>
+        </mat-select>
+        <validation-feedback controlName="category"></validation-feedback>
+      </mat-form-field>
+      <button mat-raised-button type="submit" [disabled]="!productEditorForm.valid"
+        [style.opacity]="productEditorForm.valid ? '1' : '0.7'">Zapisz</button>
+    </form>
+  </div>
+</div>

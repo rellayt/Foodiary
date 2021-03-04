@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTooltipDefaultOptions, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { initLogoAnimation, userNavAnimation } from 'src/app/utility/navbar-gsap-animations';
-import { subpageInitAnimation } from 'src/app/utility/subpage-animations';
+import { startAnimation } from 'src/app/utility/basic-animations';
 import { AuthService } from '../../../auth/auth.service';
 import { ProfileService } from '../../../profile/profile.service';
 import { SnackBarService } from '../../../services/snack-bar.service';
@@ -34,7 +34,7 @@ export class UserNavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialAnimations()
-    subpageInitAnimation(this.userNavbar.nativeElement, 0, 1.5, 0)
+    startAnimation(this.userNavbar.nativeElement, 1.5)
 
   }
 

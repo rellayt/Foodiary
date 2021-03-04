@@ -55,11 +55,10 @@
       position: relative;
       top: 10px;
     }
-    .mat-label {
-      font-size: 3.2rem !important;
-    }
-    mat-select {
-      font-size: 1.1rem;
+  }
+  ::ng-deep {
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+      transform: translateY(-3px);
     }
   }
 }
@@ -183,7 +182,7 @@
         transition: all 200ms ease-in-out;
         &:hover {
           transition: all 200ms ease-in-out;
-          background-color: $gray-light-low-opacity;
+          background-color: $gray-light-50-opacity;
         }
       }
     }
@@ -288,38 +287,37 @@
     .mat-form-field-wrapper {
       padding-bottom: 1em;
     }
-    .ng-star-inserted {
-      font-size: 19px;
+
+    $custom-label-color: rgba(0, 0, 0, 0.6);
+    .ng-tns-c166-33 {
+      font-size: 18px;
+    }
+    .mat-input-element {
+      caret-color: $blue !important;
+    }
+
+    .mat-form-field-invalid .mat-input-element,
+    .mat-warn .mat-input-element {
+      caret-color: $blue !important;
+    }
+
+    .mat-form-field-label {
+      color: $custom-label-color !important;
+    }
+
+    .mat-radio-container {
+      margin-right: 3px;
+    }
+
+    .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+      position: relative;
+      top: 7px;
     }
   }
 }
 ::ng-deep {
-  $custom-label-color: rgba(0, 0, 0, 0.6);
-
-  // mat-icon-stepper selected color change
-
-  .mat-input-element {
-    caret-color: $blue !important;
-  }
-
-  .mat-form-field-invalid .mat-input-element,
-  .mat-warn .mat-input-element {
-    caret-color: $blue !important;
-  }
-
-  .mat-form-field-label {
-    color: $custom-label-color !important;
-  }
-
-  .mat-select-panel {
-    max-height: 80vh !important;
-  }
-  .mat-radio-container {
-    margin-right: 3px;
-  }
-
-  .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-    position: relative;
-    top: 4px;
+  .mat-select-panel .mat-option {
+    height: 2.7em;
+    line-height: 2.7em;
   }
 }

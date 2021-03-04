@@ -55,7 +55,7 @@ export class PersonalDataFormComponent implements OnInit, OnDestroy {
     map(data => data.personalData),
     filter(personalData => personalData !== null),
     first(),
-    tap(personalData => this.personalDataForm.patchValue(personalData))
+    tap(personalData => personalData ? this.personalDataForm.patchValue(personalData) : '')
   )
   formSubscription: Subscription
   personalDataId: string;

@@ -1,7 +1,7 @@
 <div class="sub-navigation-container" #subNavRef>
   <nav mat-tab-nav-bar class="sub-navigation-wrapper" #linkRef>
-    <a mat-tab-link *ngFor="let page of pages" (click)="activeLink = page.link" [active]="activeLink == page.link"
-      [routerLink]="page.link">
+    <a mat-tab-link *ngFor="let page of pages" (click)="activeLink = page.link" [disabled]="activeLink == page.link"
+      [active]="activeLink == page.link" [routerLink]="page.link">
       {{ page.label }}
     </a>
   </nav>

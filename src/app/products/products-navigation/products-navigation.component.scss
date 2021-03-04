@@ -1,51 +1,35 @@
 @import "src/app/shared/colors.scss";
 
-::ng-deep .mat-tab-label,
-.mat-tab-link {
-  width: 33%;
-  font-size: 21px !important;
-  color: $black !important;
-  opacity: 0.9 !important;
-}
-::ng-deep .mat-tab-links {
-  display: flex;
-  justify-content: center;
-}
-.products-navigation-container {
-  ::ng-deep .mat-ink-bar {
-    height: 0.1em !important;
-    background-color: $blue;
-  }
-  ::ng-deep .mat-tab-labels {
-    justify-content: center;
-  }
-}
-.sub-navigation-container {
-  background-color: $white;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 4px 0px 8px #00000028;
-  a {
-    padding: 1.6vw 0 1.3vw 0;
-  }
-}
-
-.sub-navigation-wrapper {
-  background-color: $white;
-}
-.products-navigation-container {
+.products {
   width: 100%;
 
-  ::ng-deep .mat-tab-label,
-  .mat-tab-link {
-    font-size: 22px;
-    color: $black;
-    opacity: 0.9;
+  &__navigation {
+    background-color: $white;
   }
-  ::ng-deep .mat-ink-bar {
-    height: 0.2em !important;
-    background-color: $blue !important;
+  ::ng-deep {
+    .mat-ink-bar {
+      height: 0.2em !important;
+      background-color: $blue;
+    }
+    .mat-tab-labels {
+      justify-content: center;
+    }
+    .mat-tab-label,
+    .mat-tab-link {
+      font-size: 22px;
+      color: $black;
+      opacity: 0.9;
+    }
+    .mat-tab-label,
+    .mat-tab-link {
+      width: 33%;
+      font-size: 21px !important;
+      color: $black !important;
+      opacity: 0.9 !important;
+    }
+    .mat-tab-links {
+      display: flex;
+      justify-content: center;
+    }
   }
 }

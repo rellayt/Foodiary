@@ -14,7 +14,7 @@ export class ValidationService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  validateNameAvailability(options = { avoidCurrentValue: false }): AsyncValidatorFn {
+  usernameAvailability(options = { avoidCurrentValue: false }): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
 
       let match = false
@@ -23,7 +23,7 @@ export class ValidationService {
         match = name.toLowerCase() === '' + control.value.toLowerCase()
       }
 
-      return match ? of(null) : this.checkName(control.value).pipe(
+      return match ? of(null) : this.checkUsername(control.value).pipe(
         first(),
         delay(100),
         map(res => {
@@ -33,7 +33,7 @@ export class ValidationService {
     }
   }
 
-  validateEmailAvailability(options = { avoidCurrentValue: false }): AsyncValidatorFn {
+  emailAvailability(options = { avoidCurrentValue: false }): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
 
       let match = false
@@ -54,7 +54,6 @@ export class ValidationService {
 
   validatePassword(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-
       return this.checkPassword(control.value).pipe(
         first(),
         delay(100),
@@ -65,15 +64,29 @@ export class ValidationService {
     }
   }
 
+  productNameAvailability(currentValue = null): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
 
-  checkName(name: string) {
-    return this.http.get<{ available: boolean }>(`${environment.API_URL}/auth/check_name/${name}`, { headers: { skip: "true" } })
+      const match = currentValue ? currentValue === control.value : false
+
+      return match ? of(null) : this.checkProductname(control.value).pipe(
+        map(res => {
+          return res ? { invalid_product_name: true } : null
+        })
+      )
+    }
   }
 
+  checkUsername(name: string) {
+    return this.http.get<{ available: boolean }>(`${environment.API_URL}/auth/check_name/${name}`, { headers: { skip: "true" } })
+  }
   checkEmail(email: string) {
     return this.http.get<{ available: boolean }>(`${environment.API_URL}/auth/check_email/${email}`, { headers: { skip: "true" } })
   }
   checkPassword(password: string) {
     return this.http.post<boolean>(`${environment.API_URL}/auth/check_password`, { password: password })
+  }
+  checkProductname(name: string) {
+    return this.http.get<boolean>(`${environment.API_URL}/products/check_name/${name}`)
   }
 }

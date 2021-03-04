@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CaloryHelpDialogComponent } from './calory-help-dialog/calory-help-dialog.component';
 import { merge, Subscription } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
-import { filter, first, map, mapTo } from 'rxjs/operators';
+import { filter, first, map, mapTo, switchMap, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { getCalory, getNutrientPercent } from 'src/app/utility/macro-calculations';
 import { MacroService } from 'src/app/services/macro.service';
@@ -44,23 +44,7 @@ export class CaloryFormComponent implements OnInit, OnDestroy {
     map(data => data.macro),
     filter(macro => Object.values(macro).every(x => x !== 0)),
     first(),
-    map(macro => {
-      const { protein, carb, fat } = macro
-      const calory = getCalory(protein, carb, fat)
-      return {
-        calory: calory,
-        quantity: {
-          protein: protein,
-          carb: carb,
-          fat: fat
-        },
-        percent: {
-          protein: getNutrientPercent(protein * 4, calory),
-          carb: getNutrientPercent(carb * 4, calory),
-          fat: getNutrientPercent(fat * 9, calory)
-        },
-      }
-    })
+    map(macro => this.mapMacroValues(macro))
   )
 
   constructor(private matDialogRef: MatDialog, private form: FormBuilder, private route: ActivatedRoute,
@@ -71,14 +55,7 @@ export class CaloryFormComponent implements OnInit, OnDestroy {
       carb: this.createMacroGroup(),
       fat: this.createMacroGroup(),
     })
-    this.macro$.subscribe(data => {
-      this.caloryForm.controls['calory'].setValue(data.calory)
-      const nutrients = ['protein', 'carb', 'fat']
-      nutrients.forEach(nutrient => {
-        this.caloryForm.get(nutrient).controls['quantity'].setValue(data['quantity'][nutrient])
-        this.caloryForm.get(nutrient).controls['percent'].setValue(data['percent'][nutrient])
-      })
-    })
+    this.macro$.subscribe(data => this.patchMacroValues(data))
   }
 
   createMacroGroup = () => this.form.group({ quantity: this.form.control(0), percent: this.form.control(0) })
@@ -95,10 +72,6 @@ export class CaloryFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const dialogSubscription = this.matDialogRef.afterAllClosed.subscribe(() => {
-      this.dialogOpenButton._elementRef.nativeElement.classList.remove('cdk-program-focused');
-      this.dialogOpenButton._elementRef.nativeElement.classList.remove('cdk-focused');
-    })
 
     const calorySubscription = this.caloryForm.controls['calory']
       .valueChanges
@@ -131,7 +104,7 @@ export class CaloryFormComponent implements OnInit, OnDestroy {
         this.nutrientConflict = this.checkNutrientConflict()
       })
 
-    this.subscriptions.push(dialogSubscription, calorySubscription, percentSubscription, quantitySubscription)
+    this.subscriptions.push(calorySubscription, percentSubscription, quantitySubscription)
   }
 
   ngOnDestroy(): void {
@@ -140,7 +113,43 @@ export class CaloryFormComponent implements OnInit, OnDestroy {
 
 
   openDialog() {
-    this.matDialogRef.open(CaloryHelpDialogComponent, { disableClose: true });
+    const dialog = this.matDialogRef.open(CaloryHelpDialogComponent, { disableClose: true });
+    dialog.afterClosed()
+      .pipe(
+        first(),
+        tap(() => this.dialogOpenButton._elementRef.nativeElement.blur()),
+        filter(Boolean),
+        switchMap(() => this.macroService.getLatestMacro()),
+        map(macro => this.mapMacroValues(macro))
+      )
+      .subscribe(data => this.patchMacroValues(data))
+  }
+
+  mapMacroValues(macro) {
+    const { protein, carb, fat } = macro
+    const calory = getCalory(protein, carb, fat)
+    return {
+      calory: calory,
+      quantity: {
+        protein: protein,
+        carb: carb,
+        fat: fat
+      },
+      percent: {
+        protein: getNutrientPercent(protein * 4, calory),
+        carb: getNutrientPercent(carb * 4, calory),
+        fat: getNutrientPercent(fat * 9, calory)
+      },
+    }
+  }
+
+  patchMacroValues(data) {
+    this.caloryForm.controls['calory'].setValue(data.calory)
+    const nutrients = ['protein', 'carb', 'fat']
+    nutrients.forEach(nutrient => {
+      this.caloryForm.get(nutrient).controls['quantity'].setValue(data['quantity'][nutrient])
+      this.caloryForm.get(nutrient).controls['percent'].setValue(data['percent'][nutrient])
+    })
   }
 
   checkPercentageConflict() {

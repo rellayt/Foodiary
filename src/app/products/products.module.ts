@@ -10,7 +10,8 @@ import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsAdditionComponent } from './products-addition/products-addition.component';
 import { DirectivesModule } from '../directives/directives.module';
 import { ValidationModule } from '../validation/validation.module';
-
+import { ProductEditorComponent } from './products-list/product-editor/product-editor.component';
+import { ProductDeleteDialogComponent } from './products-list/product-delete/product-delete.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,8 @@ import { ValidationModule } from '../validation/validation.module';
     ProductsNavigationComponent,
     ProductsListComponent,
     ProductsAdditionComponent,
+    ProductEditorComponent,
+    ProductDeleteDialogComponent
   ],
   imports: [
     CommonModule,

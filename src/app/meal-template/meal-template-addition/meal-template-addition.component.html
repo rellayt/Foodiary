@@ -1,0 +1,171 @@
+<div class="container" #templateAddition>
+  <div class="template-addition">
+    <div class="template-addition__header">
+      Dodanie szablonu
+    </div>
+    <div class="template-addition__line"></div>
+    <div class="meal-template">
+      <div class="meal-template__header">
+        <div class="meal-template__header--timepicker">
+          <input matTooltip="Wybierz godzinę" matTooltipClass="blue-tooltip" [matTooltipPosition]="'above'"
+            placeholder="00:00" [(ngModel)]="mealTemplate.time" [ngxTimepicker]="fullTime" [format]="24" readonly>
+          <ngx-material-timepicker #fullTime [cancelBtnTmpl]="cancelButton" [confirmBtnTmpl]="confirmButton">
+          </ngx-material-timepicker>
+          <ng-template #cancelButton>
+            <button mat-raised-button class="cancel-button" style="margin-right: 10px;">Zamknij</button>
+          </ng-template>
+          <ng-template #confirmButton>
+            <button mat-raised-button class="confirm-button">Zatwierdź</button>
+          </ng-template>
+        </div>
+        <div class="meal-template__header--name">
+          <mat-form-field appearance="standard">
+            <input matInput autocomplete="off" maxlength="50" [(ngModel)]="mealTemplate.name"
+              placeholder="Nazwa szablonu">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="meal-template__wrapper">
+        <ul class="meal-template__headers">
+          <li>Produkt</li>
+          <li>Ilość</li>
+          <li>Kcal</li>
+          <li>Białko</li>
+          <li>Węglowodany</li>
+          <li>Tłuszcze</li>
+        </ul>
+        <div class="meal-template__body">
+          <mat-chip-list *ngIf="mealTemplate.products.length !== 0" class="meal-template__body--products" cdkDropList
+            cdkDropListOrientation="vertical" (cdkDropListDropped)="drop($event)">
+            <div class="meal-template__body--product" *ngFor="let product of mealTemplate.products; let i = index">
+              <div class="chip-box">
+                <mat-chip cdkDrag (removed)="removeProduct(product)">
+                  {{product.name}}
+                  <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+              </div>
+              <div class="quantity">
+                <input matInput zeroPrefixDeleter [ngModel]="product.quantity  | number : '1.0-0'" autocomplete="off"
+                  type="number" [inputMaxLength]="3" (ngModelChange)="calculateByQuantity($event, i)">
+                <div class="input-bottom-line"></div>
+                <span matSuffix
+                  [ngClass]="product.quantity < 10 ? 'move-left-one-digit-length' : product.quantity < 100 ? 'move-left-two-digit-length' : 'move-left-three-digit-length'">g</span>
+              </div>
+              <div class="calory">
+                <input matInput zeroPrefixDeleter [ngModel]="product.calory  | number : '1.0-0'" autocomplete="off"
+                  type="number" [inputMaxLength]="3" (ngModelChange)="calculateByCalory($event, i)">
+                <div class="input-bottom-line"></div>
+              </div>
+              <div class="macro-item">
+                <span>{{product.protein | number : '1.0-0'}} </span>
+                <span matSuffix>g</span>
+              </div>
+              <div class="macro-item">
+                <span>{{product.carb | number : '1.0-0'}} </span>
+                <span matSuffix>g</span>
+              </div>
+              <div class="macro-item">
+                <span>{{product.fat | number : '1.0-0'}} </span>
+                <span matSuffix>g</span>
+              </div>
+            </div>
+          </mat-chip-list>
+          <div class="meal-template__body--no-products" *ngIf="mealTemplate.products.length === 0"></div>
+        </div>
+        <form class="meal-template__add" [formGroup]="templateAdditionForm">
+          <div class="meal-template__add--inputs">
+            <mat-form-field appearance="fill" autocomplete="off">
+              <mat-label>Produkt</mat-label>
+              <input type="text" formControlName="productSearch" matInput autocomplete="off" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  [style.display]="templateAdditionForm.controls['productSearch'].value.length > 2 && !loading ? 'block' : 'none'"
+                  *ngFor="let option of options" [value]="option.name" (onSelectionChange)="selectProduct(option)"
+                  matTooltip="B {{option.protein}}g / W {{option.carb}}g / T {{option.fat}}g - {{option.calory}}kcal"
+                  matTooltipClass="blue-tooltip" [matTooltipPosition]="'above'">
+                  <div class="option" [style.font-weight]="option.id ? '600' : '500'">{{option.name}}</div>
+                </mat-option>
+                <mat-option disabled
+                  [style.display]="templateAdditionForm.controls['productSearch'].value.length > 2  && loading ? '' : 'none'">
+                  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </mat-option>
+                <mat-option class="option" disabled
+                  [style.display]="templateAdditionForm.controls['productSearch'].value.length > 2 && options.length === 0  && !loading ? '' : 'none'">
+                  Brak wyników
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Ilość</mat-label>
+              <input type="number" formControlName="quantity"
+                [value]="templateAdditionForm.controls['quantity'].value |  number : '1.0-1'" zeroPrefixDeleter matInput
+                [inputMaxLength]="3" autocomplete="off">
+              <span matSuffix [style.opacity]="selectedProduct ? '1' : '0.5'">g</span>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Kalorie</mat-label>
+              <input type="number" formControlName="calory"
+                [value]="templateAdditionForm.controls['calory'].value |  number : '1.0-1'" zeroPrefixDeleter matInput
+                [inputMaxLength]="3" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="selected-product">
+            <div #macro class="selected-product__macro">
+              <ng-container *ngIf="selectedProduct">
+                <span>{{selectedProduct.protein | number : '1.0-1'}}g</span>
+                <span>{{selectedProduct.carb | number : '1.0-1'}}g</span>
+                <span>{{selectedProduct.fat | number : '1.0-1'}}g</span>
+              </ng-container>
+            </div>
+            <div class="selected-product--button">
+              <button mat-raised-button [disabled]="!selectedProduct" (click)="addProduct()"
+                [style.opacity]="selectedProduct ? '1' : '0.7'">Dodaj</button>
+            </div>
+          </div>
+        </form>
+        <div class="meal-template__summary">
+          <div class="meal-template__summary--calory">
+            <span>Kalorie</span>
+            <span>{{templateSummary.totalCalory | number : '1.0-0'}}</span>
+          </div>
+          <div class="meal-template__summary--properties">
+            <span>Białka</span>
+            <span>{{templateSummary.calory.protein | number : '1.0-1'}}</span>
+            <span>{{templateSummary.quantity.protein | number : '1.0-1'}}</span>
+          </div>
+          <div class="meal-template__summary--percentage">
+            <mat-progress-bar [value]="templateSummary.percentage.protein" mode="determinate"></mat-progress-bar>
+            <span>{{templateSummary.percentage.protein | number : '1.0-1'}}</span>
+          </div>
+          <div class="meal-template__summary--properties">
+            <span>Węglowodanów</span>
+            <span>{{templateSummary.calory.carb | number : '1.0-1'}}</span>
+            <span>{{templateSummary.quantity.carb | number : '1.0-1'}}</span>
+          </div>
+          <div class="meal-template__summary--percentage">
+            <mat-progress-bar [value]="templateSummary.percentage.carb" mode="determinate"></mat-progress-bar>
+            <span>{{templateSummary.percentage.carb | number : '1.0-1'}}</span>
+          </div>
+          <div class="meal-template__summary--properties">
+            <span>Tłuszczy</span>
+            <span>{{templateSummary.calory.fat | number : '1.0-1'}}</span>
+            <span>{{templateSummary.quantity.fat | number : '1.0-1'}}</span>
+          </div>
+          <div class="meal-template__summary--percentage">
+            <mat-progress-bar [value]="templateSummary.percentage.fat" mode="determinate"></mat-progress-bar>
+            <span>{{templateSummary.percentage.fat | number : '1.0-1'}}</span>
+          </div>
+        </div>
+        <div class="meal-template__buttons">
+          <button mat-raised-button [disabled]="mealTemplate.products.length === 0" (click)="resetMealTemplate()"
+            [style.opacity]="mealTemplate.products.length !== 0 ? '1' : '0.8'">Resetuj</button>
+          <button mat-stroked-button [disabled]="selectedProduct" #openDialogButton
+            (click)="openProductAdditionDialog(openDialogButton)" [style.opacity]="!selectedProduct ? '1' : '0.8'">Dodaj
+            własny produkt</button>
+          <button mat-raised-button [disabled]="mealTemplate.products.length === 0" (click)="addProduct()"
+            [style.opacity]="mealTemplate.products.length !== 0 ? '1' : '0.8'">Zapisz szablon</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+@import "src/app/shared/colors.scss";
+
+.quick-add-product {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  &__close-icon {
+    height: 6px;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    button {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transform: translate(20px, -20px);
+      mat-icon {
+        opacity: 0.6;
+        font-size: 24px;
+        font-weight: 600;
+        transition: opacity 200ms ease-in;
+        &:hover {
+          opacity: 0.9;
+          transition: opacity 200ms ease-in;
+        }
+      }
+    }
+  }
+
+  form {
+    height: 95%;
+    width: 100%;
+    display: grid;
+    font-size: 18.5px;
+    grid-template-columns: repeat(4, 25%);
+    padding: 0 15px;
+    // grid-column-gap: 10px;
+    mat-form-field:first-child,
+    mat-form-field:nth-child(6) {
+      grid-column: 1/5;
+    }
+    :nth-child(2),
+    :nth-child(3),
+    :nth-child(4) {
+      margin-right: 13px;
+    }
+    mat-form-field span {
+      position: relative;
+      top: -5px;
+      opacity: 0.9;
+    }
+  }
+  &__calories {
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 72%;
+    width: 100%;
+    border-radius: 4px 4px 0px 0px;
+    background-color: rgba(0, 0, 0, 0.04);
+    border-bottom: 1px solid #0000005e;
+    span {
+      margin-right: 5px;
+      font-size: 21px;
+    }
+  }
+
+  &__buttons {
+    font-size: 20px;
+    grid-column: 3/5;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 14px;
+    transform: translateX(14px);
+    button {
+      font-size: 21px;
+      height: 48px;
+      &:disabled {
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.07);
+      }
+    }
+
+    button:first-child {
+      background-color: $white;
+      color: $black;
+      margin-right: 15px;
+    }
+    button:nth-child(2) {
+      background-color: $blue;
+      color: $white;
+    }
+  }
+  validation-feedback {
+    position: absolute;
+    width: 250px;
+    top: 35px;
+    left: -12px;
+    font-size: 17px;
+  }
+  ::ng-deep {
+    .mat-form-field-appearance-fill .mat-form-field-infix {
+      padding: 0.35em 0;
+    }
+    .mat-form-field-label-wrapper {
+      top: -1.1em;
+    }
+
+    input.mat-input-element {
+      transform: translateY(-5px);
+    }
+    .mat-select-value {
+      transform: translateY(-4px);
+    }
+  }
+}

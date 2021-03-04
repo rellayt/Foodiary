@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { subpageInitAnimation } from 'src/app/utility/subpage-animations';
+import { startAnimation } from 'src/app/utility/basic-animations';
 import { Router, RoutesRecognized } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { browserRefresh, previousPage } from '../../app.component';
-import { subpageEndAnimation } from '../../utility/subpage-animations';
+import { endAnimation } from '../../utility/basic-animations';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,33 +17,27 @@ export class ProfileEditorComponent implements OnInit, OnDestroy {
   panelOpenState = false;
 
   step = 2
-
+  routerEvent: Subscription
   constructor(private router: Router) { }
 
-  eventSubscription: Subscription
-
   ngOnInit(): void {
-    if (browserRefresh) {
-      subpageInitAnimation(this.profileEditorRef.nativeElement, 0, 1)
-    } else if (previousPage === 'settings') {
-      subpageInitAnimation(this.profileEditorRef.nativeElement, 20)
-    } else {
-      subpageInitAnimation(this.profileEditorRef.nativeElement, -20)
-    }
+    const props = browserRefresh ? [1, 0] : previousPage === '/profile/settings' ? [0.35, 20] : [0.35, -20]
 
-    this.eventSubscription = this.router.events
+    startAnimation(this.profileEditorRef.nativeElement, props[0], props[1])
+
+    this.routerEvent = this.router.events
       .pipe(filter(event => event instanceof RoutesRecognized))
-      .subscribe((events: any) => {
-        const nextPage = events.url.split('/')[2]
+      .subscribe((event: any) => {
+        const nextPage = event.url
 
-        nextPage === 'settings' ? subpageEndAnimation(this.profileEditorRef.nativeElement, 20) :
-          subpageEndAnimation(this.profileEditorRef.nativeElement, -20)
+        const value = nextPage === '/profile/settings' ? 20 : nextPage === '/profile/about_me' ? -20 : 0
 
+        endAnimation(this.profileEditorRef.nativeElement, 0.35, value)
       });
   }
 
   ngOnDestroy(): void {
-    this.eventSubscription.unsubscribe()
+    this.routerEvent.unsubscribe()
   }
 
 }

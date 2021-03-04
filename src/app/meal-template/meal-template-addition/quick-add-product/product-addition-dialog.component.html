@@ -1,0 +1,76 @@
+<div class="quick-add-product">
+  <div class="quick-add-product__close-icon">
+    <button>
+      <mat-icon [mat-dialog-close]='false' matTooltip="Zamknij" matTooltipClass="blue-tooltip"
+        [matTooltipPosition]="'above'">close
+      </mat-icon>
+    </button>
+  </div>
+  <h1 mat-dialog-title>Dodanie własnego produktu</h1>
+  <div mat-dialog-content>
+    <form [formGroup]="productAddition" autocomplete="off">
+      <mat-form-field appearance="fill">
+        <mat-label>Nazwa</mat-label>
+        <input matInput formControlName="name" maxLength="60" formControlName="name" />
+        <validation-feedback controlName="name"></validation-feedback>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Białko</mat-label>
+        <input matInput [inputMaxLength]="4" zeroPrefixDeleter type="number" formControlName="protein" />
+        <span matSuffix>/100 g</span>
+        <validation-feedback controlName="protein">
+          <mat-error
+            *ngIf="productAddition.controls['protein'].getError('max') || productAddition.controls['protein'].getError('min')">
+            Zła wartość
+          </mat-error>
+        </validation-feedback>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Węglowodany</mat-label>
+        <input matInput [inputMaxLength]="4" zeroPrefixDeleter type="number" formControlName="carb" />
+        <span matSuffix>/100 g</span>
+        <validation-feedback controlName="carb">
+          <mat-error
+            *ngIf="productAddition.controls['carb'].getError('max') || productAddition.controls['carb'].getError('min')">
+            Zła wartość
+          </mat-error>
+        </validation-feedback>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Tłuszcze</mat-label>
+        <input matInput [inputMaxLength]="4" zeroPrefixDeleter type="number" formControlName="fat" />
+        <span matSuffix>/100 g</span>
+        <validation-feedback controlName="fat">
+          <mat-error
+            *ngIf="productAddition.controls['fat'].getError('max') || productAddition.controls['fat'].getError('min')">
+            Zła wartość
+          </mat-error>
+        </validation-feedback>
+      </mat-form-field>
+      <div class="quick-add-product__calories">
+        <span>{{getCalory()}}</span>kcal
+      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Kategoria</mat-label>
+        <mat-select [panelClass]="'expanded-select'" formControlName="category">
+          <mat-option *ngFor="let category of categories" [value]="category.value">
+            {{category.viewValue}}
+          </mat-option>
+        </mat-select>
+        <validation-feedback controlName="category"></validation-feedback>
+      </mat-form-field>
+      <div class="quick-add-product__buttons">
+        <div [matTooltip]="productAddition.valid && productAddition.controls['category'].value === null ?
+        'Uzupełnij kategorię aby dodać produkt' : ''" matTooltipClass="blue-tooltip" [matTooltipPosition]="'above'">
+          <button mat-raised-button (click)="saveProduct()"
+            [disabled]="(!productAddition.valid || productAddition.controls['category'].value === null) || !canSave"
+            [style.opacity]="productAddition.valid && productAddition.controls['category'].value !== null ? '1' : '0.7'">
+            Zapisz do bazy
+          </button>
+        </div>
+        <button mat-raised-button type="submit" [disabled]="!productAddition.valid "
+          [style.opacity]="productAddition.valid ? '1' : '0.7'" [mat-dialog-close]="emitProduct()">Dodaj</button>
+      </div>
+    </form>
+  </div>
+</div>

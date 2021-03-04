@@ -31,11 +31,11 @@ export class RegisterFormComponent {
         Validators.minLength(3),
         Validators.maxLength(12),
         validateUsername()
-      ], this.validation.validateNameAvailability()),
+      ], this.validation.usernameAvailability()),
       email: this.form.control('', [
         Validators.required,
         validateEmail()
-      ], this.validation.validateEmailAvailability()),
+      ], this.validation.emailAvailability()),
       password: this.form.control('', [
         Validators.required,
         Validators.minLength(6),

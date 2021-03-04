@@ -22,6 +22,9 @@ import { ProfileModule } from './profile/profile.module';
 import { ProductsModule } from './products/products.module';
 import { DelayResolve } from './resolves/delay-resolve';
 import { DirectivesModule } from './directives/directives.module';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { getPolishPaginatorIntl } from '../polish-paginator-intl';
+import { MealTemplateModule } from './meal-template/meal-template.module';
 
 
 @NgModule({
@@ -34,6 +37,7 @@ import { DirectivesModule } from './directives/directives.module';
     SubNavigationComponent,
     GuestNavbarComponent,
     UserNavbarComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -44,13 +48,20 @@ import { DirectivesModule } from './directives/directives.module';
     AuthModule,
     ProfileModule,
     ProductsModule,
+    MealTemplateModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
   ],
 
-  providers: [UnauthorizedGuard, AuthorizedGuard, CookieService, ValidationService, DelayResolve
+  providers: [
+    UnauthorizedGuard,
+    AuthorizedGuard,
+    CookieService,
+    ValidationService,
+    DelayResolve,
+    { provide: MatPaginatorIntl, useValue: getPolishPaginatorIntl() }
   ],
   bootstrap: [AppComponent]
 })

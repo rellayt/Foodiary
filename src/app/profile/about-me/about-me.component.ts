@@ -1,11 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RoutesRecognized } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { filter, finalize, map } from 'rxjs/operators';
 import { User } from 'src/app/models/user.model';
-import { subpageEndAnimation, subpageInitAnimation } from 'src/app/utility/subpage-animations';
+import { endAnimation, startAnimation } from 'src/app/utility/basic-animations';
 import { ProfileService } from '../profile.service';
 import { browserRefresh } from 'src/app/app.component';
 import { Subscription } from 'rxjs';
+import { previousPage } from '../../app.component';
 
 @Component({
   selector: 'app-about-me',
@@ -13,30 +14,31 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./about-me.component.scss']
 })
 export class AboutMeComponent implements OnInit, OnDestroy {
-
   @ViewChild('aboutMeRef', { static: true }) aboutMeRef: ElementRef;
 
   profile$ = this.profileService.getUserProfile()
-  eventSubscription: Subscription
 
   macro$ = this.route.data.pipe(
     map(data => data.macro)
   )
-
+  routerEvent: Subscription
   constructor(private profileService: ProfileService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    browserRefresh ? subpageInitAnimation(this.aboutMeRef.nativeElement, 0, 1) :
-      subpageInitAnimation(this.aboutMeRef.nativeElement, 20)
+    const value = previousPage === "/profile/edit" || previousPage === "/profile/settings" ? 20 : 0
+    startAnimation(this.aboutMeRef.nativeElement, 0.35, value)
 
-    this.eventSubscription = this.router.events.pipe(filter(event => event instanceof RoutesRecognized))
+    this.routerEvent = this.router.events
+      .pipe(filter(event => event instanceof RoutesRecognized))
       .subscribe((event: any) => {
-        subpageEndAnimation(this.aboutMeRef.nativeElement, 20)
+        const nextPage = event.url
+        const value = nextPage.split('/')[1] !== 'profile' ? 0 : 20
+        endAnimation(this.aboutMeRef.nativeElement, 0.35, value)
       });
 
   }
   ngOnDestroy(): void {
-    this.eventSubscription.unsubscribe()
+    this.routerEvent.unsubscribe()
   }
 }
