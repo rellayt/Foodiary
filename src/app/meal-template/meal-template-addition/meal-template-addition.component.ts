@@ -90,7 +90,7 @@ export class MealTemplateAdditionComponent implements OnInit, OnDestroy {
     const value = previousPage === "/template/list" ? -20 : 0
     startAnimation(this.templateAddition.nativeElement, 0.35, value)
 
-    this.getTemplateSummary(this.mealTemplate.products)
+    this.calculateSummary(this.mealTemplate.products)
 
     this.routerEvent = this.router.events
       .pipe(filter(event => event instanceof RoutesRecognized))
@@ -180,10 +180,14 @@ export class MealTemplateAdditionComponent implements OnInit, OnDestroy {
     ).subscribe((product: Product) => {
       const { protein, carb, fat } = product
       this.mealTemplate.products.push({ quantity: 100, calory: getCalory(protein, carb, fat), ...product })
+      this.calculateSummary(this.mealTemplate.products)
+      setTimeout(() => {
+        this.templateAddition.nativeElement.scrollTo({ left: 0, top: this.templateAddition.nativeElement.scrollHeight, behavior: 'smooth' }), 205
+      }, 50)
     })
   }
 
-  getTemplateSummary(abstractProducts) {
+  calculateSummary(abstractProducts) {
     const nutriments = ['protein', 'carb', 'fat']
 
     const cached_templateSummary = deepCopy(this.templateSummary)
@@ -238,7 +242,7 @@ export class MealTemplateAdditionComponent implements OnInit, OnDestroy {
     this.templateAdditionForm.controls['calory'].reset({ value: '', disabled: true })
     endAnimation(this.macro.nativeElement, 0.4)
 
-    this.getTemplateSummary(this.mealTemplate.products)
+    this.calculateSummary(this.mealTemplate.products)
     setTimeout(() => this.selectedProduct = null, 400)
   }
 
@@ -248,14 +252,14 @@ export class MealTemplateAdditionComponent implements OnInit, OnDestroy {
     this.templateAdditionForm.controls['productSearch'].setValue('')
     setTimeout(() => {
       this.templateAddition.nativeElement.scrollTo({ left: 0, top: this.templateAddition.nativeElement.scrollHeight, behavior: 'smooth' }), 205
-    }, 150)
+    }, 50)
   }
 
   createAbstractSummary = (product: Product) => {
     const abstractProducts = [...this.mealTemplate.products]
     abstractProducts.push(product)
 
-    this.getTemplateSummary(abstractProducts)
+    this.calculateSummary(abstractProducts)
   }
 
   removeProduct(product: Product): void {
@@ -263,7 +267,7 @@ export class MealTemplateAdditionComponent implements OnInit, OnDestroy {
 
     if (index >= 0) {
       this.mealTemplate.products.splice(index, 1)
-      this.getTemplateSummary(this.mealTemplate.products)
+      this.calculateSummary(this.mealTemplate.products)
     }
   }
 
@@ -277,7 +281,7 @@ export class MealTemplateAdditionComponent implements OnInit, OnDestroy {
     if (this.selectedProduct) {
       this.resetSelectedProduct()
     } else {
-      this.getTemplateSummary([])
+      this.calculateSummary([])
     }
   }
   drop = (event: CdkDragDrop<Product[]>) =>
@@ -299,11 +303,11 @@ export class MealTemplateAdditionComponent implements OnInit, OnDestroy {
       const calory = +getCalory(protein, carb, fat)
 
       if (calory > 999) {
-        this.snackBar.open('Wyliczona wartość jest zbyt duża, ponownie dodaj produkt', 2800, true)
+        this.snackBar.open('Wyliczona wartość jest zbyt duża, dodaj produkt ponownie', 2800, true)
         this.mealTemplate.products.splice(index, 1)
       } else {
         this.mealTemplate.products[index].calory = calory
-        this.getTemplateSummary(this.mealTemplate.products)
+        this.calculateSummary(this.mealTemplate.products)
       }
 
     } catch (err) {
@@ -322,7 +326,7 @@ export class MealTemplateAdditionComponent implements OnInit, OnDestroy {
 
       this.mealTemplate.products[index].quantity = (value * quantity) / calory
       this.mealTemplate.products[index].calory = Math.round(value)
-      this.getTemplateSummary(this.mealTemplate.products)
+      this.calculateSummary(this.mealTemplate.products)
     } catch (err) {
       console.error(err);
     }
