@@ -1,0 +1,89 @@
+@import "src/app/shared/colors.scss";
+.search {
+    width: 100%;
+    height: 90px;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    &--inputs {
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        mat-form-field {
+            width: 60%;
+            transform: translateY(10px);
+        }
+        mat-form-field:nth-child(2),
+        mat-form-field:nth-child(3) {
+            margin-left: 7px;
+            width: 17%;
+            input {
+                width: 65%;
+            }
+            span {
+                opacity: 0.7;
+                position: relative;
+                right: 7px;
+            }
+        }
+    }
+    .selected-product {
+        display: grid;
+        grid-template-columns: 65% 35%;
+        height: 70%;
+        transform: translateY(10px);
+        background-color: $white;
+        &__macro {
+            opacity: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            font-size: 19px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+            height: 100%;
+            color: $black;
+            span {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            span:first-child::before {
+                content: "B ";
+                color: $blue;
+            }
+            span:nth-child(2)::before {
+                content: "W ";
+                color: $blue;
+            }
+            span:nth-child(3)::before {
+                content: "T ";
+                color: $blue;
+            }
+        }
+        &--button {
+            display: flex;
+            grid-column: 2/3;
+            justify-content: center;
+            align-items: center;
+            button {
+                font-size: 20px;
+                height: 40px;
+                background-color: $blue;
+                color: $white;
+            }
+        }
+    }
+     ::ng-deep {
+        .mat-form-field-appearance-fill .mat-form-field-flex {
+            padding: 0 0 0 10px;
+        }
+        .mat-form-field-label-wrapper {
+            top: -0.44375em;
+            padding-top: 0.84375em;
+        }
+        .mat-form-field-appearance-fill .mat-form-field-infix input {
+            transform: translateY(5px);
+        }
+    }
+}

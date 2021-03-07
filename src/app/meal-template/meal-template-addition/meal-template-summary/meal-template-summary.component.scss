@@ -1,0 +1,114 @@
+@import "src/app/shared/colors.scss";
+.summary {
+    height: 200px;
+    width: 100%;
+    display: grid;
+    font-size: 20px;
+    grid-template-columns: 65% 35%;
+    grid-template-rows: 0.2fr repeat(3, 0.7fr 1fr);
+    border-bottom: 2px solid $gray-light-25-opacity;
+    &::before {
+        content: "";
+        grid-row: 1/2;
+    }
+    .properties,
+    .percentage {
+        grid-column: 1/2;
+    }
+    .calory {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 27px;
+        grid-column: 2/3;
+        grid-row: 1/8;
+        span:first-child {
+            transform: translateY(-47px);
+            justify-self: flex-start;
+        }
+        span:nth-child(2) {
+            transform: translateY(7px);
+            &::after {
+                content: "kcal";
+                margin-left: 7px;
+                font-size: 24px;
+            }
+        }
+    }
+    .properties {
+        transform: translate(10px, 10px);
+        font-size: 20px;
+        span:first-child {
+            margin-left: 35px;
+            &::after {
+                content: "kcal";
+            }
+        }
+        span:nth-child(2) {
+            margin-left: 35px;
+            &::after {
+                content: "g";
+            }
+        }
+        span::after {
+            font-size: 19px;
+            opacity: 0.9;
+        }
+    }
+    div:nth-child(2)::before {
+        content: "Białka";
+    }
+    div:nth-child(4)::before {
+        content: "Węglowodanów";
+    }
+    div:nth-child(6)::before {
+        content: "Tłuszczy";
+    }
+    .percentage {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 90% 10%;
+        span {
+            display: flex;
+            justify-content: center;
+            margin: 0 7px;
+            &::after {
+                content: "%";
+            }
+        }
+    }
+    .percentage:last-child {
+        margin-bottom: 8px;
+    }
+}
+
+.summary-diary-mode {
+    width: 100%;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 33% repeat(5, 13.4%);
+    &::before {
+        content: "Podsumowanie";
+        opacity: 0.9;
+        grid-column: 1/3;
+    }
+    .calory,
+    .properties,
+    &::before {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 19px;
+        border-top: 1px solid $gray-light-50-opacity;
+        border-bottom: 1px solid $gray-light-50-opacity;
+    }
+    .calory,
+    .properties {
+        border-left: 1px solid $gray-light-50-opacity;
+    }
+    .properties::after {
+        content: 'g';
+        margin-left: 4px;
+    }
+}

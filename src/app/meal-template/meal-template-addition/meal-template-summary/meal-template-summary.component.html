@@ -1,0 +1,30 @@
+<div [ngClass]="!diaryMode ? 'summary' : 'summary-diary-mode'">
+    <div class="calory">
+        <span *ngIf="!diaryMode">Kalorie</span>
+        <span>{{templateSummary.totalCalory | number : '1.0-0'}}</span>
+    </div>
+    <div class="properties">
+        <span *ngIf="!diaryMode">{{templateSummary.calory.protein | number : '1.0-1'}}</span>
+        <span>{{templateSummary.quantity.protein | number : '1.0-1'}}</span>
+    </div>
+    <div class="percentage" *ngIf="!diaryMode">
+        <mat-progress-bar [value]="templateSummary.percentage.protein" mode="determinate"></mat-progress-bar>
+        <span>{{templateSummary.percentage.protein | number : '1.0-1'}}</span>
+    </div>
+    <div class="properties">
+        <span *ngIf="!diaryMode">{{templateSummary.calory.carb | number : '1.0-1'}}</span>
+        <span>{{templateSummary.quantity.carb | number : '1.0-1'}}</span>
+    </div>
+    <div class="percentage" *ngIf="!diaryMode">
+        <mat-progress-bar [value]="templateSummary.percentage.carb" mode="determinate"></mat-progress-bar>
+        <span>{{templateSummary.percentage.carb | number : '1.0-1'}}</span>
+    </div>
+    <div class="properties">
+        <span *ngIf="!diaryMode">{{templateSummary.calory.fat | number : '1.0-1'}}</span>
+        <span>{{templateSummary.quantity.fat | number : '1.0-1'}}</span>
+    </div>
+    <div class="percentage" *ngIf="!diaryMode">
+        <mat-progress-bar [value]="templateSummary.percentage.fat" mode="determinate"></mat-progress-bar>
+        <span>{{templateSummary.percentage.fat | number : '1.0-1'}}</span>
+    </div>
+</div>

@@ -12,6 +12,9 @@ import { DelayResolve } from '../resolves/delay-resolve';
 import { MealTemplateNavigationComponent } from './meal-template-navigation/meal-template-navigation.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { ProductAdditionDialogComponent } from './meal-template-addition/quick-add-product/product-addition-dialog.component';
+import { MealTemplateSummaryComponent } from './meal-template-addition/meal-template-summary/meal-template-summary.component';
+import { MealTemplateSearchComponent } from './meal-template-addition/meal-template-search/meal-template-search.component';
+import { MealTemplateBodyComponent } from './meal-template-addition/meal-template-body/meal-template-body.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { ProductAdditionDialogComponent } from './meal-template-addition/quick-a
     MealTemplateComponent,
     MealTemplateAdditionComponent,
     MealTemplateNavigationComponent,
-    ProductAdditionDialogComponent
+    ProductAdditionDialogComponent,
+    MealTemplateSummaryComponent,
+    MealTemplateSearchComponent,
+    MealTemplateBodyComponent
   ],
   imports: [
     CommonModule,

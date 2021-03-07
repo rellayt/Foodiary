@@ -53,11 +53,8 @@ export class ProductAdditionDialogComponent {
   emitProduct = () => {
     if (this.productAddition.controls['category'].value === null) {
       const { category, ...value } = this.productAddition.value
-      console.log(value);
-
       return value
     }
-    console.log(this.productAddition.value);
 
     return this.productAddition.value
   }
