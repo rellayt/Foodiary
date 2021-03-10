@@ -127,7 +127,7 @@ export class CaloryFormComponent implements OnInit, OnDestroy {
 
   mapMacroValues(macro) {
     const { protein, carb, fat } = macro
-    const calory = getCalory(protein, carb, fat)
+    const calory = getCalory(macro)
     return {
       calory: calory,
       quantity: {

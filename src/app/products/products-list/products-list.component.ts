@@ -9,15 +9,12 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, finalize, first, switchMap, tap } from 'rxjs/operators';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
-import { ProductDeleteDialogComponent } from './product-delete/product-delete.component';
+import { DeleteDialogComponent } from '../../layout/dialogs/delete/delete-dialog.component';
 import { endAnimation, startAnimation } from '../../utility/basic-animations';
 import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { previousPage } from 'src/app/app.component';
 
-export interface DialogData {
-  name: string;
-}
 
 @Component({
   selector: 'app-products-list',
@@ -41,7 +38,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     .pipe(map(data => data.map(product =>
     ({
       ...product,
-      calory: getCalory(product.protein, product.carb, product.fat)
+      calory: getCalory(product)
     }))
     ))
 
@@ -152,16 +149,17 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.expandedElement = null;
   }
 
-  delete(product: Product, deleteRef: any) {
-    const dialogRef = this.dialog.open(ProductDeleteDialogComponent, {
+  delete(product: Product, elementRef: any) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {
         name: product.name,
+        type: 'produkt'
       },
       disableClose: true,
       autoFocus: false
     })
     dialogRef.afterClosed().pipe(
-      tap(() => deleteRef._elementRef.nativeElement.blur()),
+      tap(() => elementRef._elementRef.nativeElement.blur()),
       filter(Boolean),
       switchMap(() => this.productService.delete(product.id))
     ).subscribe(res => {
@@ -176,7 +174,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   handleEditorResult(result: boolean) {
     this.focusedProduct = null
-    console.log(result);
 
     if (result) this.productService.setQuery(this.listProps.query)
   }

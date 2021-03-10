@@ -1,4 +1,74 @@
-<div class="container" #templateList>
-    <app-meal-template-body [mealTemplate]="selectedMealTemplate" (scrollDown)="scrollDown($event)"></app-meal-template-body>
+<div class="container" #listContainer>
+  <div class="meal-template-edit" [style.display]="selectedMealTemplate ? 'flex' : 'none'" #mealTemplateEdit>
+    <div class="meal-template-edit__header">
+      Edycja posiłku
+    </div>
+    <div class="meal-template-edit__line"></div>
+    <app-meal-template-body *ngIf="selectedMealTemplate" [mealTemplate]="selectedMealTemplate" [type]="'update'"
+      (scrollDown)="scrollDown($event)" (goBack)="backToList($event)">
+      <div class="meal-template-edit__back">
+        <button (click)="backToList(false)">Wróć</button>
+      </div>
+
+    </app-meal-template-body>
+  </div>
+  <div class="meal-template-list" #mealTemplateList [style.display]="selectedMealTemplate ? 'none' : 'flex'">
+    <div class="meal-template-list__header">
+      Spis zapisanych posiłków
+    </div>
+    <div class="meal-template-list__line"></div>
+    <div class="meal-template-list__empty" *ngIf="!(mealTemplate$ | async)">
+      <span>Brak posiłków</span>
+      <button mat-stroked-button [routerLink]="'../addition'">Dodaj</button>
+    </div>
+    <mat-accordion>
+      <div #groups *ngFor="let mealTemplate of mealTemplate$ | async let templateIndex = index">
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span>{{mealTemplate.time}}</span>
+              <span>{{mealTemplate.name}}</span>
+            </mat-panel-title>
+            <mat-panel-description>
+              <div class="description">
+                <span>{{mealTemplate.summary.protein | number: '1.0-0' }}</span>
+                <span>{{mealTemplate.summary.carb | number: '1.0-0' }}</span>
+                <span>{{mealTemplate.summary.fat | number: '1.0-0' }}</span>
+                <span>{{mealTemplate.summary.calory | number: '1.0-0' }}</span>
+              </div>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <ul>
+            <li>Lp.</li>
+            <li>Produkt</li>
+            <li>Ilość</li>
+            <li>B</li>
+            <li>W</li>
+            <li>T</li>
+            <li>Kcal</li>
+          </ul>
+          <div class="product" *ngFor="let product of mealTemplate.products; let i = index">
+            <span>{{i+1}}</span>
+            <span>{{product.name}}</span>
+            <span>{{product.quantity}}</span>
+            <span>{{product.protein}}</span>
+            <span>{{product.carb}}</span>
+            <span>{{product.fat}}</span>
+            <span>{{product.calory}}</span>
+          </div>
+          <div class="product-summary">
+            <div class="product-summary__buttons">
+              <button mat-raised-button #button (click)="delete(mealTemplate,button,templateIndex)">Usuń</button>
+              <button mat-raised-button (click)="selectMealTemplate(mealTemplate)">Edytuj</button>
+            </div>
+            <span>{{mealTemplate.summary.protein | number: '1.0-0'}}</span>
+            <span>{{mealTemplate.summary.carb | number: '1.0-0'}}</span>
+            <span>{{mealTemplate.summary.fat | number: '1.0-0'}}</span>
+            <span>{{mealTemplate.summary.calory | number: '1.0-0'}}</span>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </mat-accordion>
+  </div>
 
 </div>

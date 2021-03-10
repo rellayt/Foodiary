@@ -11,7 +11,6 @@ import { ProductsAdditionComponent } from './products-addition/products-addition
 import { DirectivesModule } from '../directives/directives.module';
 import { ValidationModule } from '../validation/validation.module';
 import { ProductEditorComponent } from './products-list/product-editor/product-editor.component';
-import { ProductDeleteDialogComponent } from './products-list/product-delete/product-delete.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +19,6 @@ import { ProductDeleteDialogComponent } from './products-list/product-delete/pro
     ProductsListComponent,
     ProductsAdditionComponent,
     ProductEditorComponent,
-    ProductDeleteDialogComponent
   ],
   imports: [
     CommonModule,

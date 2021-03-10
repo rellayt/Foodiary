@@ -1,15 +1,19 @@
 import { Component, ElementRef, OnInit, ViewChild, Output, Input } from '@angular/core';
-import { filter, tap, } from 'rxjs/operators';
-import { MealTemplate } from '../../../models/mealTemplate.model';
+import { filter, mergeMap, tap, } from 'rxjs/operators';
+import { MealTemplate } from '../../models/mealTemplate.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Product } from '../../../models/products.model';
-import { getCalory } from 'src/app/utility/macro-calculations';
+import { Product } from '../../models/products.model';
+import { getCalory, getMacroPercentages } from 'src/app/utility/macro-calculations';
 import { MatTooltipDefaultOptions, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
-import { ProductAdditionDialogComponent } from '../quick-add-product/product-addition-dialog.component';
+import { ProductAdditionDialogComponent } from './quick-add-product/product-addition-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { SnackBarService } from '../../../services/snack-bar.service';
-import { MealTemplateSearchComponent } from '../meal-template-search/meal-template-search.component';
+import { SnackBarService } from '../../services/snack-bar.service';
+import { MealTemplateSearchComponent } from './meal-template-search/meal-template-search.component';
 import { EventEmitter } from '@angular/core';
+import { MealTemplateService } from '../../services/mealTemplate.service';
+import { __importDefault } from 'tslib';
+import { HttpErrorResponse } from '@angular/common/http';
+import { iif, timer } from 'rxjs';
 
 export const tooltipSettings: MatTooltipDefaultOptions = {
   showDelay: 0,
@@ -28,43 +32,38 @@ export const tooltipSettings: MatTooltipDefaultOptions = {
 export class MealTemplateBodyComponent implements OnInit {
   @ViewChild('macro', { static: true }) macro: ElementRef
   @ViewChild('productSearch') productSearch: MealTemplateSearchComponent;
-  @Output() scrollDown: EventEmitter<Boolean> = new EventEmitter()
 
-  constructor(private dialog: MatDialog, private snackBar: SnackBarService) { }
-
-  addProductActivation = false
-
-  time = "12:00"
-  loading = false
 
   @Input() mealTemplate: MealTemplate = {
     name: '',
     time: '00:00',
     products: []
   }
+  @Input() type = 'create'
+  @Output() goBack: EventEmitter<Boolean> = new EventEmitter()
+  @Output() scrollDown: EventEmitter<Boolean> = new EventEmitter()
 
-  // mealTemplate: MealTemplate = fake_data
   abstractProducts: Product[]
 
-  options = []
-
   ngOnInit(): void {
+    if (this.mealTemplate.products.length > 0) {
+      this.mealTemplate.products = this.mealTemplate.products.map(product => ({ ...product, percentages: getMacroPercentages(product) }))
+    }
     this.abstractProducts = [...this.mealTemplate.products]
   }
 
 
-  openProductAdditionDialog(deleteRef: any) {
+  openProductAdditionDialog(elementRef: any) {
     const dialogRef = this.dialog.open(ProductAdditionDialogComponent, {
       autoFocus: false,
       disableClose: true,
       width: '800px',
     })
     dialogRef.afterClosed().pipe(
-      tap(() => deleteRef._elementRef.nativeElement.blur()),
+      tap(() => elementRef._elementRef.nativeElement.blur()),
       filter(Boolean),
     ).subscribe((product: Product) => {
-      const { protein, carb, fat } = product
-      this.mealTemplate.products.push({ quantity: 100, calory: getCalory(protein, carb, fat), ...product })
+      this.mealTemplate.products.push({ quantity: 100, calory: getCalory(product), ...product })
 
       this.abstractProducts = [...this.mealTemplate.products]
       this.scrollDown.emit(null)
@@ -112,10 +111,9 @@ export class MealTemplateBodyComponent implements OnInit {
 
       nutriments.forEach(name => this.mealTemplate.products[index][name] = (product[name] / quantity) * value)
 
-      const { protein, carb, fat } = this.mealTemplate.products[index]
       this.mealTemplate.products[index].quantity = value
 
-      const calory = +getCalory(protein, carb, fat)
+      const calory = +getCalory(this.mealTemplate.products[index])
 
       if (calory > 999) {
         this.snackBar.open('Wyliczona wartość jest zbyt duża, dodaj produkt ponownie', 2800, true)
@@ -160,101 +158,32 @@ export class MealTemplateBodyComponent implements OnInit {
   }
 
   save() {
-    console.log(this.mealTemplate);
+    const products = this.mealTemplate.products.map(product => {
+      const { _id, id, calory, category, percentages, name, ...clearProduct } = product
+      Object.keys(clearProduct).map((key) => {
+        clearProduct[key] = Math.round(clearProduct[key])
+      })
+      clearProduct['id'] = _id ? _id : null
+      clearProduct['name'] = name
 
+      return clearProduct as Product
+    })
+
+    const { time, name, id } = this.mealTemplate
+    const mealTemplate = { time: time, name: name, products: products }
+
+    timer(50).pipe(
+      mergeMap(() => iif(() => this.type === 'create',
+        this.mealTemplateService.save(mealTemplate),
+        this.mealTemplateService.update(mealTemplate, id)))
+    ).subscribe(res => {
+      this.snackBar.open(this.type === 'create' ? 'Szablon pomyślnie zapisany' : 'Szablon pomyślnie zaktualizowany')
+      this.type === 'update' ? this.goBack.emit(true) : this.resetMealTemplate()
+    }, (error: HttpErrorResponse) => {
+      let message = error.status === 409 ? 'Nazwa już istnieje' : 'Błąd serwera'
+      if (error.status === 409) this.mealTemplate.name = ''
+      this.snackBar.open(message, 1400, true)
+    })
   }
-
+  constructor(private dialog: MatDialog, private snackBar: SnackBarService, private mealTemplateService: MealTemplateService) { }
 }
-
-const fake_data: MealTemplate =
-{
-  name: "Obiadek",
-  time: "13:45",
-  products: [
-    {
-      calory: 0,
-      quantity: 100,
-      name: 'Pierogi',
-      protein: 25,
-      carb: 50,
-      fat: 10,
-      percentages: [
-        25.6,
-        51.3,
-        23.1
-      ]
-    },
-    {
-      calory: 0,
-      quantity: 25,
-      name: 'Truskawki',
-      protein: 47,
-      carb: 25,
-      fat: 15
-    },
-    {
-      calory: 0,
-      quantity: 240,
-      name: 'Banany',
-      protein: 15,
-      carb: 28,
-      fat: 29
-    },
-    {
-      calory: 0,
-      quantity: 240,
-      name: 'Banany',
-      protein: 15,
-      carb: 28,
-      fat: 29
-    },
-    {
-      calory: 0,
-      quantity: 240,
-      name: 'Banany',
-      protein: 15,
-      carb: 28,
-      fat: 29
-    },
-    {
-      calory: 0,
-      quantity: 240,
-      name: 'Banany',
-      protein: 15,
-      carb: 28,
-      fat: 29
-    },
-    {
-      calory: 0,
-      quantity: 240,
-      name: 'Banany',
-      protein: 15,
-      carb: 28,
-      fat: 29
-    }
-  ]
-}
-const fake_options: Product[] = [
-  {
-    calory: 450,
-    name: 'Ciasto',
-    protein: 10,
-    carb: 45,
-    fat: 12
-  },
-  {
-    calory: 70,
-    quantity: 0,
-    name: 'Placki',
-    protein: 1,
-    carb: 88,
-    fat: 14
-  },
-  {
-    calory: 155,
-    name: 'Mąka',
-    protein: 10,
-    carb: 48,
-    fat: 59
-  }
-]

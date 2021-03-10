@@ -11,10 +11,11 @@ import { DirectivesModule } from '../directives/directives.module';
 import { DelayResolve } from '../resolves/delay-resolve';
 import { MealTemplateNavigationComponent } from './meal-template-navigation/meal-template-navigation.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { ProductAdditionDialogComponent } from './meal-template-addition/quick-add-product/product-addition-dialog.component';
-import { MealTemplateSummaryComponent } from './meal-template-addition/meal-template-summary/meal-template-summary.component';
-import { MealTemplateSearchComponent } from './meal-template-addition/meal-template-search/meal-template-search.component';
-import { MealTemplateBodyComponent } from './meal-template-addition/meal-template-body/meal-template-body.component';
+import { ProductAdditionDialogComponent } from './meal-template-body/quick-add-product/product-addition-dialog.component';
+import { MealTemplateSummaryComponent } from './meal-template-body/meal-template-summary/meal-template-summary.component';
+import { MealTemplateSearchComponent } from './meal-template-body/meal-template-search/meal-template-search.component';
+import { MealTemplateBodyComponent } from './meal-template-body/meal-template-body.component';
+import { MealTemplateResolve } from '../resolves/meal-template-resolve';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { MealTemplateBodyComponent } from './meal-template-addition/meal-templat
     ProductAdditionDialogComponent,
     MealTemplateSummaryComponent,
     MealTemplateSearchComponent,
-    MealTemplateBodyComponent
+    MealTemplateBodyComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +40,8 @@ import { MealTemplateBodyComponent } from './meal-template-addition/meal-templat
     NgxMaterialTimepickerModule.setLocale('pl-PL')
   ],
   providers: [
-    DelayResolve
+    DelayResolve,
+    MealTemplateResolve
   ]
 })
 export class MealTemplateModule { }

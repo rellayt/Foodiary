@@ -6,6 +6,7 @@ import { MealTemplateComponent } from './meal-template.component';
 import { MealTemplateListComponent } from './meal-template-list/meal-template-list.component';
 import { MealTemplateAdditionComponent } from './meal-template-addition/meal-template-addition.component';
 import { CommonModule } from '@angular/common';
+import { MealTemplateResolve } from '../resolves/meal-template-resolve';
 
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
         component: MealTemplateListComponent,
         resolve: {
           'delay': DelayResolve,
+          'mealTemplate': MealTemplateResolve
         }
       },
       {

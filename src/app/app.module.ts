@@ -25,6 +25,7 @@ import { DirectivesModule } from './directives/directives.module';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getPolishPaginatorIntl } from '../polish-paginator-intl';
 import { MealTemplateModule } from './meal-template/meal-template.module';
+import { DeleteDialogComponent } from './layout/dialogs/delete/delete-dialog.component';
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import { MealTemplateModule } from './meal-template/meal-template.module';
     SubNavigationComponent,
     GuestNavbarComponent,
     UserNavbarComponent,
-
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,

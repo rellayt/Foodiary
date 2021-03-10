@@ -10,9 +10,8 @@ import { deepCopy } from 'src/app/utility/utility';
   templateUrl: './meal-template-summary.component.html',
   styleUrls: ['./meal-template-summary.component.scss']
 })
-export class MealTemplateSummaryComponent implements OnInit {
+export class MealTemplateSummaryComponent {
 
-  constructor() { }
   @Input() diaryMode = false
 
   templateSummary = {
@@ -34,8 +33,6 @@ export class MealTemplateSummaryComponent implements OnInit {
     },
   }
 
-  ngOnInit(): void { }
-
   @Input() set abstractProducts(abstractProducts: Product[]) {
     const nutriments = ['protein', 'carb', 'fat']
 
@@ -52,7 +49,7 @@ export class MealTemplateSummaryComponent implements OnInit {
       this.templateSummary.totalCalory += this.templateSummary.calory[name]
     })
     const { quantity: { protein: protein }, quantity: { carb: carb }, quantity: { fat: fat } } = this.templateSummary
-    const nutrimentsPercentage = getMacroPercentages(protein, carb, fat)
+    const nutrimentsPercentage = getMacroPercentages({ protein: protein, carb: carb, fat: fat })
 
     nutriments.forEach((name, i) => this.templateSummary.percentage[name] = nutrimentsPercentage[i])
 
@@ -87,4 +84,5 @@ export class MealTemplateSummaryComponent implements OnInit {
       takeWhile(x => (from < to) ? (x <= to) : (x >= to)),
     )
   }
+  constructor() { }
 }

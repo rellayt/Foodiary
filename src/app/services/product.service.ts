@@ -81,7 +81,7 @@ export class ProductService {
     return this.http.get<Product>(`${environment.API_URL}/products/${id}`)
   }
 
-  delete(productId: number) {
+  delete(productId: string) {
     return this.http.delete<Product>(`${environment.API_URL}/products/${productId}`)
   }
 

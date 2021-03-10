@@ -31,8 +31,7 @@ export class MealTemplateSearchComponent implements OnInit {
   }
 
   selectProduct(product) {
-    const { protein, carb, fat } = product
-    this.selectedProduct = { ...product, quantity: 100, percentages: getMacroPercentages(protein, carb, fat) }
+    this.selectedProduct = { ...product, quantity: 100, percentages: getMacroPercentages(product) }
     this.productSearchForm.patchValue({ query: product.name, quantity: 100, calory: product.calory })
     this.productSearchForm.enable()
     this.abstractProductEmitter.emit(this.selectedProduct)
@@ -56,7 +55,7 @@ export class MealTemplateSearchComponent implements OnInit {
           ...localProducts, ...externalProducts
         ].map(product => ({
           ...product,
-          calory: Math.round(getCalory(product.protein, product.carb, product.fat))
+          calory: Math.round(getCalory(product))
         }))),
       )
       .subscribe(data => {
@@ -72,10 +71,9 @@ export class MealTemplateSearchComponent implements OnInit {
 
         nutriments.forEach(name => this.selectedProduct[name] = this.selectedProduct[name] / quantity * value)
 
-        const { protein, carb, fat } = this.selectedProduct
         this.selectedProduct.quantity = value
 
-        this.selectedProduct.calory = +getCalory(protein, carb, fat).toFixed(1)
+        this.selectedProduct.calory = +getCalory(this.selectedProduct).toFixed(1)
         this.productSearchForm.controls['calory'].setValue(this.selectedProduct.calory)
         this.abstractProductEmitter.emit(this.selectedProduct)
       })

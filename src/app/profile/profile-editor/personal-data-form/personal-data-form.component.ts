@@ -117,6 +117,4 @@ export class PersonalDataFormComponent implements OnInit, OnDestroy {
 
   }
 
-  openSnackbar(message: string) {
-  }
 }
