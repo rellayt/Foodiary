@@ -8,17 +8,17 @@ The user's session is secured with a special token that grants access to selecte
 
 <b>Meal template addition & modifying food products</b>
 
-<div align="left">
+<div align="left"  style="height: 50%; width: 50%;">
       <a href="https://drive.google.com/file/d/1tfyf_5F43ygxNYjocBXSFw5M-pWQRUtB/view?usp=sharing">
-         <img src="https://i.imgur.com/Hk9O1KH.png" style="height: 50%; width: 50%;">
+         <img src="https://i.imgur.com/Hk9O1KH.png" >
       </a>
 </div>
 <br><br>
 <b>Product multiple addition, deletion and modification provided by server side pagination by per pages, page size, category and name </b>
 
-<div align="left">
+<div align="left" style="height: 50%; width: 50%;">
       <a href="https://drive.google.com/file/d/1tfyf_5F43ygxNYjocBXSFw5M-pWQRUtB/view?usp=sharing">
-         <img src="https://i.imgur.com/JkSxZXR.png" style="height: 50%; width: 50%;">
+         <img src="https://i.imgur.com/JkSxZXR.png">
       </a>
 </div>
 
