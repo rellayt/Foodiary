@@ -4,11 +4,11 @@ A web application that allows you to create a diet in an easy and transparent wa
 
 The user's session is secured with a special token that grants access to selected resources.
 
-<p style="font-size:25px">Snippets <i>(click to open a video)</i></p>
+<p styles="font-size:25px">Snippets <i>(click to open a video)</i></p>
 
 <b>Meal template addition & modifying food products</b>
 
-<div align="left"  style="height: 50%; width: 50%;">
+<div align="left" styles="height: 50%; width: 50%;">
       <a href="https://drive.google.com/file/d/1tfyf_5F43ygxNYjocBXSFw5M-pWQRUtB/view?usp=sharing">
          <img src="https://i.imgur.com/Hk9O1KH.png" >
       </a>
@@ -16,7 +16,7 @@ The user's session is secured with a special token that grants access to selecte
 <br><br>
 <b>Product multiple addition, deletion and modification provided by server side pagination by per pages, page size, category and name </b>
 
-<div align="left" style="height: 50%; width: 50%;">
+<div align="left" styles="height: 50%; width: 50%;">
       <a href="https://drive.google.com/file/d/1tfyf_5F43ygxNYjocBXSFw5M-pWQRUtB/view?usp=sharing">
          <img src="https://i.imgur.com/JkSxZXR.png">
       </a>
