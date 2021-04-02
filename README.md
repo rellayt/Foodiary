@@ -4,7 +4,7 @@ A web application that allows you to create a diet in an easy and transparent wa
 
 The user's session is secured with a special token that grants access to selected resources.
 
-<p style="font-size:17px">Snippets <i>(click to open a video)</i></p>
+<p style="font-size:25px">Snippets <i>(click to open a video)</i></p>
 
 <b>Meal template addition & modifying food products</b>
 
