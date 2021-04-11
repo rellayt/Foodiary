@@ -1,0 +1,67 @@
+<div class="diary-expansion">
+  <div class="diary-body">
+    <div class="diary-body__header">
+      <div class="diary-body__header-back">
+        <button (click)="goBack()">Lista</button>
+      </div>
+      <p>{{diary.name}}</p>
+      <div class="header-buttons">
+        <button mat-icon-button>
+          <mat-icon matTooltip="Pobierz plik PDF" matTooltipClass="blue-tooltip" [matTooltipPosition]="'above'">
+            picture_as_pdf</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon (click)="goToEdit()" matTooltip="Edytuj" matTooltipClass="blue-tooltip"
+            [matTooltipPosition]="'above'">edit</mat-icon>
+        </button>
+        <button mat-icon-button #deleteButtonRef>
+          <mat-icon (click)="delete(deleteButtonRef)" matTooltip="Usuń dziennik" matTooltipClass="red-tooltip"
+            [matTooltipPosition]="'above'">
+            delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="diary-body__inner">
+      <div class="diary-body__inner__header">
+        <p>Nazwa</p>
+        <p>Ilość</p>
+        <p>Kcal</p>
+        <p>Białko</p>
+        <p>Węglowodany</p>
+        <p>Tłuszcze</p>
+      </div>
+      <div class="diary-body__inner__meal-template" *ngFor="let mealTemplate of diary.mealTemplates">
+        <div class="name">
+          <span>{{mealTemplate.name}}</span>
+          <span>{{mealTemplate.time}}</span>
+        </div>
+        <div class="product" *ngFor="let product of mealTemplate.products">
+          <span>{{product.name}}</span>
+          <span>{{product.quantity}}</span>
+          <span>{{product.calory}}</span>
+          <span>{{product.protein}}</span>
+          <span>{{product.carb}}</span>
+          <span>{{product.fat}}</span>
+        </div>
+        <div class="summary">
+          <span>{{mealTemplate.summary?.calory}}</span>
+          <span>{{mealTemplate.summary.protein}}</span>
+          <span>{{mealTemplate.summary.carb}}</span>
+          <span>{{mealTemplate.summary.fat}}</span>
+        </div>
+      </div>
+      <div class="diary-body__summary">
+        <span>Dostarczono: </span>
+        <span>{{diarySummary.delivered.calory}}</span>
+        <span>{{diarySummary.delivered.protein}}</span>
+        <span>{{diarySummary.delivered.carb}}</span>
+        <span>{{diarySummary.delivered.fat}}</span>
+        <span>Pozostało: </span>
+        <span>{{diarySummary.remain.calory}}</span>
+        <span>{{diarySummary.remain.protein}}</span>
+        <span>{{diarySummary.remain.carb}}</span>
+        <span>{{diarySummary.remain.fat}}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,6 @@ import { MacroService } from '../services/macro.service';
 export class MacroResolve implements Resolve<Macro> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-
     return this.macroService.getLatestMacro()
   }
 

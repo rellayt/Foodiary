@@ -1,0 +1,35 @@
+@import "src/app/shared/colors.scss";
+
+.diary {
+  width: 100%;
+
+  &__navigation {
+    background-color: $white;
+  }
+  ::ng-deep {
+    .mat-ink-bar {
+      height: 0.2em !important;
+      background-color: $blue;
+    }
+    .mat-tab-labels {
+      justify-content: center;
+    }
+    .mat-tab-label,
+    .mat-tab-link {
+      font-size: 22px;
+      color: $black;
+      opacity: 0.9;
+    }
+    .mat-tab-label,
+    .mat-tab-link {
+      width: 33%;
+      font-size: 21px !important;
+      color: $black !important;
+      opacity: 0.9 !important;
+    }
+    .mat-tab-links {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

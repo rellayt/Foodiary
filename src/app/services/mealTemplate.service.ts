@@ -1,7 +1,6 @@
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { PersonalData } from '../models/personalData.model';
 import { MealTemplate } from '../models/mealTemplate.model';
 
 @Injectable({
@@ -19,8 +18,12 @@ export class MealTemplateService {
     return this.http.put<MealTemplate>(`${environment.API_URL}/meal_templates/${id}`, data)
   }
 
-  getMany() {
-    return this.http.get<MealTemplate>(`${environment.API_URL}/meal_templates/`)
+  getMany(query?: string) {
+    return this.http.get<MealTemplate[]>(`${environment.API_URL}/meal_templates/`, {
+      params: {
+        q: query || ''
+      }
+    })
   }
 
   delete(id: string) {

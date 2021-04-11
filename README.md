@@ -1,27 +1,23 @@
 # Foodiary
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.9.
+A web application that allows you to create a diet in an easy and transparent way. The special appearance and functionality allows even beginners to compose a simple menu, meal and even save the product to the base to use it again.
 
-## Development server
+The user's session is secured with a special token that grants access to selected resources.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+<p font-size=25px>Snippets <b>(click to open a video)</b></p>
+<br>
+<p>Meal template addition & modifying food products</p>
+<div align="left">
+      <a href="https://drive.google.com/file/d/1tfyf_5F43ygxNYjocBXSFw5M-pWQRUtB/view?usp=sharing">
+         <img src="https://i.imgur.com/Hk9O1KH.png" width="650" height="350">
+      </a>
+</div>
+<br><br>
 
-## Code scaffolding
+<p>Product multiple addition, deletion and modification <br> provided by server side pagination by per pages, page size, category and name </p>
+<div align="left">
+      <a href="https://drive.google.com/file/d/1tfyf_5F43ygxNYjocBXSFw5M-pWQRUtB/view?usp=sharing">
+         <img src="https://i.imgur.com/JkSxZXR.png" width="650" height="350">
+      </a>
+</div>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

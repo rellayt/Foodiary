@@ -1,0 +1,7 @@
+<div class="diary-addition" #diaryAddition>
+  <div class="diary-addition__header">
+    Dodanie dziennika
+  </div>
+  <div class="diary-addition__line"></div>
+  <app-diary-body (diaryNameEmitter)="getDiaryName()" [diaryName]="diaryName$ | async"></app-diary-body>
+</div>

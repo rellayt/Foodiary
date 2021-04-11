@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="diary">
+    <div class="diary__header">
+      <div class="diary__header-back" *ngIf="editMode"><button (click)="backEmitter.emit(false)">Wstecz</button></div>
+      <div class="diary__header-back" *ngIf="editMode"><button (click)="listEmitter.emit('edit')">Lista</button></div>
+      <span>{{diary.name}}</span>
+    </div>
+    <div class="diary__template" #templates *ngFor="let mealTemplate of diary.mealTemplates; let i = index">
+      <app-meal-template-body #templateBody [mealTemplate]="mealTemplate" [diaryMode]="true"
+        (summaryUpdate)="mealTemplatesCmp ? updateDiarySummary() : ''" (templateName)="solveState()">
+        <div class="diary__delete">
+          <button [style.visibility]="diary.mealTemplates.length > 1 ? 'visible':'hidden'"
+            (click)="removeMealTemplate(i)" matTooltip="Usuń" matTooltipClass="red-tooltip"
+            [matTooltipPosition]="'above'">
+            <mat-icon>clear</mat-icon>
+          </button>
+          <button (click)="saveTemplate(i)"
+            *ngIf="!diary.mealTemplates[i].id && diary.mealTemplates[i].products.length > 0 && diary.mealTemplates[i].name && !editMode"
+            matTooltip="Zapisz posiłek" matTooltipClass="blue-tooltip" [matTooltipPosition]="'above'">
+            <mat-icon>save_alt</mat-icon>
+          </button>
+        </div>
+      </app-meal-template-body>
+    </div>
+    <div class="diary__buttons" [ngClass]="(mealTemplates$ | async) ? 'diary__templates' : 'diary__no-templates'">
+      <app-diary-search *ngIf="(mealTemplates$ | async)" (queryMealTemplate)="addMealTemplate($event)"
+        [searchDisable]="buttonState.search.disabled">
+      </app-diary-search>
+      <div [matTooltip]="buttonState.nextTemplate.disabled ? buttonState.nextTemplate.message : ''"
+        matTooltipClass="red-tooltip" [matTooltipPosition]="'above'">
+        <button mat-raised-button [disabled]="buttonState.nextTemplate.disabled"
+          [style.opacity]="buttonState.nextTemplate.disabled ? '0.8' : '1'" (click)="addMealTemplate()">
+          Następny posiłek
+        </button>
+      </div>
+      <div [matTooltip]="buttonState.save.disabled ? buttonState.save.message : ''" matTooltipClass="red-tooltip"
+        [matTooltipPosition]="'above'">
+        <button mat-raised-button [disabled]="buttonState.save.disabled"
+          (click)="buttonState.nextTemplate.disabled=!buttonState.nextTemplate.disabled"
+          [style.opacity]="buttonState.save.disabled ? '0.8' : '1'" (click)="save()">
+          {{!editMode ? 'Zapisz dziennik' : 'Zaktualizuj'}}
+        </button>
+      </div>
+    </div>
+    <div class="diary__summary" *ngIf="(userMacro$ | async) as userMacro">
+      <ul class="header">
+        <li>Kalorie</li>
+        <li>Białko</li>
+        <li>Węglowodany</li>
+        <li>Tłuszcze</li>
+      </ul>
+      <ul class="info">
+        <li>Dostarczono</li>
+        <li *ngFor="let prop of objectValues(summary.delivered)">{{prop | number : '1.0-1'}}</li>
+        <li>Pozostało</li>
+        <li>{{summary.remain.calory | number : '1.0-0'}}</li>
+        <li>{{summary.remain.protein | number : '1.0-1'}}</li>
+        <li>{{summary.remain.carb | number : '1.0-1'}}</li>
+        <li>{{summary.remain.fat | number : '1.0-1'}}</li>
+        <li>Zapotrzebowanie
+          <button #editButton mat-icon-button (click)="openMacroDialog(editButton)" matTooltip="Edytuj kalorykę"
+            matTooltipClass="blue-tooltip" matTooltipPosition="above">
+            <mat-icon>mode_edit</mat-icon>
+          </button>
+        </li>
+        <li>{{summary.nutriments.calory | number : '1.0-0'}}</li>
+        <li>{{summary.nutriments.protein | number : '1.0-1'}}</li>
+        <li>{{summary.nutriments.carb | number : '1.0-1'}}</li>
+        <li>{{summary.nutriments.fat | number : '1.0-1'}}</li>
+      </ul>
+    </div>
+  </div>
+</div>

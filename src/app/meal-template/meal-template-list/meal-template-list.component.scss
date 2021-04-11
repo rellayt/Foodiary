@@ -1,5 +1,5 @@
 @import "src/app/shared/colors.scss";
-.container {
+.list-container {
   width: 100%;
   height: 93.6%;
   display: flex;
@@ -13,7 +13,6 @@
     align-items: center;
     flex-direction: column;
     margin-top: 25px;
-    // background-color: rgba(0, 255, 0, 0.082);
     &__header {
       margin: 0.5% 0;
       font-size: 24px;
@@ -54,7 +53,7 @@
         .description {
           font-size: 17.54px;
           span::after {
-            content: "g /";
+            content: "g ";
             margin-right: 7px;
           }
           span:first-child::before {
@@ -80,9 +79,7 @@
     .product-summary {
       min-height: 40px;
       display: grid;
-      // grid-template-columns: 6% 32% repeat(5, 12.4%);
-      grid-template-columns: 0.5fr 3fr repeat(5, 1fr);
-      border: 1px solid $gray-light-50-opacity;
+      grid-template-columns: 6% 32% repeat(5, 12.4%);
       li,
       span {
         display: flex;
@@ -93,15 +90,25 @@
     }
     ul {
       list-style: none;
-      li:not(:last-child) {
+      border-top: 1px solid $gray-light-50-opacity;
+      border-bottom: 1px solid $gray-light-50-opacity;
+      li {
         border-right: 1px solid $gray-light-50-opacity;
+      }
+      li:first-child {
+        border-left: 1px solid $gray-light-50-opacity;
       }
     }
 
     .product {
       border-top: transparent;
+      border-bottom: 1px solid $gray-light-50-opacity;
       span {
         padding: 5px;
+        border-right: 1px solid $gray-light-50-opacity;
+      }
+      span:first-child {
+        border-left: 1px solid $gray-light-50-opacity;
       }
       span:nth-child(3),
       span:nth-child(4),
@@ -142,6 +149,7 @@
       span:nth-child(2) {
         border-left: 1px solid $gray-light-50-opacity;
         grid-column: 4/5;
+        margin-left: -1px;
       }
 
       span {
@@ -159,7 +167,6 @@
     flex-direction: column;
     margin-top: 25px;
     opacity: 0;
-    // background-color: rgba(0, 255, 0, 0.082);
     &__header {
       margin: 0.5% 0;
       font-size: 24px;
@@ -177,12 +184,12 @@
         color: $black;
         font-size: 22px;
         cursor: pointer;
-        border: 2px solid transparent;
-        border-bottom: 2px solid $blue;
+        border: 3px solid transparent;
+        border-bottom: 3px solid $blue;
         background-color: transparent;
         transition: 125ms border-bottom ease-in;
         &:hover {
-          border: 2px solid transparent;
+          border: 3px solid transparent;
           transition: 125ms border-bottom ease-in;
         }
         &:focus {

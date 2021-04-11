@@ -1,5 +1,5 @@
-<div class="container" #listContainer>
-  <div class="meal-template-edit" [style.display]="selectedMealTemplate ? 'flex' : 'none'" #mealTemplateEdit>
+<div class="list-container" #listContainer>
+  <div class="meal-template-edit" #mealTemplateEdit [style.display]="selectedMealTemplate ? 'flex' : 'none'">
     <div class="meal-template-edit__header">
       Edycja posiłku
     </div>
@@ -9,12 +9,11 @@
       <div class="meal-template-edit__back">
         <button (click)="backToList(false)">Wróć</button>
       </div>
-
     </app-meal-template-body>
   </div>
   <div class="meal-template-list" #mealTemplateList [style.display]="selectedMealTemplate ? 'none' : 'flex'">
     <div class="meal-template-list__header">
-      Spis zapisanych posiłków
+      Spis posiłków
     </div>
     <div class="meal-template-list__line"></div>
     <div class="meal-template-list__empty" *ngIf="!(mealTemplate$ | async)">

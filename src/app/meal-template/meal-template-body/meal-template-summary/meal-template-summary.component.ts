@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { timer } from 'rxjs';
 import { finalize, scan, startWith, takeWhile } from 'rxjs/operators';
 import { Product } from 'src/app/models/products.model';
+import { counterAnimation } from 'src/app/utility/basic-animations';
 import { getMacroPercentages } from 'src/app/utility/macro-calculations';
 import { deepCopy } from 'src/app/utility/utility';
 
@@ -13,6 +14,7 @@ import { deepCopy } from 'src/app/utility/utility';
 export class MealTemplateSummaryComponent {
 
   @Input() diaryMode = false
+  @Output() summaryUpdate: EventEmitter<Boolean> = new EventEmitter()
 
   templateSummary = {
     totalCalory: 0,
@@ -54,6 +56,7 @@ export class MealTemplateSummaryComponent {
     nutriments.forEach((name, i) => this.templateSummary.percentage[name] = nutrimentsPercentage[i])
 
     this.summaryCountAnimation(cached_templateSummary)
+    setTimeout(() => this.summaryUpdate.emit(true), 300)
   }
 
   summaryCountAnimation(cached_templateSummary) {
@@ -62,27 +65,17 @@ export class MealTemplateSummaryComponent {
     const propertyTargetValue = [quantity, calory, percentage]
     properties.shift()
 
-    this.counterAnimation(cached_templateSummary.totalCalory, this.templateSummary.totalCalory)
+    counterAnimation(cached_templateSummary.totalCalory, this.templateSummary.totalCalory)
       .pipe(finalize(() => this.templateSummary.totalCalory = totalCalory))
       .subscribe(value => this.templateSummary.totalCalory = value)
 
     nutriments.forEach(name =>
       properties.forEach((property, i) => {
-        this.counterAnimation(cached_templateSummary[property][name], this.templateSummary[property][name])
+        counterAnimation(cached_templateSummary[property][name], this.templateSummary[property][name])
           .pipe(finalize(() => this.templateSummary[property][name] = propertyTargetValue[i][name] || 0))
           .subscribe(value => this.templateSummary[property][name] = +value.toFixed(1))
       }))
   }
 
-  counterAnimation(from: number, to: number) {
-    const absolute = Math.abs(from - to)
-    const value = Math.round(((absolute / 10) * 5) / 7) || 0.3
-
-    return timer(100, 35).pipe(
-      startWith(from),
-      scan(acc => from < to ? acc + value : acc - value),
-      takeWhile(x => (from < to) ? (x <= to) : (x >= to)),
-    )
-  }
   constructor() { }
 }

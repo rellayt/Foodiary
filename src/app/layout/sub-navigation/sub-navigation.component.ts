@@ -13,7 +13,7 @@ export class SubNavigationComponent implements OnInit, OnDestroy {
 
   pages = [{ label: 'Profil', link: 'profile' },
   { label: 'Dziennik', link: 'diary' }, { label: 'Szablony', link: 'template' },
-  { label: 'Produkty', link: 'products' }, { label: 'Dodaj przepis', link: 'add-recipe' }];
+  { label: 'Produkty', link: 'products' }, { label: 'Dodaj przepis', link: 'add_recipe' }];
 
   activeLink;
   @ViewChild('subNavRef', { static: true }) subNavRef: ElementRef;
@@ -25,7 +25,7 @@ export class SubNavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    startAnimation(this.subNavRef.nativeElement, 1.5,)
+    startAnimation(this.subNavRef.nativeElement, 0.5, 0, Math.random() < 0.5 ? -10 : 10)
     startAnimation(this.linkRef.nativeElement, 3.5, 0, -15)
 
     this.routerEvent = this.router.events.pipe(filter(event => event instanceof NavigationEnd))

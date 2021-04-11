@@ -1,51 +1,76 @@
-<form class="search" [formGroup]="productSearchForm">
-  <div class="search--inputs">
-    <mat-form-field appearance="fill" autocomplete="off">
-      <mat-label>Produkt</mat-label>
-      <input type="text" formControlName="query" matInput autocomplete="off" [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option
-          [style.display]="productSearchForm.controls['query'].value.length > 2 && !loading ? 'block' : 'none'"
-          *ngFor="let option of options" [value]="option.name" (onSelectionChange)="selectProduct(option)"
-          matTooltip="B {{option.protein}}g / W {{option.carb}}g / T {{option.fat}}g - {{option.calory}}kcal"
+<form class="search" [ngClass]="diaryMode ? 'search--diary-mode' : ''" [formGroup]="productSearchForm">
+  <div class="search-wrapper" #mealTemplateSearch
+    [style.display]="diaryMode && !additionButton && productsLength > 0 ? 'none' : ''"
+    [style.opacity]="diaryMode && !additionButton && productsLength > 0 ? '' : '1'">
+    <div class="search--inputs">
+      <mat-form-field appearance="fill" autocomplete="off">
+        <mat-label>Produkt</mat-label>
+        <div [matTooltip]="this.productSearchForm.controls['query'].disabled ? 'Maksymalna ilość produktów to 10' : ''"
           matTooltipClass="blue-tooltip" [matTooltipPosition]="'above'">
-          <div class="option" [style.font-weight]="option.id ? '600' : '500'">{{option.name}}</div>
-        </mat-option>
-        <mat-option disabled
-          [style.display]="productSearchForm.controls['query'].value.length > 2  && loading ? '' : 'none'">
-          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </mat-option>
-        <mat-option disabled
-          [style.display]="productSearchForm.controls['query'].value.length > 2 && options.length === 0  && !loading ? '' : 'none'">
-          Brak wyników
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Ilość</mat-label>
-      <input type="number" formControlName="quantity"
-        [value]="productSearchForm.controls['quantity'].value |  number : '1.0-1'" zeroPrefixDeleter matInput
-        [inputMaxLength]="3" autocomplete="off">
-      <span matSuffix [style.opacity]="selectedProduct ? '1' : '0.5'">g</span>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Kalorie</mat-label>
-      <input type="number" formControlName="calory"
-        [value]="productSearchForm.controls['calory'].value |  number : '1.0-1'" zeroPrefixDeleter matInput
-        [inputMaxLength]="3" autocomplete="off">
-    </mat-form-field>
-  </div>
-  <div class="selected-product">
-    <div #macro class="selected-product__macro">
-      <ng-container *ngIf="selectedProduct">
-        <span>{{selectedProduct.protein | number : '1.0-1'}}g</span>
-        <span>{{selectedProduct.carb | number : '1.0-1'}}g</span>
-        <span>{{selectedProduct.fat | number : '1.0-1'}}g</span>
-      </ng-container>
+          <input type="text" formControlName="query" matInput autocomplete="off" [matAutocomplete]="auto">
+        </div>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option
+            [style.display]="productSearchForm.controls['query'].value.length > 2 && !loading ? 'block' : 'none'"
+            *ngFor="let option of options" [value]="option.name" (onSelectionChange)="selectProduct(option)"
+            matTooltip="B {{option.protein}}g / W {{option.carb}}g / T {{option.fat}}g - {{option.calory}}kcal"
+            matTooltipClass="blue-tooltip" [matTooltipPosition]="'above'">
+            <div class="option" [style.font-weight]="option.id ? '600' : '500'">{{option.name}}</div>
+          </mat-option>
+          <mat-option disabled
+            [style.display]="productSearchForm.controls['query'].value.length > 2  && loading ? '' : 'none'">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </mat-option>
+          <mat-option disabled
+            [style.display]="productSearchForm.controls['query'].value.length > 2 && options.length === 0  && !loading ? '' : 'none'">
+            Brak wyników
+          </mat-option>
+        </mat-autocomplete>
+        <button [style.display]="diaryMode && productSearchForm.controls['query'].value.length < 3 ? 'block' : 'none'"
+          #ownProduct (click)="addOwnProduct($event,ownProduct)" mat-icon-button matSuffix
+          matTooltip="Dodaj własny produkt" matTooltipClass="blue-tooltip" [matTooltipPosition]="'above'">
+          <mat-icon>
+            add_circle
+          </mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Ilość</mat-label>
+        <input type="number" formControlName="quantity"
+          [value]="productSearchForm.controls['quantity'].value |  number : '1.0-1'" zeroPrefixDeleter matInput
+          [inputMaxLength]="3" autocomplete="off">
+        <span matSuffix [style.opacity]="selectedProduct ? '1' : '0.5'">g</span>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Kalorie</mat-label>
+        <input type="number" formControlName="calory"
+          [value]="productSearchForm.controls['calory'].value |  number : '1.0-1'" zeroPrefixDeleter matInput
+          [inputMaxLength]="3" autocomplete="off">
+      </mat-form-field>
     </div>
-    <div class="selected-product--button">
-      <button mat-raised-button [disabled]="!selectedProduct" (click)="addProduct()"
-        [style.opacity]="selectedProduct ? '1' : '0.7'">Dodaj</button>
+    <div class="selected-product">
+      <div #macro class="selected-product__macro">
+        <ng-container *ngIf="selectedProduct">
+          <span>{{selectedProduct.protein | number : '1.0-1'}}g</span>
+          <span>{{selectedProduct.carb | number : '1.0-1'}}g</span>
+          <span>{{selectedProduct.fat | number : '1.0-1'}}g</span>
+        </ng-container>
+      </div>
+      <div class="selected-product--button"
+        [matTooltip]="this.productSearchForm.controls['query'].disabled ? 'Maksymalna ilość produktów to 10' : !selectedProduct ? 'Wybierz produkt':''"
+        matTooltipClass="red-tooltip" [matTooltipPosition]="'above'">
+        <button mat-raised-button [disabled]="!selectedProduct" (click)="addProduct(addNextProduct)"
+          [style.opacity]="selectedProduct ? '1' : '0.7'">Dodaj</button>
+      </div>
+    </div>
+  </div>
+  <div class="add-next-product" [style.display]="diaryMode && !additionButton && productsLength > 0 ? 'flex' : 'none'">
+    <div [matTooltip]="this.productSearchForm.controls['query'].disabled ? 'Maksymalna ilość produktów to 10' : ''"
+      matTooltipClass=" red-tooltip" [matTooltipPosition]="'above'">
+      <button #addNextProduct mat-raised-button (click)="enableProductAddition(addNextProduct)"
+        [disabled]="this.productSearchForm.controls['query'].disabled">
+        Dodaj następny produkt
+      </button>
     </div>
   </div>
 </form>

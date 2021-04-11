@@ -119,10 +119,12 @@ export class CaloryFormComponent implements OnInit, OnDestroy {
         first(),
         tap(() => this.dialogOpenButton._elementRef.nativeElement.blur()),
         filter(Boolean),
-        switchMap(() => this.macroService.getLatestMacro()),
         map(macro => this.mapMacroValues(macro))
       )
-      .subscribe(data => this.patchMacroValues(data))
+      .subscribe(macro => {
+        this.snackBar.open("Pomyślnie zapisano", 1700)
+        this.patchMacroValues(macro)
+      })
   }
 
   mapMacroValues(macro) {

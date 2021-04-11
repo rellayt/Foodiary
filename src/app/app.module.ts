@@ -8,7 +8,6 @@ import { LogoComponent } from './layout/logo/logo.component';
 import { BackgroundComponent } from './layout/background/background.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { DiaryComponent } from './diary/diary.component';
 import { SubNavigationComponent } from './layout/sub-navigation/sub-navigation.component';
 import { GuestNavbarComponent } from './layout/headers/guest-navbar/guest-navbar.component';
 import { UserNavbarComponent } from './layout/headers/user-navbar/user-navbar.component';
@@ -26,6 +25,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getPolishPaginatorIntl } from '../polish-paginator-intl';
 import { MealTemplateModule } from './meal-template/meal-template.module';
 import { DeleteDialogComponent } from './layout/dialogs/delete/delete-dialog.component';
+import { DiaryModule } from './diary/diary.module';
 
 
 @NgModule({
@@ -34,7 +34,6 @@ import { DeleteDialogComponent } from './layout/dialogs/delete/delete-dialog.com
     LogoComponent,
     BackgroundComponent,
     RoutingComponents,
-    DiaryComponent,
     SubNavigationComponent,
     GuestNavbarComponent,
     UserNavbarComponent,
@@ -42,9 +41,10 @@ import { DeleteDialogComponent } from './layout/dialogs/delete/delete-dialog.com
   ],
   imports: [
     BrowserModule,
+    DiaryModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     DirectivesModule,
+    BrowserAnimationsModule,
     ValidationModule,
     AuthModule,
     ProfileModule,
@@ -67,7 +67,5 @@ import { DeleteDialogComponent } from './layout/dialogs/delete/delete-dialog.com
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor() {
-
-  }
+  constructor() { }
 }

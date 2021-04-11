@@ -34,7 +34,7 @@ export class UserNavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialAnimations()
-    startAnimation(this.userNavbar.nativeElement, 1.5)
+    startAnimation(this.userNavbar.nativeElement, 0.5, 0, Math.random() < 0.5 ? -10 : 10)
 
   }
 

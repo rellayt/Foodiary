@@ -56,9 +56,12 @@
       top: 10px;
     }
   }
+  mat-select {
+    font-size: 19px;
+  }
   ::ng-deep {
     .mat-form-field-appearance-outline .mat-form-field-infix {
-      transform: translateY(-3px);
+      // transform: translateY(-3px);
     }
   }
 }
@@ -126,11 +129,11 @@
     align-items: center;
     button {
       background-color: $blue;
-      font-size: 1.35rem;
-      color: white;
-      padding: 10px 28px;
+      color: $white;
+      font-size: 22px;
+      padding: 5px 22px;
       position: relative;
-      top: 11px;
+      top: 13px;
     }
   }
 }
@@ -310,14 +313,10 @@
     }
 
     .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-      position: relative;
-      top: 7px;
+      transform: translateY(-10%);
     }
-  }
-}
-::ng-deep {
-  .mat-select-panel .mat-option {
-    height: 2.7em;
-    line-height: 2.7em;
+    .mat-select-value {
+      transform: translateY(-3px);
+    }
   }
 }

@@ -1,11 +1,12 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
 import { Product } from 'src/app/models/products.model';
 import { ProductService } from 'src/app/services/product.service';
 import { endAnimation, fromToOpacityAnimation } from 'src/app/utility/basic-animations';
 import { getCalory, getMacroPercentages } from 'src/app/utility/macro-calculations';
 import { combineLatest } from 'rxjs';
+import { startAnimation } from '../../../utility/basic-animations';
 
 @Component({
   selector: 'app-meal-template-search',
@@ -14,8 +15,16 @@ import { combineLatest } from 'rxjs';
 })
 export class MealTemplateSearchComponent implements OnInit {
   @ViewChild('macro', { static: true }) macro: ElementRef
+  @ViewChild('mealTemplateSearch', { static: true }) mealTemplateSearch: ElementRef
+
   @Output() abstractProductEmitter = new EventEmitter()
   @Output() addProductEmitter = new EventEmitter()
+  @Output() addOwnProductEmitter = new EventEmitter()
+
+  @Input() diaryMode = false
+  @Input() productsLength = 0
+
+  additionButton: Boolean
 
   selectedProduct: Product = null
   productSearchForm: any
@@ -38,15 +47,22 @@ export class MealTemplateSearchComponent implements OnInit {
     fromToOpacityAnimation(this.macro.nativeElement, 1)
   }
 
+  @Input() set searchDisabled(value) {
+    value ? this.productSearchForm.controls['query'].disable() :
+      this.productSearchForm.controls['query'].enable()
+  }
+
   ngOnInit(): void {
+    this.additionButton = this.diaryMode ? true : false
     this.productSearchForm.controls['query'].valueChanges
       .pipe(
+        debounceTime(250),
+        filter((value: string) => !!value && value.length > 2),
         tap(value => {
           if (this.selectedProduct && this.selectedProduct.name !== value) this.resetSelectedProduct()
           this.productService.setQuery(value)
           this.loading = true
         }),
-        filter((value: string) => !!value && value.length > 2),
         switchMap((value: string) => combineLatest(
           this.productService.searchProducts(),
           this.productService.searchExternalProducts(value)
@@ -102,10 +118,35 @@ export class MealTemplateSearchComponent implements OnInit {
     setTimeout(() => this.selectedProduct = null, 400)
   }
 
-  addProduct() {
-    this.addProductEmitter.emit(this.selectedProduct)
-    this.resetSelectedProduct()
-    this.productSearchForm.controls['query'].setValue('')
+  enableProductAddition(element) {
+    endAnimation(element._elementRef.nativeElement, 0.3)
+    setTimeout(() => {
+      fromToOpacityAnimation(this.mealTemplateSearch.nativeElement, 0.3)
+      this.additionButton = true
+    }, 300)
+  }
+
+  addOwnProduct(event, buttonRef) {
+    event.stopPropagation();
+    this.addOwnProductEmitter.emit(buttonRef)
+  }
+
+  addProduct(element) {
+    if (this.diaryMode) {
+      endAnimation(this.mealTemplateSearch.nativeElement, 0.3, 0, 0)
+
+      setTimeout(() => {
+        fromToOpacityAnimation(element._elementRef.nativeElement, 0.3)
+        this.additionButton = false
+        this.addProductEmitter.emit(this.selectedProduct)
+        this.resetSelectedProduct()
+        this.productSearchForm.controls['query'].setValue('')
+      }, 300)
+    } else {
+      this.addProductEmitter.emit(this.selectedProduct)
+      this.resetSelectedProduct()
+      this.productSearchForm.controls['query'].setValue('')
+    }
   }
 
 }

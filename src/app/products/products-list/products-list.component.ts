@@ -35,12 +35,11 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   dataSource = this.productService.searchProducts()
-    .pipe(map(data => data.map(product =>
-    ({
+    .pipe(map(data => data.map(product => ({
       ...product,
       calory: getCalory(product)
-    }))
-    ))
+    })
+    )))
 
   columnsToDisplay = ['Nazwa produktu']
   expandedElement: Product | null

@@ -1,0 +1,25 @@
+<form #searchform class="diary-search">
+  <mat-form-field appearance="fill" autocomplete="off">
+    <mat-label>Wyszukaj zapisany posiłek</mat-label>
+    <div [matTooltip]="query.disabled ? 'Maksymalna ilość posiłków to 7' : ''" matTooltipClass="red-tooltip"
+      [matTooltipPosition]="'above'">
+      <input type="text" [formControl]="query" matInput autocomplete="off" [matAutocomplete]="auto" #queryRef>
+    </div>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option [style.display]="query && query.value.length > 1 && !loading ? 'block' : 'none'"
+        *ngFor="let option of options" [value]="option.name"
+        (onSelectionChange)="selectMealTemplate(option); searchform.reset()"
+        matTooltip="B {{option.summary.protein}}g / W {{option.summary.carb}}g / T {{option.summary.fat}}g - {{option.summary.calory}}kcal"
+        matTooltipClass="blue-tooltip" [matTooltipPosition]="'above'">
+        <div class="option" [style.font-weight]="option.id ? '600' : '500'">{{option.name}}</div>
+      </mat-option>
+      <mat-option disabled [style.display]="query && query.value.length > 1  && loading ? '' : 'none'">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </mat-option>
+      <mat-option disabled
+        [style.display]="query && query.value.length > 1 && options.length === 0  && !loading ? '' : 'none'">
+        Brak wyników
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

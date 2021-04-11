@@ -4,6 +4,7 @@
   overflow-x: hidden;
   overflow-y: hidden;
   z-index: -1;
+  transform: none !important;
 }
 .logged-height {
   clear: both;
@@ -15,11 +16,11 @@
   height: 100%;
 }
 #background {
-  position: fixed;
-  width: 200%;
-  height: 200%;
-  top: -40% !important;
-  left: -40% !important;
+  position: fixed !important;
+  height: 300vh;
+  width: 300vw;
+  left: -100vw !important;
+  top: -100vh !important;
 }
 .container {
   width: 100%;

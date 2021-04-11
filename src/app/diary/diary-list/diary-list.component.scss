@@ -1,0 +1,153 @@
+@import "src/app/shared/colors.scss";
+.diary-list {
+  width: 100%;
+  height: 93.6%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: auto;
+  &__header {
+    margin: 25px 0 0.5% 0;
+    width: 100%;
+    font-size: 24px;
+    text-align: center;
+    &:after {
+      content: "";
+      display: block;
+      width: 70%;
+      margin: 15px auto;
+      box-shadow: 0px 0px 1px #f7f7f7;
+      border-top: solid 1px $gray-light;
+    }
+  }
+  .diary-list-wrapper {
+    width: 100%;
+  }
+  .diary-view-center {
+    grid-template-columns: 6% 88% 6%;
+  }
+  .diary-view-standard {
+    grid-template-columns: 16% 84%;
+  }
+  .diary-view {
+    display: grid;
+    &__item {
+      // opacity: 0;
+      app-diary-sidebar {
+        display: flex;
+      }
+    }
+    // app-diary-sidebar,
+    // app-diary-expansion {
+    //   opacity: 0;
+    // }
+  }
+  .metadata-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .metadata-list__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25px;
+    font-size: 22px;
+    gap: 25px;
+    width: 100%;
+    button {
+      font-size: 19px;
+    }
+  }
+  .metadata-wrapper {
+    &:first-child {
+      margin-top: 10px;
+    }
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    width: 500px;
+    border-radius: 7px;
+    font-size: 19px;
+    transition: 250ms all;
+    background-color: $white;
+    color: $black;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+      0px 2px 2px 0px rgb(0 0 0 / 7%), 0px 1px 5px 0px rgb(0 0 0 / 6%);
+    cursor: pointer;
+    &:hover {
+      // filter: brightness(0.99);
+      color: $blue;
+      box-shadow: 0px 3px 15px -2px rgb(0 0 0 / 20%),
+        0px 2px 2px 0px rgb(0 0 0 / 7%), 0px 1px 5px 0px rgb(0 0 0 / 6%);
+    }
+    &__info {
+      display: flex;
+      position: relative;
+      margin-bottom: 7px;
+      p {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      p:first-child::before,
+      p:nth-child(2)::before {
+        font-size: 18px;
+        margin-right: 7px;
+      }
+      p:first-child::before {
+        color: $black;
+        content: "Ilość posiłków: ";
+      }
+      p:nth-child(2) {
+        margin-left: auto;
+        color: $black;
+        &::before {
+          content: "Edytowano: ";
+        }
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        margin: 15px 0 1px 0;
+        // background-color: $gray-light;
+        height: 0px;
+        top: 22px;
+        width: 100%;
+        border-top: solid 1px $gray-light;
+      }
+    }
+    &__macro {
+      display: flex;
+      justify-content: space-around;
+      p {
+        margin: 5px;
+      }
+      p:not(:last-child) {
+        &::before {
+          margin-right: 3px;
+          color: $black;
+        }
+        &:first-child::before {
+          content: "B";
+        }
+        &:nth-child(2)::before {
+          content: "W";
+        }
+        &:nth-child(3)::before {
+          content: "T";
+        }
+        &::after {
+          color: $black;
+          margin-left: 2px;
+          content: "g";
+        }
+      }
+      p:last-child::after {
+        color: $black;
+        content: "kcal";
+        margin-left: 3px;
+      }
+    }
+  }
+}

@@ -12,6 +12,11 @@
   height: 783px;
   width: 80%;
 }
+@media (min-width: 501px) and (max-width: 1480px) {
+  .main-wrapper {
+    width: 97.5%;
+  }
+}
 
 .inactive {
   visibility: hidden;

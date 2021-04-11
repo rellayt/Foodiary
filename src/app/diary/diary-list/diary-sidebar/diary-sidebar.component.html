@@ -1,0 +1,7 @@
+<div class="diary-sidebar">
+  <div class="wrapper" *ngFor="let diary of diaryNames">
+    <div class="diary-name" [ngClass]="block ? '' : 'hover'" (click)="block ? '' : selectDiary(diary)">
+      <p>{{diary.name}}</p>
+    </div>
+  </div>
+</div>

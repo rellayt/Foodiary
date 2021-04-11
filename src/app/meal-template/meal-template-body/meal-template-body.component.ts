@@ -14,6 +14,8 @@ import { MealTemplateService } from '../../services/mealTemplate.service';
 import { __importDefault } from 'tslib';
 import { HttpErrorResponse } from '@angular/common/http';
 import { iif, timer } from 'rxjs';
+import { MealTemplateSummaryComponent } from './meal-template-summary/meal-template-summary.component';
+import { clearProduct } from 'src/app/helpers/meal-template';
 
 export const tooltipSettings: MatTooltipDefaultOptions = {
   showDelay: 0,
@@ -31,29 +33,29 @@ export const tooltipSettings: MatTooltipDefaultOptions = {
 })
 export class MealTemplateBodyComponent implements OnInit {
   @ViewChild('macro', { static: true }) macro: ElementRef
-  @ViewChild('productSearch') productSearch: MealTemplateSearchComponent;
+  @ViewChild('productSearch') productSearch: MealTemplateSearchComponent
+  @ViewChild('mealTemplateSummary') mealTemplateSummary: MealTemplateSummaryComponent
 
-
-  @Input() mealTemplate: MealTemplate = {
-    name: '',
-    time: '00:00',
-    products: []
-  }
+  @Input() mealTemplate: MealTemplate = { name: '', time: '00:00', products: [] }
   @Input() type = 'create'
+  @Input() diaryMode = false
+
   @Output() goBack: EventEmitter<Boolean> = new EventEmitter()
   @Output() scrollDown: EventEmitter<Boolean> = new EventEmitter()
+  @Output() summaryUpdate: EventEmitter<Boolean> = new EventEmitter()
+  @Output() templateName: EventEmitter<Boolean> = new EventEmitter()
 
   abstractProducts: Product[]
 
   ngOnInit(): void {
     if (this.mealTemplate.products.length > 0) {
-      this.mealTemplate.products = this.mealTemplate.products.map(product => ({ ...product, percentages: getMacroPercentages(product) }))
+      this.mealTemplate.products = this.mealTemplate.products.map(product =>
+        ({ ...product, percentages: getMacroPercentages(product) }))
     }
     this.abstractProducts = [...this.mealTemplate.products]
   }
 
-
-  openProductAdditionDialog(elementRef: any) {
+  addOwnProduct(elementRef: any) {
     const dialogRef = this.dialog.open(ProductAdditionDialogComponent, {
       autoFocus: false,
       disableClose: true,
@@ -74,7 +76,6 @@ export class MealTemplateBodyComponent implements OnInit {
     const abstractProducts = [...this.mealTemplate.products]
 
     if (product) abstractProducts.push(product)
-
     this.abstractProducts = [...abstractProducts]
   }
 
@@ -88,18 +89,14 @@ export class MealTemplateBodyComponent implements OnInit {
   }
 
   resetMealTemplate = () => {
-    this.mealTemplate = {
-      name: '',
-      time: '00:00',
-      products: []
-    }
+    this.mealTemplate = { name: '', time: '00:00', products: [] }
     this.productSearch.productSearchForm.controls['query'].setValue('')
 
     this.productSearch.selectedProduct ? this.productSearch.resetSelectedProduct() : this.abstractProducts = []
   }
 
   drop = (event: CdkDragDrop<Product[]>) =>
-    moveItemInArray(this.mealTemplate.products, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.mealTemplate.products, event.previousIndex, event.currentIndex)
 
   calculateByQuantity = (value: number, index: number) => {
     try {
@@ -120,6 +117,7 @@ export class MealTemplateBodyComponent implements OnInit {
         this.mealTemplate.products.splice(index, 1)
       } else {
         this.mealTemplate.products[index].calory = calory
+
         this.abstractProducts = [...this.mealTemplate.products]
       }
     } catch (err) {
@@ -145,8 +143,8 @@ export class MealTemplateBodyComponent implements OnInit {
         this.mealTemplate.products[index].quantity = result
         this.mealTemplate.products[index].calory = Math.round(value)
       }
-      this.abstractProducts = [...this.mealTemplate.products]
 
+      this.abstractProducts = [...this.mealTemplate.products]
     } catch (err) {
       console.error(err);
     }
@@ -158,16 +156,7 @@ export class MealTemplateBodyComponent implements OnInit {
   }
 
   save() {
-    const products = this.mealTemplate.products.map(product => {
-      const { _id, id, calory, category, percentages, name, ...clearProduct } = product
-      Object.keys(clearProduct).map((key) => {
-        clearProduct[key] = Math.round(clearProduct[key])
-      })
-      clearProduct['id'] = _id ? _id : null
-      clearProduct['name'] = name
-
-      return clearProduct as Product
-    })
+    const products = this.mealTemplate.products.map((product: any) => clearProduct(product))
 
     const { time, name, id } = this.mealTemplate
     const mealTemplate = { time: time, name: name, products: products }

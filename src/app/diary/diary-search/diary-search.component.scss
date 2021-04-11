@@ -1,0 +1,24 @@
+.diary-search {
+  width: 100%;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(12px);
+  // background-color: cadetblue;
+  mat-form-field {
+    width: 300px;
+  }
+  ::ng-deep {
+    .mat-form-field-appearance-fill .mat-form-field-flex {
+      padding: 0 0 0 10px;
+    }
+    .mat-form-field-label-wrapper {
+      top: -0.44375em;
+      padding-top: 0.84375em;
+    }
+    .mat-form-field-appearance-fill .mat-form-field-infix input {
+      transform: translateY(5px);
+    }
+  }
+}

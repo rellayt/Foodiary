@@ -1,0 +1,51 @@
+<div class="diary-list" #listContainer>
+  <div class="diary-list__header">
+    Spis dzienników
+  </div>
+  <div class="diary-list-wrapper">
+    <div class="diary-view" [ngClass]="sidebarData.length > 0 ? 'diary-view-standard' : 'diary-view-center'"
+      [style.display]="state === 'view' ? 'grid' : 'none'">
+      <div class="diary-view__item" #sidebar>
+        <app-diary-sidebar (selectedDiaryEmitter)="sidebarSelection($event)" [diaryNames]="sidebarData">
+        </app-diary-sidebar>
+      </div>
+      <div class="diary-view__item" #expansion>
+        <app-diary-expansion [userMacro]="userMacro" *ngIf="selectedDiary && userMacro$ | async as userMacro"
+          [setDiary]="this.selectedDiary" (backEmitter)="backToList($event)" (editEmitter)="goToEdit()"
+          (deleteEmitter)="deleteDiary($event)">
+        </app-diary-expansion>
+      </div>
+    </div>
+    <div class="metadata-list__empty" *ngIf="!(diaryMetadata$ | async)">
+      <span>Brak dzienników</span>
+      <button mat-stroked-button [routerLink]="'../addition'">Dodaj</button>
+    </div>
+    <div class="metadata-list" [style.display]="state === 'list' ? 'flex' : 'none'">
+      <ng-container *ngIf="(diaryMetadata$ | async) as diaryMetadata">
+        <div #metadatas *ngFor="let diary of diaryMetadata; let i = index">
+          <div class="metadata-wrapper" matRipple [matRippleCentered]="false" [matRippleUnbounded]="false"
+            [matRippleColor]="'#b5bfc71a'" (click)="selectDiary(i, diary._id)">
+            <h1>{{diary.name}}</h1>
+            <div class="metadata-wrapper__info">
+              <p [matTooltip]="diary.names" matTooltipClass="blue-tooltip" [matTooltipPosition]="'right'">
+                {{diary.templateNames.length}}</p>
+              <p *ngIf="diary.updatedAt">{{diary.updatedAt | date: 'dd/MM/yyyy'}}</p>
+            </div>
+            <div class="metadata-wrapper__macro">
+              <p>{{diary.totalMacro.protein}}</p>
+              <p>{{diary.totalMacro.carb}}</p>
+              <p>{{diary.totalMacro.fat}}</p>
+              <p>{{diary.totalMacro.calory}}</p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div [style.display]="state === 'edit' ? 'block' : 'none'" #diaryEdit>
+      <div *ngIf="state === 'edit'">
+        <app-diary-body [editMode]="true" [diaryData]=selectedDiary (listEmitter)="backToList($event)"
+          (backEmitter)="backToDiaryView($event)" (userMacroEmitter)="updateUserMacro($event)"></app-diary-body>
+      </div>
+    </div>
+  </div>
+</div>

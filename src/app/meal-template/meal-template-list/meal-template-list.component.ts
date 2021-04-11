@@ -1,3 +1,4 @@
+import { createTemplateSummary } from './../../utility/meal-template-calculations';
 import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -33,8 +34,8 @@ export class MealTemplateListComponent implements OnInit, OnDestroy {
 
   mealTemplate$ = this.route.data.pipe(
     map(data => data.mealTemplate),
-    filter(mealTemplate => mealTemplate !== null),
-    map(mealTemplates => this.fillData(mealTemplates)),
+    filter(mealTemplate => mealTemplate.length > 0),
+    map(mealTemplates => createTemplateSummary(mealTemplates)),
     first(),
   )
 
@@ -53,23 +54,6 @@ export class MealTemplateListComponent implements OnInit, OnDestroy {
       });
   }
 
-  fillData(mealTemplates) {
-    return mealTemplates.map(mealTemplate => {
-      const nutriments = ['protein', 'carb', 'fat']
-      mealTemplate.summary = { protein: 0, carb: 0, fat: 0, calory: 0 }
-
-      nutriments.forEach(nutriment => {
-        mealTemplate.summary[nutriment] = mealTemplate.products
-          .map(product => product[nutriment])
-          .reduce((acc, val) => acc + val, 0)
-      })
-      mealTemplate.products = mealTemplate.products.map(product => ({ ...product, calory: Math.round(getCalory(product)) }))
-
-      mealTemplate.summary['calory'] = getCalory(mealTemplate.summary)
-
-      return mealTemplate
-    })
-  }
 
   scrollDown(e) {
     setTimeout(() => {
@@ -91,7 +75,7 @@ export class MealTemplateListComponent implements OnInit, OnDestroy {
       if (e) {
         this.mealTemplate$ = this.mealTemplateService.getMany().pipe(
           filter(mealTemplate => mealTemplate !== null),
-          map(mealTemplates => this.fillData(mealTemplates)),
+          map(mealTemplates => createTemplateSummary(mealTemplates)),
           first(),
         )
       }
@@ -118,7 +102,7 @@ export class MealTemplateListComponent implements OnInit, OnDestroy {
       setTimeout(() =>
         this.mealTemplate$ = this.mealTemplateService.getMany().pipe(
           filter(mealTemplate => mealTemplate !== null),
-          map(mealTemplates => this.fillData(mealTemplates)),
+          map(mealTemplates => createTemplateSummary(mealTemplates)),
           first(),
         ), 450)
 
@@ -129,35 +113,4 @@ export class MealTemplateListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.routerEvent.unsubscribe()
   }
-}
-const fake_data: MealTemplate =
-{
-  name: "Obiadek",
-  time: "13:45",
-  products: [
-    {
-      calory: 0,
-      quantity: 100,
-      name: 'Pierogi',
-      protein: 25,
-      carb: 50,
-      fat: 10
-    },
-    {
-      calory: 0,
-      quantity: 25,
-      name: 'Truskawki',
-      protein: 47,
-      carb: 25,
-      fat: 15
-    },
-    {
-      calory: 0,
-      quantity: 240,
-      name: 'BanAAAAAAAA AAAAAAAAAAAAAAAAAA AAAAAAany',
-      protein: 15,
-      carb: 28,
-      fat: 29
-    },
-  ]
 }

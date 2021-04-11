@@ -134,10 +134,10 @@ export class CaloryHelpDialogComponent implements OnInit {
     );
   }
   save() {
-    this.macroService.saveMacro({ protein: this.viewValues.protein, carb: this.viewValues.carb, fat: this.viewValues.fat })
+    const data = { protein: this.viewValues.protein, carb: this.viewValues.carb, fat: this.viewValues.fat }
+    this.macroService.saveMacro(data)
       .subscribe(res => {
         this.macroService.clearCache()
-        this.snackBar.open("Pomyślnie zapisano", 1700)
       })
   }
 }

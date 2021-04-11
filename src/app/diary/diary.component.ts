@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
+import { startAnimation } from '../utility/basic-animations';
 
 @Component({
   selector: 'app-diary',
@@ -8,13 +9,13 @@ import { User } from '../models/user.model';
   styleUrls: ['./diary.component.scss']
 })
 export class DiaryComponent implements OnInit {
-
+  @ViewChild('diary', { static: true }) diary: ElementRef;
   currentUser: User;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-
+    startAnimation(this.diary.nativeElement, 0.7)
   }
 
 }

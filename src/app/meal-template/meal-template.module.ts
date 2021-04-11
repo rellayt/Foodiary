@@ -42,6 +42,9 @@ import { MealTemplateResolve } from '../resolves/meal-template-resolve';
   providers: [
     DelayResolve,
     MealTemplateResolve
+  ],
+  exports: [
+    MealTemplateBodyComponent
   ]
 })
 export class MealTemplateModule { }

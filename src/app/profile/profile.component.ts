@@ -10,13 +10,13 @@ import { MeasurementService } from '../services/measurement.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  @ViewChild('profileCardRef', { static: true }) profileCardRef: ElementRef;
+  @ViewChild('profileCard', { static: true }) profileCard: ElementRef;
 
   constructor(private macro: MacroService, private personalData: PersonalDataService, private measurement: MeasurementService) {
   }
 
   ngOnInit(): void {
-    startAnimation(this.profileCardRef.nativeElement, 0.7)
+    startAnimation(this.profileCard.nativeElement, 0.7)
   }
   ngOnDestroy(): void {
     this.macro.clearCache()

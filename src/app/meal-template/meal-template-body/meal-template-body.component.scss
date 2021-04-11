@@ -14,10 +14,7 @@
     border-bottom: 1px solid $gray-light-50-opacity;
     display: flex;
     align-items: center;
-    // background-color: rgba(174, 0, 255, 0.226);
     &--timepicker {
-      // width: 12%;
-      // background-color: rgba(0, 183, 255, 0.397);
       input {
         transform: translateX(12px);
         cursor: pointer;
@@ -34,7 +31,6 @@
       margin-left: 5px;
       display: flex;
       align-items: center;
-      // background-color: rgba(0, 255, 0, 0.377);
       font-size: 22px;
       mat-form-field {
         width: 55%;
@@ -55,7 +51,6 @@
     flex-direction: column;
     align-items: center;
     height: 94%;
-    // margin-bottom: 10px;
   }
   &__headers {
     width: 100%;
@@ -116,12 +111,10 @@
       .quantity input {
         transform: translateX(14px);
         width: 65px;
-        // background-color: rgba(255, 255, 0, 0.459);
       }
       .calory input {
         transform: translateX(11px);
         width: 53px;
-        // background-color: rgba(255, 255, 0, 0.459);
       }
       div:nth-child(6) {
         border-right: 1px solid $white;
@@ -197,13 +190,18 @@
       color: $black;
       background-color: $white;
     }
-    button:nth-child(2) {
+    div:nth-child(2) button {
       background-color: $white;
       color: $black;
+      text-shadow: 0px 1px 0px transparent;
+      transition: 250ms all;
       &:disabled {
-        background-color: transparent;
-        border: none;
+        color: $white;
+        background-color: $red;
+        box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 10%),
+          0px 2px 2px 0px rgb(0 0 0 / 5%), 0px 1px 5px 0px rgb(0 0 0 / 5%);
         outline: none;
+        text-shadow: 0px 1px 0px rgb(0 0 0 / 30%);
       }
     }
     button:last-child {
@@ -220,7 +218,11 @@
     }
   }
 }
-
+.meal-template--diary-mode {
+  box-shadow: none;
+  border: 1px solid $gray-light-50-opacity;
+  margin: 17px 0;
+}
 ::ng-deep {
   .mat-standard-chip .mat-chip-remove.mat-icon {
     width: 22px !important;

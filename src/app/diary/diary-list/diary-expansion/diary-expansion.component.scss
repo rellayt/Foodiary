@@ -1,0 +1,194 @@
+@import "src/app/shared/colors.scss";
+.diary-expansion {
+  margin: 0 25px;
+  display: flex;
+  .diary-body {
+    transition: 250ms all;
+    width: 100%;
+    background-color: $white;
+    color: $black;
+    margin-bottom: 15px;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+      0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+    &__header {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 7px 0;
+      position: relative;
+      p {
+        font-size: 24px;
+        margin: 0;
+      }
+      .header-buttons {
+        position: absolute;
+        right: 0;
+        top: 5px;
+        button {
+          width: 45px;
+          height: 45px;
+          opacity: 0.75;
+          margin-right: 5px;
+          mat-icon {
+            color: $black;
+            position: relative;
+            font-size: 30px;
+            top: -1px;
+            right: 4px;
+            transition: all 250ms ease;
+            &:hover {
+              opacity: 1;
+              color: $blue;
+            }
+          }
+        }
+        button:nth-child(3) mat-icon:hover {
+          color: $red;
+        }
+      }
+      &-back {
+        position: absolute;
+        left: 0;
+        margin-left: 20px;
+        button {
+          color: $black;
+          font-size: 22px;
+          cursor: pointer;
+          border: 3px solid transparent;
+          border-bottom: 3px solid $blue;
+          background-color: transparent;
+          transition: 125ms border-bottom ease-in;
+          &:hover {
+            border: 3px solid transparent;
+            transition: 125ms border-bottom ease-in;
+          }
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+    &__inner {
+      &__header {
+        display: grid;
+        grid-template-columns: 30% repeat(5, 14%);
+        box-shadow: 0px 2px 2px -1px rgb(0 0 0 / 20%);
+        margin-bottom: 2px;
+        background-color: $blue;
+        color: $white;
+        p {
+          height: 50px;
+          border-top: 1px solid $gray-light;
+          border-bottom: 1px solid $gray-light;
+          margin: 0;
+        }
+      }
+      &__header p,
+      &__meal-template .name,
+      .diary-body__summary span,
+      .product span,
+      .summary span {
+        font-size: 19px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      &__meal-template {
+        .name {
+          height: 50px;
+          grid-column: 1/7;
+          justify-content: flex-start;
+          padding-left: 15px;
+          text-transform: capitalize;
+          border-top: 1px solid $gray-light-25-opacity;
+          background-color: $gray-light-10-opacity;
+          span:first-child {
+            margin-right: 20px;
+            font-weight: 600;
+          }
+          span:nth-child(2)::before {
+            content: "godz. ";
+            font-size: 18px;
+            text-transform: none;
+          }
+        }
+        .product {
+          display: grid;
+          grid-template-columns: 30% repeat(5, 14%);
+          span {
+            font-size: 18px;
+            height: 40px;
+            border-top: 1px solid $gray-light;
+          }
+          span:nth-child(2n),
+          span:nth-child(5) {
+            &::after {
+              content: "g";
+              margin-left: 6px;
+            }
+          }
+        }
+        .summary {
+          display: grid;
+          grid-template-columns: 30% repeat(5, 14%);
+          border-top: 1px solid $gray-light;
+
+          span:first-child {
+            grid-column: 3/4;
+          }
+          span {
+            font-size: 18px;
+            height: 40px;
+            background-color: $blue;
+            color: $white;
+            &:not(:first-child)::after {
+              content: "g";
+              margin-left: 6px;
+            }
+          }
+        }
+      }
+      .diary-body__summary {
+        display: grid;
+        grid-template-columns: 20% 15% 20% 25% 20%;
+        background-color: $blue;
+        color: $white;
+        margin-top: 20px;
+        span {
+          justify-content: flex-start;
+          height: 45px;
+        }
+        span:nth-child(-n + 5) {
+          border-bottom: 1px solid $white;
+        }
+        span:nth-child(5n + 1) {
+          padding-left: 10px;
+          width: 100%;
+          font-weight: 600;
+          // margin-left: 10px;
+        }
+        span:nth-child(5n + 2)::after {
+          content: "kcal";
+          margin-left: 7px;
+        }
+        span:nth-child(n + 3):not(:nth-child(6)):not(:nth-child(7))::after {
+          content: "g";
+          margin-left: 7px;
+        }
+        span:nth-child(5n + 3)::before {
+          content: "białko:";
+          margin-right: 7px;
+        }
+        span:nth-child(5n + 4)::before {
+          content: "węglowodany:";
+          margin-right: 7px;
+        }
+        span:nth-child(5n + 5)::before {
+          content: "tłuszcze:";
+          margin-right: 7px;
+        }
+      }
+    }
+  }
+}

@@ -7,12 +7,12 @@ import { startAnimation } from '../utility/basic-animations';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-  @ViewChild('productsCardRef', { static: true }) productsCardRef: ElementRef;
+  @ViewChild('productsCard', { static: true }) productsCard: ElementRef;
 
   constructor() { }
 
   ngOnInit(): void {
-    startAnimation(this.productsCardRef.nativeElement, 0.7)
+    startAnimation(this.productsCard.nativeElement, 0.7)
 
   }
 

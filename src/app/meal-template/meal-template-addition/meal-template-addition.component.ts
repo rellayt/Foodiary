@@ -17,7 +17,6 @@ export class MealTemplateAdditionComponent implements OnInit, OnDestroy {
   routerEvent: Subscription
 
   ngOnInit(): void {
-
     const value = previousPage === "/template/list" ? -20 : 0
     startAnimation(this.templateAddition.nativeElement, 0.35, value)
 
