@@ -31,16 +31,9 @@
   }
   .diary-view {
     display: grid;
-    &__item {
-      // opacity: 0;
-      app-diary-sidebar {
-        display: flex;
-      }
+    &__item app-diary-sidebar {
+      display: flex;
     }
-    // app-diary-sidebar,
-    // app-diary-expansion {
-    //   opacity: 0;
-    // }
   }
   .metadata-list {
     display: flex;
@@ -71,11 +64,10 @@
     transition: 250ms all;
     background-color: $white;
     color: $black;
-    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
-      0px 2px 2px 0px rgb(0 0 0 / 7%), 0px 1px 5px 0px rgb(0 0 0 / 6%);
+    box-shadow: 0px 2px 5px -2px rgb(0 0 0 / 18%),
+      0px 1px 4px 0px rgb(0 0 0 / 9%), 0px -1px 7px 1px rgb(0 0 0 / 6%);
     cursor: pointer;
     &:hover {
-      // filter: brightness(0.99);
       color: $blue;
       box-shadow: 0px 3px 15px -2px rgb(0 0 0 / 20%),
         0px 2px 2px 0px rgb(0 0 0 / 7%), 0px 1px 5px 0px rgb(0 0 0 / 6%);

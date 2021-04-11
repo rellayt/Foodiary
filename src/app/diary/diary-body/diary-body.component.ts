@@ -199,7 +199,10 @@ export class DiaryBodyComponent implements OnInit {
             this.nutrimentsCountAnimation({ ...macro })
           }),
         )
-      if (this.editMode) this.userMacroEmitter.emit({ ...macro })
+      if (this.editMode) {
+        this.userMacroEmitter.emit({ ...macro })
+        setTimeout(() => this.templates.forEach(template => fromToOpacityAnimation(template.nativeElement, 0.01)), 20)
+      }
       this.snackBar.open('Kaloryka została zaktualizowana', 1500)
     })
   }
