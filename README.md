@@ -40,7 +40,7 @@ Backend
 #### Search products route params & Creating / Updating single meal template
 <div align="left">
      <a href="https://drive.google.com/file/d/1NX3LTkKBa1QoQWI6tWY6hxQLBfe6mzJh/view?usp=sharing">
-        <img src="https://i.imgur.com/luQScLu.png" width="650" height="360">
+        <img src="https://i.imgur.com/luQScLu.png" width="500" height="260">
      </a>
 </div>
 <br>
