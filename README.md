@@ -35,7 +35,7 @@
 - MongoDB
 - Cheerio.js
 
-# Snippets <b>(click to open a video)</b>
+# Snippets <i>1080p</i> <b>(click to open a video)</b>
 
 #### Search products route params & Creating / Updating single meal template
 <div align="left">
