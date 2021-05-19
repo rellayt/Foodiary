@@ -35,13 +35,6 @@ Backend
 - MongoDB
 - Cheerio.js
 
-## Database model
-#### Click to open image
-<div align="left">
-    <img src="https://i.imgur.com/5qgpByK.png" width="650" height="450">
-</div>
-<br>
-
 # Snippets <b>(click to open a video)</b>
 
 #### Search products route params & Creating / Updating single meal template
@@ -84,3 +77,9 @@ Backend
 </div>
 <br>
 
+## Database model
+#### Click to open image
+<div align="left">
+    <img src="https://i.imgur.com/5qgpByK.png" width="650" height="450">
+</div>
+<br>
