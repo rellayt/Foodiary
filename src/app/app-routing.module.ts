@@ -8,6 +8,11 @@ import { DiaryComponent } from './diary/diary.component';
 import { AuthModule } from './auth/auth.module';
 import { AuthorizedGuard } from './auth/authorized.guard';
 import { UnauthorizedGuard } from './auth/unauthorized.guard';
+import { QuestionnaireComponent } from './home/questionnaire/questionnaire.component';
+import { RegisterExtendedComponent } from './auth/register-extended/register-extended.component';
+import { WildcardComponent } from './wildcard/wildcard.component';
+import { AboutMeComponent } from './profile/about-me/about-me.component';
+import { RegisterExtendedGuard } from './auth/register-extended.guard';
 
 
 const routes: Routes = [
@@ -38,6 +43,15 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'register_extended',
+    component: RegisterExtendedComponent,
+    canActivate: [
+      UnauthorizedGuard,
+      RegisterExtendedGuard
+
+    ]
+  },
+  {
     path: 'forgot-password',
     component: ForgotPasswordComponent,
     canActivate: [
@@ -45,11 +59,19 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'diary',
-    component: DiaryComponent,
+    path: 'questionnaire',
+    component: QuestionnaireComponent,
     canActivate: [
-      AuthorizedGuard
+      UnauthorizedGuard,
     ]
+  },
+  // {
+  //   path: 'profile',
+  //   redirectTo: 'profile/about_me',
+  // },
+  {
+    path: '**',
+    component: WildcardComponent,
   },
 ];
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TooltipPosition } from '@angular/material/tooltip';
-import { OnceClickedService } from '../../services/animation/once-clicked.service';
 import { validateEmail } from '../../validation/validators';
 
 @Component({
@@ -11,7 +10,7 @@ import { validateEmail } from '../../validation/validators';
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private onceClickedService: OnceClickedService) { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.dialog.open(ForgotPasswordDialogComponent, {
@@ -19,7 +18,6 @@ export class ForgotPasswordComponent implements OnInit {
       width: '500px',
       disableClose: true
     });
-    this.onceClickedService.changeOnceClickedSubject(true);
   }
 }
 @Component({

@@ -3,7 +3,6 @@ import { MatDialog, } from '@angular/material/dialog';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { Router } from '@angular/router';
 import { TooltipPosition } from '@angular/material/tooltip';
-import { OnceClickedService } from '../../services/animation/once-clicked.service';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +10,10 @@ import { OnceClickedService } from '../../services/animation/once-clicked.servic
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  constructor(public dialog: MatDialog, private onceClickedService: OnceClickedService) { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
     this.dialog.open(LoginDialogComponent, { disableClose: true, restoreFocus: false });
-    this.onceClickedService.changeOnceClickedSubject(true);
   }
 
   ngOnDestroy() {

@@ -6,9 +6,10 @@ export const createTemplateSummary = (mealTemplates) => {
     mealTemplate.summary = { protein: 0, carb: 0, fat: 0, calory: 0 }
 
     nutriments.forEach(nutriment => {
-      mealTemplate.summary[nutriment] = mealTemplate.products
+      mealTemplate.summary[nutriment] = +mealTemplate.products
         .map(product => product[nutriment])
         .reduce((acc, val) => acc + val, 0)
+        .toFixed(1)
     })
     mealTemplate.products = mealTemplate.products.map(product => ({ ...product, calory: Math.round(getCalory(product)) }))
 

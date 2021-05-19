@@ -13,6 +13,7 @@ body {
   color: $black;
   font-family: "Poppins";
 }
+
 .mat-calendar-body-cell-content.mat-calendar-body-selected {
   background-color: $blue !important;
   color: $white !important;
@@ -28,23 +29,22 @@ mat-chip {
   padding: 10px !important;
 }
 .blue-tooltip {
-  top: 1px;
   background: $blue-low-opacity;
-  padding: 5px 7px;
   color: $white;
-  font-weight: 600;
-  font-size: 1em;
-  position: relative;
-  bottom: 6px;
-  border-radius: 7px !important;
-  white-space: pre-line;
-  box-shadow: 1px 0px 5px #00000033;
 }
 .red-tooltip {
-  top: 1px;
   background: $red-low-opacity;
-  padding: 5px 7px;
   color: $white;
+}
+.warning-tooltip {
+  background: $warning;
+  color: $black;
+}
+.blue-tooltip,
+.red-tooltip,
+.warning-tooltip {
+  top: 1px;
+  padding: 5px 7px;
   font-weight: 600;
   font-size: 1em;
   position: relative;
@@ -84,6 +84,13 @@ mat-option .mat-option-text .option {
 }
 .mat-snack-bar-error {
   background-color: $red;
+}
+.mat-snack-bar-warning {
+  color: $black;
+  background-color: $warning;
+  .mat-simple-snackbar-action {
+    color: $black;
+  }
 }
 .expanded-select {
   min-height: 43.5vh;

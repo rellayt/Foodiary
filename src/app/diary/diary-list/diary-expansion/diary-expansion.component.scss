@@ -82,6 +82,15 @@
           border-top: 1px solid $gray-light;
           border-bottom: 1px solid $gray-light;
           margin: 0;
+          &:nth-child(4)::before {
+            content: "Białko";
+          }
+          &:nth-child(5)::before {
+            content: "Węglowodany";
+          }
+          &:nth-child(6)::before {
+            content: "Tłuszcze";
+          }
         }
       }
       &__header p,
@@ -189,6 +198,35 @@
           margin-right: 7px;
         }
       }
+    }
+  }
+}
+@media (max-width: 1024px) {
+  .diary-body__inner__header {
+    p {
+      &:nth-child(4)::before {
+        content: "B" !important;
+      }
+      &:nth-child(5)::before {
+        content: "W" !important;
+      }
+      &:nth-child(6)::before {
+        content: "T" !important;
+      }
+    }
+  }
+  .diary-body__summary {
+    span:nth-child(5n + 3)::before {
+      content: "B:" !important;
+      margin-right: 5px;
+    }
+    span:nth-child(5n + 4)::before {
+      content: "W:" !important;
+      margin-right: 5px;
+    }
+    span:nth-child(5n + 5)::before {
+      content: "T:" !important;
+      margin-right: 5px;
     }
   }
 }

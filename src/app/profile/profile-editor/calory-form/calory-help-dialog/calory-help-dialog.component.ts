@@ -5,6 +5,8 @@ import { Macro } from '../../../../models/macro.model';
 import { gsap } from 'gsap';
 import { SnackBarService } from '../../../../services/snack-bar.service';
 import { MacroService } from '../../../../services/macro.service';
+import { physicalActivity } from 'src/app/helpers/userCalory';
+import { calculateBasicMetabolism } from '../../../../helpers/userCalory';
 
 @Component({
   selector: 'app-calory-help-dialog',
@@ -12,37 +14,27 @@ import { MacroService } from '../../../../services/macro.service';
   styleUrls: ['./calory-help-dialog.component.scss']
 })
 export class CaloryHelpDialogComponent implements OnInit {
+  @ViewChild('gender', { static: true }) gender: ElementRef
+  @ViewChild('activity', { static: true }) activity: ElementRef
+  @ViewChild('heightweight', { static: true }) heightweight: ElementRef
+  @ViewChild('agesubmit', { static: true }) agesubmit: ElementRef
 
-  @ViewChild('gender', { static: true }) gender: ElementRef<HTMLDivElement>;
-  @ViewChild('activity', { static: true }) activity: ElementRef<HTMLDivElement>;
-  @ViewChild('heightweight', { static: true }) heightweight: ElementRef<HTMLDivElement>;
-  @ViewChild('agesubmit', { static: true }) agesubmit: ElementRef<HTMLDivElement>;
-
-  @ViewChild('basicText1', { static: true }) basicText1: ElementRef<HTMLDivElement>;
-  @ViewChild('bMetabolism', { static: true }) bMetabolism: ElementRef<HTMLDivElement>;
-  @ViewChild('tabs', { static: true }) tabs: ElementRef<HTMLDivElement>;
-  @ViewChild('basicText2', { static: true }) basicText2: ElementRef<HTMLDivElement>;
-  @ViewChild('totalCalory', { static: true }) totalCalory: ElementRef<HTMLDivElement>;
-  @ViewChild('totalNutrients', { static: true }) totalNutrients: ElementRef<HTMLDivElement>;
-  @ViewChild('saveButton', { static: true }) saveButton: ElementRef<HTMLDivElement>;
-
+  @ViewChild('basicText1', { static: true }) basicText1: ElementRef
+  @ViewChild('bMetabolism', { static: true }) bMetabolism: ElementRef
+  @ViewChild('tabs', { static: true }) tabs: ElementRef
+  @ViewChild('basicText2', { static: true }) basicText2: ElementRef
+  @ViewChild('totalCalory', { static: true }) totalCalory: ElementRef
+  @ViewChild('totalNutrients', { static: true }) totalNutrients: ElementRef
+  @ViewChild('saveButton', { static: true }) saveButton: ElementRef
 
   caloryHelpForm: FormGroup
 
-  tooltipPosition: TooltipPosition = 'above';
-
-  physicalActivity = [
-    { value: 1.112, viewValue: 'Prawie brak' },
-    { value: 1.272, viewValue: 'Lekka aktywność' },
-    { value: 1.425, viewValue: 'Umiarkowana aktywność' },
-    { value: 1.60, viewValue: 'Duża aktywność' },
-    { value: 1.785, viewValue: 'Bardzo duża aktywność' },
-  ];
+  physicalActivity = physicalActivity
 
   genders = [
     { value: 'male', viewValue: 'Mężczyzna' },
     { value: 'female', viewValue: 'Kobieta' }
-  ];
+  ]
 
   userTarget = 'stay';
 
@@ -54,7 +46,7 @@ export class CaloryHelpDialogComponent implements OnInit {
   viewText: string;
   result = false;
 
-  constructor(private formBuilder: FormBuilder, private snackBar: SnackBarService, private macroService: MacroService) {
+  constructor(private formBuilder: FormBuilder, private macroService: MacroService) {
     this.caloryHelpForm = this.formBuilder.group({
       activity: ['', [Validators.required]],
       weight: ['', [Validators.required, Validators.min(35), Validators.max(180)]],
@@ -87,14 +79,9 @@ export class CaloryHelpDialogComponent implements OnInit {
     return 'Nieprawidłowa wartość'
   }
 
-  calculate() {
-    const value = (name: string) => this.caloryHelpForm.get(name).value;
-    const [activity, weight, height, age] = [value('activity'), value('weight'), value('height'), value('age')];
-    if (this.selectedGender === 'male') {
-      this.basicMetabolism = Math.round(66.5 + (13.75 * weight) + (5.003 * height) - (6.775 * age));
-    } else {
-      this.basicMetabolism = Math.round(665.1 + (9.563 * weight) + (1.85 * height) - (4.676 * age));
-    }
+  macroCalculation() {
+    const { activity, weight, height, age } = this.caloryHelpForm.value
+    this.basicMetabolism = calculateBasicMetabolism({ weight, height, age, gender: this.selectedGender })
     const SDDP = this.basicMetabolism / 10;
 
     this.totalMetabolism = Math.round(this.basicMetabolism * activity + SDDP)
@@ -123,12 +110,14 @@ export class CaloryHelpDialogComponent implements OnInit {
     ];
     values.forEach(item => {
       if (item.name === name) {
-        const tempCalory = this.totalMetabolism + item.value;
-        this.viewValues.protein = Math.round((tempCalory * 0.23) / 4)
-        this.viewValues.carb = Math.round((tempCalory * 0.54) / 4)
-        this.viewValues.fat = Math.round((tempCalory * 0.23) / 9)
+        const calory = Math.round(this.totalMetabolism + item.value);
+
+        this.viewValues.protein = Math.round((calory * 0.23) / 4)
+        this.viewValues.carb = Math.round((calory * 0.54) / 4)
+        this.viewValues.fat = Math.round((calory * 0.23) / 9)
         this.viewText = item.text
-        this.viewValues.calory = this.viewValues.protein * 4 + this.viewValues.carb * 4 + this.viewValues.fat * 9;
+
+        this.viewValues.calory = calory;
       }
     }
     );

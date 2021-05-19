@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Product } from '../models/products.model';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 interface Params {
   query: string;
@@ -64,8 +64,8 @@ export class ProductService {
           _category: "" + params.category
         }
       })),
-      tap(res => this.total.next(res.count)),
-      map(res => res.products as Product[])
+      tap(({ count }) => this.total.next(count)),
+      map(({ products }) => products as Product[])
     )
   }
 

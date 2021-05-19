@@ -20,7 +20,7 @@
       right: 2px;
       color: $black;
       font-size: 28px;
-      opacity: 60%;
+      opacity: 0.6;
     }
   }
   .forgot-password-container {
@@ -75,8 +75,15 @@
     stroke: $white !important;
     zoom: 0.28;
   }
-  ::ng-deep .mat-progress-spinner circle,
-  .mat-spinner circle {
-    stroke: $white;
+  ::ng-deep {
+    .mat-progress-spinner circle,
+    .mat-spinner circle {
+      stroke: $white;
+    }
+    .mat-form-field-appearance-fill .mat-form-field-flex {
+      border-radius: 6px 6px 0 0;
+      background-color: rgba(0, 0, 0, 0.03);
+      box-shadow: inset 0px 0px 4px 0px $gray-light-25-opacity;
+    }
   }
 }

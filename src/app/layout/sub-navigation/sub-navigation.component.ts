@@ -25,8 +25,8 @@ export class SubNavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    startAnimation(this.subNavRef.nativeElement, 0.5, 0, Math.random() < 0.5 ? -10 : 10)
-    startAnimation(this.linkRef.nativeElement, 3.5, 0, -15)
+    startAnimation(this.subNavRef.nativeElement, 0.7, 0, Math.random() < 0.5 ? -12 : 12)
+    startAnimation(this.linkRef.nativeElement, 3.1, 0, -15)
 
     this.routerEvent = this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: any) => {

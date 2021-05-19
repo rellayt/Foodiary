@@ -1,0 +1,141 @@
+@import "src/app/shared/colors.scss";
+
+.questionnaire {
+  color: $black;
+  min-height: 80%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 6.5vw 1fr 1vw;
+  .question {
+    grid-row: 2/3;
+    display: flex;
+    flex-direction: column;
+    margin: 15px auto;
+    padding: 25px 30px;
+    min-width: 970px;
+    background-color: $white;
+    border-radius: 5px;
+    box-shadow: 0px 3px 5px 1px rgb(0 0 0 / 10%);
+    border: 1px solid $gray-light-25-opacity;
+    &__heading,
+    &__query {
+      display: flex;
+      justify-content: center;
+    }
+    &__heading {
+      font-size: 35px;
+      font-weight: 600;
+    }
+    &__query {
+      font-size: 22px;
+      margin: 20px 0;
+    }
+    &__answers {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3%;
+      .answer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 15px;
+        height: 220px;
+        width: 270px;
+        cursor: pointer;
+        border-radius: 15px;
+        transition: all 0.3s;
+        background-color: $white;
+        border: 2px solid $gray-light-50-opacity;
+        p {
+          font-size: 22px;
+        }
+        &:hover {
+          background-color: $gray-light-10-opacity;
+        }
+      }
+      .answer.selected {
+        background-color: $blue;
+        border: 2px solid $white;
+        color: $white;
+      }
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+      button {
+        border-radius: 15px;
+        margin: 8px;
+      }
+      .previous {
+        border: 2px solid $gray-light-50-opacity;
+        width: 50px;
+        background-color: transparent;
+        transition: 250ms ease;
+        cursor: pointer;
+        i {
+          font-size: 30px;
+          height: 30px;
+          color: $blue;
+          transform: translateX(-1px);
+        }
+        &:focus {
+          outline: none;
+        }
+        &:hover {
+          border: 2px solid $blue;
+        }
+        &:disabled {
+          border: 2px solid $gray-light-50-opacity;
+        }
+      }
+      .next {
+        color: $white;
+        background-color: $blue;
+        font-size: 20px;
+        padding: 5px 35px;
+        transition: 300ms ease;
+        border: 2px solid transparent;
+        &:hover {
+          opacity: 0.94;
+        }
+        &:disabled {
+          opacity: 0.7;
+        }
+        ::ng-deep .mat-ripple-element {
+          background-color: rgba(0, 23, 65, 0.126);
+        }
+      }
+    }
+    .progress {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 400px;
+      margin: 10px auto;
+      &__bar {
+        margin: 10px auto 20px;
+        height: 20px;
+        border-radius: 10px;
+        width: 100%;
+        background-color: $gray-light-25-opacity;
+        &--slider {
+          height: inherit;
+          width: 0%;
+          background-color: $blue;
+          border-radius: 10px;
+        }
+      }
+      &__actions {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        font-size: 19px;
+        color: $gray-light;
+        .p-actions-left span:nth-child(2) {
+          margin: 0 5px;
+        }
+      }
+    }
+  }
+}

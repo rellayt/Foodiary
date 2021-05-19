@@ -14,7 +14,8 @@ import { DiaryNameResolve } from '../resolves/diary-name-resolve';
 const routes: Routes = [
   {
     path: 'diary',
-    redirectTo: 'diary/list'
+    redirectTo: 'diary/list',
+    pathMatch: 'full'
   },
   {
     path: 'diary',

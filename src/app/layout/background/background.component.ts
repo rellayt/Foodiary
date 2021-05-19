@@ -22,17 +22,27 @@ export class BackgroundComponent implements OnInit, AfterContentInit {
   ngOnInit(): void {
     this.initialAnimations();
 
+    // VANTA.FOG({
+    //   el: '#background',
+    //   minHeight: 200.00,
+    //   minWidth: 200.00,
+    //   highlightColor: 0x2092fa,
+    //   midtoneColor: 0xfcfcfc,
+    //   lowlightColor: 0xffffff,
+    //   baseColor: 0xffffff,
+    //   blurFactor: 0.63,
+    //   speed: 1.30,
+    //   zoom: 1.10
+    // });
     VANTA.FOG({
       el: '#background',
       minHeight: 200.00,
       minWidth: 200.00,
-      highlightColor: 0x2092fa,
-      midtoneColor: 0xfcfcfc,
-      lowlightColor: 0xffffff,
+      highlightColor: 0xffffff,
+      midtoneColor: 0xffffff,
+      lowlightColor: 0x75ff,
       baseColor: 0xffffff,
-      blurFactor: 0.63,
-      speed: 1.30,
-      zoom: 1.10
+      zoom: 2
     });
   }
 

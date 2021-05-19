@@ -2,19 +2,29 @@
 
 .main-container {
   width: 100%;
-  height: calc(100%-107px);
   display: flex;
   justify-content: center;
+  .main-wrapper {
+    margin-bottom: 12px;
+    min-height: 903px;
+    padding-top: 138px;
+    width: 84%;
+  }
+  .guest-wrapper {
+    display: grid;
+    grid-template-rows: 85px 1fr;
+    width: 100%;
+  }
+}
+@media (min-width: 1481px) and (max-width: 1800px) {
+  .main-wrapper {
+    width: 90% !important;
+  }
 }
 
-.main-wrapper {
-  margin: 18px 0;
-  height: 783px;
-  width: 80%;
-}
 @media (min-width: 501px) and (max-width: 1480px) {
   .main-wrapper {
-    width: 97.5%;
+    width: 97.5% !important;
   }
 }
 

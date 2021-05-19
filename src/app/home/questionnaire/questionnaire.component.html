@@ -1,0 +1,37 @@
+<div class="questionnaire">
+  <div class="question" #questionContainer>
+    <h2 class="question__heading">Pytanie {{currentQuestionIndex + 1}} </h2>
+    <div class="question__query">{{ question?.query }}</div>
+    <div class="question__answers" #answers>
+      <div class="answer" *ngFor="let answer of question.options; let i = index" #currentAnswer
+        (click)="onSelect(currentAnswer, i)">
+        <p>{{answer?.text}}</p>
+      </div>
+    </div>
+    <div class="actions" #actions>
+      <button mat-ripple [disabled]="currentQuestionIndex === 0" class="previous" (click)="manageAction('previous')">
+        <i class="fa fa-caret-left"></i>
+      </button>
+      <div [matTooltip]="selectedOption === null ? 'Wybierz odpowiedź' : ''" [matTooltipClass]="'blue-tooltip'"
+        [matTooltipPosition]="'right'" [matTooltipShowDelay]="'300'">
+        <button mat-flat-button class="next" [disabled]="selectedOption === null"
+          (click)="manageAction('next')">{{currentQuestionIndex < 3 ? 'Następne' : 'Przejdź dalej' }}</button>
+      </div>
+    </div>
+    <div class="progress">
+      <div class="progress__bar">
+        <div #slider class="progress__bar--slider"></div>
+      </div>
+      <div class="progress__actions" #progress>
+        <div class="p-actions-left">
+          <span>Krok {{ currentQuestionIndex + 1 }}</span>
+          <span>z</span>
+          <span>{{ questions.length }}</span>
+        </div>
+        <div class="p-actions-right">
+          <span>{{ progressValue }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

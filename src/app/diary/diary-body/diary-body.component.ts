@@ -13,7 +13,7 @@ import { clearProduct } from '../../helpers/meal-template';
 import { ActivatedRoute } from '@angular/router';
 import { iif, of, timer } from 'rxjs';
 import { filter, finalize, first, map, mergeMap, tap } from 'rxjs/operators';
-import { counterAnimation, endAnimation, fromToOpacityAnimation, startAnimation } from 'src/app/utility/basic-animations';
+import { counterAnimation, endAnimation, fromToOpacityAnimation } from 'src/app/utility/basic-animations';
 
 @Component({
   selector: 'app-diary-body',
@@ -88,6 +88,7 @@ export class DiaryBodyComponent implements OnInit {
 
     setTimeout(() => {
       fromToOpacityAnimation(this.templates.toArray()[this.diary.mealTemplates.length - 1].nativeElement, 2)
+      window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: 'smooth' })
     }, 150)
   }
 

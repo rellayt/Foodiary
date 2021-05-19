@@ -1,9 +1,13 @@
-<app-guest-navbar *ngIf="!isAuthenticated"></app-guest-navbar>
-<app-user-navbar *ngIf="isAuthenticated"></app-user-navbar>
-<app-sub-navigation *ngIf="isAuthenticated"></app-sub-navigation>
+<div #guestNavbar>
+  <app-guest-navbar (navigateEmitter)="navigate($event)" *ngIf="!isAuthenticated"></app-guest-navbar>
+</div>
+<app-user-navbar (logoutEmitter)="logout()" *ngIf="isAuthenticated"></app-user-navbar>
+<div #subNavigation>
+  <app-sub-navigation *ngIf="isAuthenticated"></app-sub-navigation>
+</div>
 <app-background></app-background>
 <div class="main-container">
-  <div class="main-wrapper">
+  <div [ngClass]="isAuthenticated ? 'main-wrapper' : 'guest-wrapper'" #main>
     <router-outlet></router-outlet>
   </div>
 </div>

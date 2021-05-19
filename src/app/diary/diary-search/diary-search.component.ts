@@ -25,17 +25,17 @@ export class DiarySearchComponent implements OnInit {
   ngOnInit(): void {
     this.query.valueChanges
       .pipe(
+        tap(() => {
+          this.options = []
+          this.loading = true
+        }),
         debounceTime(250),
-        tap(value =>
-          this.selectedMealTemplate && this.selectedMealTemplate.name !== value ?
-            this.loading = true : ''
-        ),
         filter((value: string) => !!value && value.length > 1 && value !== ''),
         switchMap((value: string) => this.mealTemplateService.getMany(value)),
         map(mealTemplates => createTemplateSummary(mealTemplates) || []))
       .subscribe((data: MealTemplate[]) => {
-        this.loading = false
         this.options = data;
+        setTimeout(() => this.loading = false, 100)
       })
   }
   @Input() set searchDisable(value) {

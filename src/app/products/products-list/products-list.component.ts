@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject, ElementRef, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Product } from '../../models/products.model';
 import { CATEGORIES_DATA } from '../../utility/static-data';
@@ -7,7 +7,7 @@ import { ProductService } from '../../services/product.service';
 import { map } from 'rxjs/internal/operators/map';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { filter, finalize, first, switchMap, tap } from 'rxjs/operators';
+import { filter, first, switchMap, tap } from 'rxjs/operators';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { DeleteDialogComponent } from '../../layout/dialogs/delete/delete-dialog.component';
 import { endAnimation, startAnimation } from '../../utility/basic-animations';
@@ -71,7 +71,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       .subscribe((event: any) => {
         const nextPage = event.url
         if (!nextPage.includes('?')) {
-          const value = nextPage.split('/')[1] !== 'products' ? 0 : 20
+          const value = nextPage.split('/')[1] ? 0 : 20
           endAnimation(this.productList.nativeElement, 0.35, value)
         }
       });
@@ -84,7 +84,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     ).subscribe(params => {
       this.listProps = {
         query: params.get('q') || '',
-        category: +params.get('_category') || 0,
+        category: +params.get('category') || 0,
         page: +params.get('_page') || 1,
         perPage: +params.get('_perpage') || 5
       }

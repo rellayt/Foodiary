@@ -1,7 +1,7 @@
 @import "src/app/shared/colors.scss";
 
 .navbar-container-user {
-  position: relative;
+  position: fixed;
   display: flex;
   align-items: center;
   width: 100%;
@@ -9,6 +9,10 @@
   z-index: 5;
   background-color: $white;
   box-shadow: 0px 0px 14px #00000033;
+  .profile {
+    background-color: blueviolet;
+    font-size: 19px !important;
+  }
   .title {
     margin-left: 30px;
   }
@@ -52,6 +56,29 @@
         color: #3186f5b2;
         font-size: 30px;
       }
+    }
+  }
+}
+.cdk-overlay-connected-position-bounding-box .cdk-overlay-pane .mat-menu-panel {
+  font-size: 18px;
+  .mat-menu-content,
+  p {
+    margin: 9px 0;
+    text-align: center;
+    &::after {
+      content: "";
+      height: 2px;
+      width: 100%;
+      background-color: $gray-dark;
+    }
+  }
+
+  .mat-menu-content button {
+    font-size: 18px;
+    width: 130px;
+    padding: 0 10px;
+    &:first-child {
+      border-top: 1px solid $gray-dark;
     }
   }
 }

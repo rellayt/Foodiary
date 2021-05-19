@@ -12,6 +12,7 @@ const routes: Routes = [
   {
     path: 'products',
     redirectTo: 'products/list',
+    pathMatch: 'full'
   },
   {
     path: 'products',

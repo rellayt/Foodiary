@@ -64,10 +64,10 @@ export class PersonalDataFormComponent implements OnInit, OnDestroy {
   constructor(private form: FormBuilder, private route: ActivatedRoute,
     private personalDataService: PersonalDataService, private snackBar: SnackBarService) {
     this.personalDataForm = this.form.group({
-      forename: this.form.control(null, [Validators.pattern("[a-zA-Z]+"), Validators.minLength(3), Validators.maxLength(30)]),
-      surname: this.form.control(null, [Validators.pattern("[a-zA-Z]+"), Validators.minLength(3), Validators.maxLength(30)]),
+      forename: this.form.control(null, [Validators.pattern("[a-ząćęłńóś źżA-ZĄĆĘŁŃÓŚŹŻ]+"), Validators.minLength(3), Validators.maxLength(30)]),
+      surname: this.form.control(null, [Validators.pattern("[a-ząćęłńóś źżA-ZĄĆĘŁŃÓŚŹŻ]+"), Validators.minLength(3), Validators.maxLength(30)]),
       gender: this.form.control(null),
-      city: this.form.control(null, [Validators.minLength(3), Validators.pattern("[a-zA-Z]+")]),
+      city: this.form.control(null, [Validators.minLength(3), Validators.pattern("[a-ząćęłńóś źżA-ZĄĆĘŁŃÓŚŹŻ]+")]),
       residingAbroad: this.form.control(false, {
         updateOn: 'change'
       }),

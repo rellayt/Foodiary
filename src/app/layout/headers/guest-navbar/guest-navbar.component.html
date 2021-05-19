@@ -1,11 +1,17 @@
-<nav class="navbar-container-guest">
-  <div class="title" #title>
+<nav class="header" #header>
+  <div class="logo" #logo (click)="navigate('/home')">
     <app-logo></app-logo>
   </div>
-  <div class="guest-navigation">
-    <a #menuItem1 routerLink="/">Przepisy</a>
-    <a #menuItem2 routerLink="/">Kalkulatory</a>
-    <a #menuItem3 routerLink="/">O nas</a>
-    <a #menuItem4 routerLink="/login">Moje konto</a>
+  <ul class="menu" #menu>
+    <li class="menu__item"><a (click)="navigate('register')">Przepisy</a></li>
+    <li class="menu__item"><a routerLink="/">Kalkulatory</a></li>
+    <li class="menu__item"><a routerLink="/">O nas</a></li>
+    <li class="menu__item"><a routerLink="/">Jak to działa?</a></li>
+  </ul>
+  <div class="account" #account>
+    <button (click)="navigate('login')">
+      <mat-icon>person</mat-icon>
+      Konto
+    </button>
   </div>
 </nav>

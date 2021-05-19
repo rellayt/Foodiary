@@ -1,31 +1,14 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { first, map, tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { CookieService } from 'ngx-cookie-service';
-import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarService } from '../services/snack-bar.service';
+import { LoginCredentials, RegisterCredentials, Session } from '../models/credentials.model';
 
-interface LoginCredentials {
-  username: string;
-  password: string;
-}
-
-interface RegisterCredentials {
-  name: string;
-  email: string;
-  password: string;
-}
-
-export interface Session {
-  token: string;
-  user: User;
-  message?: string;
-}
 
 
 @Injectable({
@@ -81,29 +64,35 @@ export class AuthService {
         })
       )
   }
+  registerExtended(data) {
+    return this.http.post<Session>(`${environment.API_URL}/auth/register_extended`, data,
+      { headers: { skip: "true" } }).pipe(
+        tap(res => {
+          this.cookieService.set('token', res.token)
+          setTimeout(() => this.session.next(res), 230)
+        })
+      )
+  }
 
-  logout(message?: string, navigateTo = 'home') {
-    this.cookieService.delete('token', '/')
+  logout(message?: string, navigateTo = '/home') {
+    this.cookieService.deleteAll()
     this.session.next({
       user: null,
       token: null,
       message
     })
-
     if (message) this.snackBar.open(message, 3500, true);
+    setTimeout(() => this.router.navigate([navigateTo]), 100)
 
-    this.router.navigate([navigateTo])
   }
 
   authenticate() {
+    if (!this.cookieService.check('token')) return
     const token = this.cookieService.get('token')
-    if (!token) return throwError('No token')
-    return this.http.get<User>(`${environment.API_URL}/auth/authenticate`,
-      { headers: new HttpHeaders({ 'x-auth-token': token }) })
-      .pipe(
-        first(),
-        tap(res => this.session.next({ user: res, token: token }))
-      )
+
+    this.http.get<User>(`${environment.API_URL}/auth/authenticate`, { headers: new HttpHeaders({ 'x-auth-token': token }) })
+      .pipe(first())
+      .subscribe(res => this.session.next({ user: res, token }))
   }
 
   constructor(private http: HttpClient, private cookieService: CookieService, private router: Router, private snackBar: SnackBarService) {

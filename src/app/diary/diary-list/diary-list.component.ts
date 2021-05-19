@@ -83,7 +83,7 @@ export class DiaryListComponent implements OnInit {
       this.state = 'view'
       fromToOpacityAnimation(this.expansion.nativeElement, 0.45, 0, -10)
       fromToOpacityAnimation(this.sidebar.nativeElement, 0.45, 20)
-      this.listContainer.nativeElement.scrollTo({ left: 0, top: 0, behavior: 'smooth' })
+      window.scrollTo({ left: 0, top: 0, behavior: 'smooth' })
     }, 455)
   }
 
@@ -102,7 +102,7 @@ export class DiaryListComponent implements OnInit {
         .filter((data) => data.name !== name)
       fromToOpacityAnimation(this.expansion.nativeElement, 0.25, 0, -10)
       fromToOpacityAnimation(this.sidebar.nativeElement, 0.25, -10)
-      this.listContainer.nativeElement.scrollTo({ left: 0, top: 0, behavior: 'smooth' })
+      window.scrollTo({ left: 0, top: 0, behavior: 'smooth' })
     }, 250)
   }
 

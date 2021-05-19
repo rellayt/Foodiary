@@ -4,7 +4,7 @@
     <nav class="user-login-header">
       <span>{{ profile.name }}</span>
     </nav>
-    <div class="weight-chart ">one</div>
+    <div class="weight-chart "></div>
     <div class="two" *ngIf="macro$ | async as macro ">
       <mat-expansion-panel [expanded]="true" hideToggle>
         <mat-expansion-panel-header>
@@ -35,19 +35,18 @@
     </div>
 
     <div class="informations">
-      <mat-expansion-panel [expanded]="true" hideToggle>
+      <mat-expansion-panel [expanded]="false" hideToggle>
         <mat-expansion-panel-header>
           <mat-panel-title>
             Moje dane
           </mat-panel-title>
 
         </mat-expansion-panel-header>
-        {{profile.created_at}}
         <p>This is the primary content of the panel.</p>
       </mat-expansion-panel>
     </div>
     <div class="informations">
-      <mat-expansion-panel [expanded]="true" hideToggle>
+      <mat-expansion-panel [expanded]="false" hideToggle>
         <mat-expansion-panel-header>
           <mat-panel-title>
             Pomiary

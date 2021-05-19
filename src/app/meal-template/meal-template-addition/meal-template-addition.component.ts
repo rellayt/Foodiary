@@ -29,10 +29,5 @@ export class MealTemplateAdditionComponent implements OnInit, OnDestroy {
         endAnimation(this.templateAddition.nativeElement, 0.35, value)
       })
   }
-  scrollDown(e) {
-    setTimeout(() => {
-      this.templateAddition.nativeElement.scrollTo({ left: 0, top: this.templateAddition.nativeElement.scrollHeight, behavior: 'smooth' }), 205
-    }, 5)
-  }
   ngOnDestroy() { this.routerEvent.unsubscribe() }
 }

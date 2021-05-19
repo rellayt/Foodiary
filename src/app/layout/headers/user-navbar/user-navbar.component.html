@@ -22,8 +22,8 @@
       <div matRipple class="nav-user-account" mat-icon-button [matMenuTriggerFor]="menu">
         <i class="fa fa-user"></i>
       </div>
-      <mat-menu #menu="matMenu">
-        {{(profile | async).name }}
+      <mat-menu #menu="matMenu" class="profile-menu">
+        <p>{{(profile | async).name }}</p>
         <button mat-menu-item>Profil</button>
         <button mat-menu-item>Ustawienia</button>
         <button mat-menu-item (click)="logout()">Wyloguj</button>

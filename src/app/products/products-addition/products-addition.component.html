@@ -62,12 +62,18 @@
         </mat-form-field>
       </div>
       <div class="products-addition__buttons" #buttons>
-        <button mat-raised-button type="submit" (click)="save()" [disabled]="!productsAddition.valid"
-          [style.opacity]="productsAddition.valid ? '1' : '0.7'">Zapisz</button>
-        <button mat-raised-button [disabled]="!productsAddition.valid"
-          [style.opacity]="productsAddition.valid ? '1' : '0.55'"
-          *ngIf="productsAddition.controls['products'].length < 10"
-          (click)="addProduct(productsAddition.get('products'))">Dodaj następny</button>
+        <div [matTooltip]="!productsAddition.valid ? 'Uzupełnij pola' : ''" matTooltipClass="red-tooltip"
+          [matTooltipPosition]="'above'">
+          <button mat-raised-button type="submit" (click)="save()" [disabled]="!productsAddition.valid"
+            [style.opacity]="productsAddition.valid ? '1' : '0.7'">Zapisz</button>
+        </div>
+        <div [matTooltip]="!productsAddition.valid ? 'Uzupełnij pola' : ''" matTooltipClass="red-tooltip"
+          [matTooltipPosition]="'above'">
+          <button mat-raised-button [disabled]="!productsAddition.valid"
+            [style.opacity]="productsAddition.valid ? '1' : '0.55'"
+            *ngIf="productsAddition.controls['products'].length < 10"
+            (click)="addProduct(productsAddition.get('products'))">Dodaj następny</button>
+        </div>
       </div>
     </form>
   </div>

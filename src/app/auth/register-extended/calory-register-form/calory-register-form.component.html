@@ -1,0 +1,71 @@
+<form class="calory-form" [formGroup]="caloryForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Waga</mat-label>
+    <input matInput formControlName="weight" type="number" [inputMaxLength]="3" autocomplete="off" />
+    <span matSuffix>kg</span>
+    <validation-feedback controlName="weight">
+      <mat-error *ngIf="caloryForm.controls['weight'].getError('min') as error">
+        Minimalna wartość to <b>{{error.min}}</b> kg
+      </mat-error>
+      <mat-error *ngIf="caloryForm.controls['weight'].getError('max') as error">
+        Maksymalna wartość to <b>{{error.max}}</b> kg
+      </mat-error>
+    </validation-feedback>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Wzrost</mat-label>
+    <span matSuffix>cm</span>
+    <input matInput formControlName="height" type="number" [inputMaxLength]="3" autocomplete="off" />
+    <validation-feedback controlName="height">
+      <mat-error *ngIf="caloryForm.controls['height'].getError('min') as error">
+        Minimalna wartość to <b>{{error.min}}</b> cm
+      </mat-error>
+      <mat-error *ngIf="caloryForm.controls['height'].getError('max') as error">
+        Maksymalna wartość to <b>{{error.max}}</b> cm
+      </mat-error>
+    </validation-feedback>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Wiek</mat-label>
+    <input matInput formControlName="age" type="number" [inputMaxLength]="3" autocomplete="off" />
+    <validation-feedback controlName="age">
+      <mat-error *ngIf="caloryForm.controls['age'].getError('min') as error">
+        Minimalny wiek to <b>{{error.min}}</b>
+      </mat-error>
+      <mat-error *ngIf="caloryForm.controls['age'].getError('max') as error">
+        Maksymalny wiek to <b>{{error.max}}</b>
+      </mat-error>
+    </validation-feedback>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-select [(value)]="caloryForm.controls['activity'].value" formControlName="activity"
+      placeholder="Aktywność fizyczna">
+      <mat-option *ngFor="let activity of physicalActivity" [value]="activity.viewValue">
+        {{activity.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="summary" #calorySummary [style.visibility]="statusFlag ? 'visible' : 'hidden'">
+    <div class="basic-metabolism">Podstawowa przemiana materii wynosi<span>{{userInfo.basicMetabolism}}</span></div>
+    <div class="calory-target">
+      <ul>
+        <li [ngClass]="userInfo.caloryTarget.name === 'loss' ? 'active' : ''" (click)="calculateTarget('loss')">
+          Chcę schudnąć</li>
+        <li [ngClass]="userInfo.caloryTarget.name === 'stay' ? 'active' : ''" (click)="calculateTarget('stay')">
+          Chcę utrzymać wagę
+        </li>
+        <li [ngClass]="userInfo.caloryTarget.name === 'mass' ? 'active' : ''" (click)="calculateTarget('mass')">
+          Chcę przytyć</li>
+      </ul>
+    </div>
+    <span>Jeśli chcesz {{userInfo.caloryTarget.view}} wagę, utrzymuj swoje dzienne zapotrzebowanie kaloryczne
+      na poziomie
+    </span>
+    <div class="calory-result">
+      <span>{{userInfo.calory}}</span>
+      <span>{{userMacro.protein}}</span>
+      <span>{{userMacro.carb}}</span>
+      <span>{{userMacro.fat}}</span>
+    </div>
+  </div>
+</form>

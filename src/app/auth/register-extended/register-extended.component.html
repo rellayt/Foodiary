@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="register-extended" #registerExtended>
+    <h1 class="header">Uzupełnij pozostałe pola, aby dokończyć rejestrację</h1>
+    <div class="wrapper">
+      <h1>Dane konta</h1>
+      <h1>Kalorie</h1>
+      <app-register-form [registerExtended]="true" (formValueEmitter)="setRegisterFormValue($event)">
+      </app-register-form>
+      <app-calory-register-form [questionnaireData]="routeState" (userMacroEmitter)="setMacroValue($event)">
+      </app-calory-register-form>
+      <div class="actions">
+        <div [matTooltip]="!macroValue || !registerFormValue ? 'Uzupełnij lub popraw pola' : ''"
+          [matTooltipClass]="'red-tooltip'" [matTooltipPosition]="'left'">
+          <button mat-flat-button [disabled]="!macroValue || !registerFormValue" (click)="register()">
+            <mat-spinner *ngIf="loading"></mat-spinner>
+            <span *ngIf="!loading" class="button-text">Zarejestruj</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

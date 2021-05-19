@@ -17,4 +17,13 @@ export class SnackBarService {
     })
   }
 
+  openWarning(message: string, duration = 1000) {
+    this._snackBar.open(message, "X", {
+      duration: duration,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+      panelClass: 'mat-snack-bar-warning'
+    })
+  }
+
 }

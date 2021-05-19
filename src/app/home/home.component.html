@@ -1,26 +1,18 @@
 <div class="home-container">
-  <div class="card-wrapper" #welcomeWindow>
-    <mat-card class="card-container">
-      <mat-card-header>
-        <mat-card-title class="mat-card-title">
-          <div class="mat-card-title-children">Witaj!</div>
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <span>
-          Foodiary jest prostą w obsłudze aplikacją stworzoną z myślą o użytkownikach chcących
-          zmienić swoje nawyki żywieniowe.
-        </span>
-      </mat-card-content>
-      <mat-card-footer>
-        <div class="button-container">
-          <a href="">Rozpocznij</a>
-        </div>
-      </mat-card-footer>
-    </mat-card>
-  </div>
-  <div class="arrows-container" #arrowContainer>
-    <span class="arrows-word">PRZEWODNIK</span>
-    <div class="test"><i class="fa fa-angle-double-down" #arrow></i></div>
+  <div class="home">
+    <div class="heading" #heading>
+      <h1>Dieta</h1>
+      <p>Już <b>nigdy</b> nie musi być monotonna ani trudna w realizacji</p>
+    </div>
+    <div class="info" #info>
+      <p>Foodiary umożliwia obliczenie Twojego zapotrzebowania
+        kalorycznego w zależności od ustalonego celu, a następnie utworzenie diety
+        złożonej z własnych posiłków lub inspirując się przepisami stworzonych przez użytkowników
+      </p>
+    </div>
+    <div class="begin" #begin>
+      <button mat-flat-button (click)="navigate('/questionnaire')">Ustal kalorykę</button>
+      <button mat-flat-button (click)="navigate('/register')">Zarejestruj</button>
+    </div>
   </div>
 </div>

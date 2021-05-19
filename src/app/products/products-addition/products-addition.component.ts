@@ -77,7 +77,7 @@ export class ProductsAdditionComponent implements OnInit, OnDestroy {
     }, 200)
     setTimeout(() => {
       fromToOpacityAnimation(this.groups.toArray()[products.length - 1].nativeElement, 1.5)
-      this.productAddition.nativeElement.scrollTo({ left: 0, top: this.productAddition.nativeElement.scrollHeight, behavior: 'smooth' }), 205
+      window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: 'smooth' })
     }, 200)
   }
 

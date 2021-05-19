@@ -41,7 +41,6 @@ export class MealTemplateBodyComponent implements OnInit {
   @Input() diaryMode = false
 
   @Output() goBack: EventEmitter<Boolean> = new EventEmitter()
-  @Output() scrollDown: EventEmitter<Boolean> = new EventEmitter()
   @Output() summaryUpdate: EventEmitter<Boolean> = new EventEmitter()
   @Output() templateName: EventEmitter<Boolean> = new EventEmitter()
 
@@ -68,7 +67,6 @@ export class MealTemplateBodyComponent implements OnInit {
       this.mealTemplate.products.push({ quantity: 100, calory: getCalory(product), ...product })
 
       this.abstractProducts = [...this.mealTemplate.products]
-      this.scrollDown.emit(null)
     })
   }
 
@@ -152,7 +150,9 @@ export class MealTemplateBodyComponent implements OnInit {
 
   addProduct(product: Product) {
     this.mealTemplate.products.push(product)
-    this.scrollDown.emit(null)
+    if (!this.diaryMode) {
+      setTimeout(() => window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: 'smooth' }), 50)
+    }
   }
 
   save() {

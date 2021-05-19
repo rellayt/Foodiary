@@ -13,6 +13,9 @@ import { SingleErrorCleanerDirective } from '../directives/single-error-cleaner.
 import { LoginErrorCleanerDirective } from '../directives/login-error-cleaner.directive';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './auth-interceptor.service';
+import { RegisterExtendedComponent } from './register-extended/register-extended.component';
+import { CaloryRegisterFormComponent } from './register-extended/calory-register-form/calory-register-form.component';
+import { DirectivesModule } from '../directives/directives.module';
 
 
 const dialogComponents = [
@@ -31,6 +34,7 @@ const standardComponents = [
 @NgModule({
   imports: [
     CommonModule,
+    DirectivesModule,
     RouterModule,
     MaterialModule,
     FormsModule,
@@ -42,14 +46,16 @@ const standardComponents = [
     formComponents,
     standardComponents,
     SingleErrorCleanerDirective,
-    LoginErrorCleanerDirective
+    LoginErrorCleanerDirective,
+    RegisterExtendedComponent,
+    CaloryRegisterFormComponent
   ],
   exports: [
     dialogComponents,
     formComponents,
     standardComponents,
     SingleErrorCleanerDirective,
-    LoginErrorCleanerDirective
+    LoginErrorCleanerDirective,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

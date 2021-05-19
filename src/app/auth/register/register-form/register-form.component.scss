@@ -4,12 +4,12 @@
   flex-direction: column;
   align-items: center;
   mat-form-field {
-    width: 90%;
-    font-size: 19px;
+    width: 100%;
+    font-size: 18px;
     input {
       position: relative;
       top: 3px;
-      font-size: 22px;
+      font-size: 21px;
     }
   }
   :nth-child(4) {
@@ -17,18 +17,25 @@
       position: relative;
       right: 2px;
       top: 1px;
-      color: $blue;
+      color: $black;
       font-size: 30px;
-      opacity: 0.8;
+      opacity: 0.6;
     }
   }
   mat-spinner {
     stroke: $white !important;
     zoom: 0.28;
   }
-  ::ng-deep .mat-progress-spinner circle,
-  .mat-spinner circle {
-    stroke: $white;
+  ::ng-deep {
+    .mat-progress-spinner circle,
+    .mat-spinner circle {
+      stroke: $white;
+    }
+    .mat-form-field-appearance-fill .mat-form-field-flex {
+      border-radius: 6px 6px 0 0;
+      background-color: rgba(0, 0, 0, 0.03);
+      box-shadow: inset 0px 0px 4px 0px $gray-light-25-opacity;
+    }
   }
   .submit-button-container {
     display: flex;
@@ -43,7 +50,7 @@
       color: $white;
       font-size: 22px;
       border-radius: 7px;
-      width: 90%;
+      width: 100%;
       height: 90%;
     }
   }
@@ -51,7 +58,7 @@
   validation-feedback {
     position: absolute;
     width: 422px;
-    top: 44px;
+    top: 42px;
     left: -12px;
     font-size: 17px;
   }

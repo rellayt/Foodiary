@@ -34,9 +34,11 @@ export class LoginFormComponent {
     timer(500).pipe(
       switchMap(() => this.auth.login(this.loginForm.value)),
       first()
-    ).subscribe(data => {
-      this.snackBar.open("Zalogowano", 1500);
+    ).subscribe(() => {
       this.router.navigate([this.profileUrl])
+      setTimeout(() => this.snackBar.open("Zalogowano", 1100), 500)
+
+
     }, error => {
       this.loading = false;
       this.loginForm.controls[`login`].setErrors({ invalid: true });

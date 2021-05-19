@@ -41,9 +41,4 @@ export class DiaryAdditionComponent implements OnInit {
     this.diaryName$ = this.diaryService.getDiaryName().pipe(map(({ diaryName }) => diaryName))
   }
 
-  scrollDown() {
-    setTimeout(() => {
-      this.diaryAddition.nativeElement.scrollTo({ left: 0, top: this.diaryAddition.nativeElement.scrollHeight, behavior: 'smooth' }), 205
-    }, 5)
-  }
 }

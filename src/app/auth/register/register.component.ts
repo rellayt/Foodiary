@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TooltipPosition } from '@angular/material/tooltip';
-import { OnceClickedService } from '../../services/animation/once-clicked.service';
 import { AuthService } from '../auth.service';
 import { takeUntil, takeWhile, tap } from 'rxjs/operators';
 
@@ -11,11 +10,10 @@ import { takeUntil, takeWhile, tap } from 'rxjs/operators';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private onceClickedService: OnceClickedService, private auth: AuthService) { }
+  constructor(private dialog: MatDialog, private auth: AuthService) { }
 
   ngOnInit(): void {
     this.dialog.open(RegisterDialogComponent, { disableClose: true });
-    this.onceClickedService.changeOnceClickedSubject(true);
   }
 }
 

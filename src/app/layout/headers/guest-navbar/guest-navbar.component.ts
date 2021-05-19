@@ -1,6 +1,7 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Renderer2 } from '@angular/core';
 import { ElementRef, ViewChild } from '@angular/core';
 import { guestNavAnimation, initLogoAnimation } from 'src/app/utility/navbar-gsap-animations';
+import { startAnimation } from '../../../utility/basic-animations';
 
 @Component({
   selector: 'app-guest-navbar',
@@ -8,36 +9,28 @@ import { guestNavAnimation, initLogoAnimation } from 'src/app/utility/navbar-gsa
   styleUrls: ['./guest-navbar.component.scss']
 })
 export class GuestNavbarComponent implements OnInit {
-  @ViewChild('title', { static: true }) title: ElementRef;
-  @ViewChild('menuItem1', { static: true }) menuItem1: ElementRef;
-  @ViewChild('menuItem2', { static: true }) menuItem2: ElementRef;
-  @ViewChild('menuItem3', { static: true }) menuItem3: ElementRef;
-  @ViewChild('menuItem4', { static: true }) menuItem4: ElementRef;
+  @ViewChild('header', { static: true }) header: ElementRef
+  @ViewChild('logo', { static: true }) logo: ElementRef
+  @ViewChild('menu', { static: true }) menu: ElementRef
+  @ViewChild('account', { static: true }) account: ElementRef
 
-  constructor(private renderer: Renderer2) { }
+  @Output() navigateEmitter: EventEmitter<string> = new EventEmitter()
+
+  constructor() { }
 
   ngOnInit(): void {
-    const menuItems = [this.menuItem1, this.menuItem2, this.menuItem3, this.menuItem4].map(el => el.nativeElement);
-    this.initialAnimations(menuItems)
-    this.menuItemsHover(menuItems)
-  }
-
-  initialAnimations = (menuItems) => {
-    initLogoAnimation(this.title.nativeElement);
-    let value = 0.5;
-    menuItems.forEach((elementRef) => {
-      guestNavAnimation(elementRef, value);
-      value += 0.4;
-    });
-  }
-
-  menuItemsHover = (menuItems) => {
-    menuItems.forEach((hoverElement) => {
-      const secondaryElements = Object.assign([], menuItems).filter((el) => el !== hoverElement)
-      secondaryElements.forEach((sideElement: ElementRef) => {
-        hoverElement.addEventListener('mouseenter', () => this.renderer.addClass(sideElement, 'element-hover'))
-        hoverElement.addEventListener('mouseleave', () => this.renderer.removeClass(sideElement, 'element-hover'))
-      })
+    initLogoAnimation(this.logo.nativeElement)
+    startAnimation(this.header.nativeElement, 1.2, 0, -30)
+    let delay = 0.4
+    this.menu.nativeElement.childNodes.forEach(node => {
+      startAnimation(node, 0.9, 0, -20, delay)
+      delay += 0.2
     })
+    startAnimation(this.account.nativeElement, 2, 0, 0, 1.3)
   }
+
+  navigate(url) {
+    this.navigateEmitter.emit(url)
+  }
+
 }

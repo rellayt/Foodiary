@@ -54,13 +54,6 @@ export class MealTemplateListComponent implements OnInit, OnDestroy {
       });
   }
 
-
-  scrollDown(e) {
-    setTimeout(() => {
-      this.listContainer.nativeElement.scrollTo({ left: 0, top: this.listContainer.nativeElement.scrollHeight, behavior: 'smooth' }), 205
-    }, 5)
-  }
-
   selectMealTemplate(mealTemplate) {
     endAnimation(this.mealTemplateList.nativeElement, 0.4)
     setTimeout(() => {

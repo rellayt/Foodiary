@@ -17,7 +17,7 @@ export class ProductsNavigationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activeLink = this.router.url.split('/')[2]
+    this.activeLink = this.router.url.split('/')[2].charAt(0) === 'l' ? 'list' : 'addition'
   }
 
 }

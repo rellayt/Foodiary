@@ -26,46 +26,55 @@ import { getPolishPaginatorIntl } from '../polish-paginator-intl';
 import { MealTemplateModule } from './meal-template/meal-template.module';
 import { DeleteDialogComponent } from './layout/dialogs/delete/delete-dialog.component';
 import { DiaryModule } from './diary/diary.module';
+import { QuestionnaireComponent } from './home/questionnaire/questionnaire.component';
+import { WildcardComponent } from './wildcard/wildcard.component';
+import { AuthService } from './auth/auth.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    QuestionnaireComponent,
     LogoComponent,
     BackgroundComponent,
     RoutingComponents,
     SubNavigationComponent,
     GuestNavbarComponent,
     UserNavbarComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    WildcardComponent,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     DiaryModule,
-    AppRoutingModule,
+    ProfileModule,
     DirectivesModule,
     BrowserAnimationsModule,
     ValidationModule,
     AuthModule,
-    ProfileModule,
     ProductsModule,
     MealTemplateModule,
+    AppRoutingModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
   ],
 
   providers: [
     UnauthorizedGuard,
     AuthorizedGuard,
+    AuthorizedGuard,
     CookieService,
     ValidationService,
     DelayResolve,
+    AuthService,
     { provide: MatPaginatorIntl, useValue: getPolishPaginatorIntl() }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor() { }
+  constructor(private authService: AuthService) {
+    this.authService.authenticate()
+  }
 }

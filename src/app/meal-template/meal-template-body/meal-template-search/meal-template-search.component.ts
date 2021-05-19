@@ -56,12 +56,15 @@ export class MealTemplateSearchComponent implements OnInit {
     this.additionButton = this.diaryMode ? true : false
     this.productSearchForm.controls['query'].valueChanges
       .pipe(
+        tap(() => {
+          this.options = []
+          this.loading = true
+        }),
         debounceTime(250),
         filter((value: string) => !!value && value.length > 2),
         tap(value => {
           if (this.selectedProduct && this.selectedProduct.name !== value) this.resetSelectedProduct()
           this.productService.setQuery(value)
-          this.loading = true
         }),
         switchMap((value: string) => combineLatest(
           this.productService.searchProducts(),
@@ -75,8 +78,9 @@ export class MealTemplateSearchComponent implements OnInit {
         }))),
       )
       .subscribe(data => {
-        this.loading = false
         this.options = data;
+        setTimeout(() => this.loading = false, 100)
+
       })
 
     this.productSearchForm.controls['quantity'].valueChanges

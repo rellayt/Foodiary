@@ -1,0 +1,146 @@
+@import "src/app/shared/colors.scss";
+
+.calory-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 18px;
+  & > * {
+    margin: 0 10px;
+  }
+  mat-form-field {
+    border-radius: 50px;
+    font-size: 18px;
+    input {
+      width: 72px;
+      top: 3px;
+      font-size: 21px;
+    }
+    mat-select {
+      mat-option {
+        position: relative;
+        top: 50px;
+      }
+    }
+  }
+  .summary {
+    grid-column: 1/3;
+    opacity: 0;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.425);
+    margin-bottom: 12px;
+    & > * {
+      margin: 12px 0;
+      display: flex;
+      align-items: center;
+    }
+    .basic-metabolism {
+      margin: 0;
+
+      height: 25px;
+      span {
+        font-size: 21px;
+        font-weight: 600;
+        margin-left: 7px;
+        &::after {
+          content: "kcal";
+          font-weight: 500;
+          margin-left: 4px;
+        }
+      }
+    }
+    .calory-target {
+      height: 55px;
+      ul {
+        border-radius: 6px;
+        border: 1px solid $gray-light-50-opacity;
+        height: 40px;
+        display: flex;
+        flex-grow: 1;
+        li {
+          cursor: pointer;
+          border-radius: 6px;
+          height: 100%;
+          align-items: center;
+          border: 1px solid rgba(0, 0, 0, 0);
+          color: $black;
+          display: flex;
+          justify-content: center;
+          font-size: 18px;
+          flex-grow: 1;
+          background: $white;
+          transition: background 200ms;
+          &:hover {
+            background: $gray-light-10-opacity;
+          }
+        }
+        .active {
+          background-color: $blue;
+          color: $white;
+          &:hover {
+            background-color: $blue;
+          }
+        }
+      }
+    }
+    .calory-result {
+      height: 30px;
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 0;
+      span {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      :first-child {
+        font-weight: 600;
+        font-size: 25px;
+        &::after {
+          content: "kcal";
+          font-weight: 500;
+          margin-left: 4px;
+        }
+      }
+      span:not(:first-child) {
+        &::after {
+          content: "g";
+          margin-left: 3px;
+          font-weight: 500;
+        }
+        &::before,
+        &::after {
+          font-weight: 500;
+        }
+        &:nth-child(2)::before {
+          content: "białko ";
+        }
+        &:nth-child(3)::before {
+          content: "węglowodany ";
+        }
+        &:nth-child(4)::before {
+          content: "tłuszcze ";
+        }
+      }
+    }
+  }
+  validation-feedback {
+    position: absolute;
+    width: 422px;
+    top: 42px;
+    left: -12px;
+    font-size: 17px;
+  }
+  ::ng-deep {
+    .mat-form-field-appearance-fill .mat-select-arrow-wrapper {
+      transform: translateY(-45%);
+    }
+    .mat-select-value {
+      transform: translateY(-9px);
+    }
+    .mat-form-field-appearance-fill .mat-form-field-flex {
+      border-radius: 6px 6px 0 0;
+      background-color: rgba(0, 0, 0, 0.025);
+      box-shadow: inset 0px 0px 4px 0px $gray-light-50-opacity;
+    }
+  }
+}

@@ -5,7 +5,7 @@
     </div>
     <div class="meal-template-edit__line"></div>
     <app-meal-template-body *ngIf="selectedMealTemplate" [mealTemplate]="selectedMealTemplate" [type]="'update'"
-      (scrollDown)="scrollDown($event)" (goBack)="backToList($event)">
+      (goBack)="backToList($event)">
       <div class="meal-template-edit__back">
         <button (click)="backToList(false)">Wróć</button>
       </div>

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { first, tap } from 'rxjs/operators';
-import { AuthService, Session } from '../auth/auth.service';
+import { AuthService } from '../auth/auth.service';
+import { Session } from '../models/credentials.model';
 
 
 interface UpdateCredentials {

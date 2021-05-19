@@ -65,6 +65,15 @@
       justify-content: center;
       list-style: none;
       border-right: 1px solid $gray-light-50-opacity;
+      &:nth-child(4)::before {
+        content: "Białko";
+      }
+      &:nth-child(5)::before {
+        content: "Węglowodany";
+      }
+      &:nth-child(6)::before {
+        content: "Tłuszcze";
+      }
     }
     li:last-child {
       border-right: 0;
@@ -222,6 +231,21 @@
   box-shadow: none;
   border: 1px solid $gray-light-50-opacity;
   margin: 17px 0;
+}
+@media (max-width: 1024px) {
+  .meal-template__headers {
+    li {
+      &:nth-child(4)::before {
+        content: "B";
+      }
+      &:nth-child(5)::before {
+        content: "W";
+      }
+      &:nth-child(6)::before {
+        content: "T";
+      }
+    }
+  }
 }
 ::ng-deep {
   .mat-standard-chip .mat-chip-remove.mat-icon {

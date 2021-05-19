@@ -13,6 +13,7 @@ const routes: Routes = [
   {
     path: 'template',
     redirectTo: 'template/list',
+    pathMatch: 'full'
   },
   {
     path: 'template',

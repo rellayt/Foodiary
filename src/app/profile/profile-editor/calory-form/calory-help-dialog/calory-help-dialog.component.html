@@ -1,8 +1,8 @@
 <div class="calory-help-dialog-wrapper">
   <div class="close-icon">
     <button>
-      <mat-icon mat-dialog-close matTooltip="Zamknij" matTooltipClass="blue-tooltip"
-        [matTooltipPosition]="tooltipPosition">close</mat-icon>
+      <mat-icon mat-dialog-close matTooltip="Zamknij" matTooltipClass="blue-tooltip" [matTooltipPosition]="'above'">
+        close</mat-icon>
     </button>
   </div>
   <form>
@@ -36,7 +36,7 @@
         <div class="weight-height-wrapper">
           <span class="above-input-name">Waga:</span>
           <mat-form-field class="example-full-width" appearance="outline" [formGroup]="caloryHelpForm">
-            <input type="number" matInput formControlName="weight">
+            <input type="number" matInput formControlName="weight" [inputMaxLength]="3">
             <mat-error *ngIf="caloryHelpForm.get('weight').invalid">{{getErrorMessage('weight')}}</mat-error>
             <span matSuffix>kg</span>
           </mat-form-field>
@@ -44,7 +44,7 @@
         <div class="weight-height-wrapper">
           <span class="above-input-name">Wzrost:</span>
           <mat-form-field class="example-full-width" appearance="outline" [formGroup]="caloryHelpForm">
-            <input type="number" matInput formControlName="height">
+            <input type="number" matInput formControlName="height" [inputMaxLength]="3">
             <mat-error *ngIf="caloryHelpForm.get('height').invalid">{{getErrorMessage('height')}}</mat-error>
             <span matSuffix>cm</span>
           </mat-form-field>
@@ -54,14 +54,15 @@
         <div class="age-wrapper">
           <span class="above-input-name">Wiek:</span>
           <mat-form-field class="example-full-width" appearance="outline" [formGroup]="caloryHelpForm">
-            <input type="number" matInput formControlName="age">
+            <input type="number" matInput formControlName="age" [inputMaxLength]="3">
             <mat-error *ngIf="caloryHelpForm.get('age').invalid">{{getErrorMessage('age')}}</mat-error>
             <span matSuffix>lat</span>
           </mat-form-field>
         </div>
         <div class="submit-button"><button type="submit" mat-stroked-button
             [style.opacity]="caloryHelpForm.valid && !!this.selectedGender ? '1' : '0.7'"
-            [disabled]="!caloryHelpForm.valid || !this.selectedGender" (click)="calculate()">Oblicz</button></div>
+            [disabled]="!caloryHelpForm.valid || !this.selectedGender" (click)="macroCalculation()">Oblicz</button>
+        </div>
       </div>
     </div>
   </form>
