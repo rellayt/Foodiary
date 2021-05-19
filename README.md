@@ -2,7 +2,6 @@
 
 ### Web application for comfortable diet arrangement with the possibility of monitoring of your body measurements
 
-<br>
 ## Main features:
 
 - Create a food diary with the exact amount of macronutrients and calories for each meal
@@ -42,6 +41,7 @@ Backend
     <img src="https://i.imgur.com/5qgpByK.png" width="650" height="450">
 </div>
 <br>
+
 # Snippets <b>(click to open a video)</b>
 
 #### Search products route params & Creating / Updating single meal template
