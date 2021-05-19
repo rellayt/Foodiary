@@ -21,14 +21,14 @@
 
 ## Technology stack
 
-Front-End
+### Front-End
 - Typescript
 - Angular
 - RxJS
 - MaterialUI
 - Parallax.js / Vanta.js
 
-Back-End
+### Back-End
 - Typescript
 - Node.js
 - Express.js
