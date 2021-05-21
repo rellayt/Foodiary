@@ -26,6 +26,7 @@
 - Angular
 - RxJS
 - MaterialUI
+- GSAP
 - Parallax.js / Vanta.js
 
 ### Back-End
