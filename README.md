@@ -2,7 +2,7 @@
 
 ### Web application for comfortable diet arrangement with the possibility monitoring of your body measurements
 
-## Main features:
+## Main features
 
 - Create a food diary with the exact amount of macronutrients and calories for each meal
 - The ability to save multiple meal templates to use it in furter creation of diary
