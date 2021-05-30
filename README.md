@@ -1,6 +1,6 @@
 # Foodiary
 
-### Web application for comfortable diet arrangement with the possibility monitoring of your body measurements
+### Web application for comfortable diet arrangement with the possibility of monitoring your body measurements
 
 ## Main features
 
